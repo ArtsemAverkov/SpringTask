@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id 'war'
+}
+
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework:spring-core:6.0.3'
+    implementation 'org.springframework:spring-context:6.0.3'
+    implementation 'org.springframework:spring-web:6.0.3'
+    implementation 'org.springframework:spring-webmvc:6.0.3'
+    compileOnly 'jakarta.servlet:jakarta.servlet-api:6.0.0'
+
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.26'
+
+    implementation 'org.hibernate:hibernate-core:5.6.10.Final'
+    implementation 'org.hibernate:hibernate-entitymanager:5.6.10.Final'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.5.1'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.2'
+    implementation group: 'com.google.code.gson', name: 'gson', version: '2.10'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+
+
