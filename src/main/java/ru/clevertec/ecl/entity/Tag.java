@@ -6,7 +6,9 @@ import org.hibernate.annotations.OptimisticLocking;
 
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,7 +18,6 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
-//@OptimisticLocking(type = OptimisticLockType.VERSION)
 public class Tag {
 
     @Id
@@ -25,7 +26,7 @@ public class Tag {
     private String name;
 
     @OneToMany(mappedBy ="tag", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Set<GiftCertificates> giftCertificatesList = new HashSet<>();
+    private List<GiftCertificates> giftCertificatesList = new ArrayList<>();
 
     public Tag(String name) {
         this.name = name;

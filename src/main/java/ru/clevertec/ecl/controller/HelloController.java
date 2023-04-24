@@ -19,7 +19,7 @@ public class HelloController {
 
     @GetMapping("/hello")
     public long hello() {
-        return giftCertificatesService.create(new GiftCertificates());
+        return 1;
     }
 }
 

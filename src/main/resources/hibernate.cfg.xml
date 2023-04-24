@@ -12,6 +12,7 @@
     <property name="show_sql">true</property>
     <property name="format_sql">true</property>
     <mapping class="ru.clevertec.ecl.entity.Tag"/>
+    <mapping class="ru.clevertec.ecl.entity.GiftCertificates"/>
 
   </session-factory>
 </hibernate-configuration>
