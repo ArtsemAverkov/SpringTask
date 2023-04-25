@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS tags (
+CREATE TABLE IF NOT EXISTS tag (
                                     id SERIAL PRIMARY KEY,
                                     name VARCHAR(255) NOT NULL
     );
@@ -11,4 +11,4 @@ CREATE TABLE IF NOT EXISTS giftCertificates (
     duration VARCHAR(255),
     create_date VARCHAR(255) NOT NULL,
     last_update_date VARCHAR(255) NOT NULL,
-    tag_id BIGINT REFERENCES tags(id) ON DELETE SET NULL)
+    tag_id BIGINT REFERENCES tag(id) ON DELETE SET NULL)

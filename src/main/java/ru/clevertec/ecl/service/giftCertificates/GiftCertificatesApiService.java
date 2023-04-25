@@ -3,6 +3,7 @@ package ru.clevertec.ecl.service.giftCertificates;
 import org.springframework.stereotype.Service;
 import ru.clevertec.ecl.dto.GiftCertificatesDto;
 import ru.clevertec.ecl.entity.GiftCertificates;
+import ru.clevertec.ecl.entity.Tag;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
 
 import java.time.LocalDateTime;
@@ -40,8 +41,8 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
     }
 
     @Override
-    public List<GiftCertificates> readAll() {
-        return giftCertificatesRepository.readAll();
+    public List<Object[]> readAll(String tagName, String orderBy, String orderType) {
+        return giftCertificatesRepository.readAll(tagName, orderBy, orderType);
     }
 
     private GiftCertificates buildGiftCertificates(GiftCertificatesDto giftCertificatesDto){
@@ -53,6 +54,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
                 .price(giftCertificatesDto.getPrice())
                 .description(giftCertificatesDto.getDescription())
                 .duration(giftCertificatesDto.getDuration())
+                .tag(new Tag(giftCertificatesDto.getTagDto().getName()))
                 .create_date(isoDateTime)
                 .last_update_date(isoDateTime)
                 .build();

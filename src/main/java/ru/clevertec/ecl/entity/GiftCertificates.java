@@ -1,5 +1,6 @@
 package ru.clevertec.ecl.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 import lombok.Builder;
 import org.hibernate.annotations.OnDelete;
@@ -19,10 +20,11 @@ import javax.persistence.*;
 @ToString(exclude = "tag")
 @EqualsAndHashCode(exclude = "tag")
 @OptimisticLocking(type = OptimisticLockType.VERSION)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "tag"})
 public class GiftCertificates {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private String description;
@@ -31,7 +33,7 @@ public class GiftCertificates {
     private String create_date;
     private String last_update_date;
 
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Tag tag;
 }

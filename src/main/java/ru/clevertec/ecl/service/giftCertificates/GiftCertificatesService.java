@@ -10,5 +10,5 @@ public interface GiftCertificatesService {
     GiftCertificates read (long id) throws Exception;
     boolean update (GiftCertificatesDto giftCertificates, Long id);
     boolean delete (Long id);
-    List<GiftCertificates> readAll ();
+    List<Object[]> readAll (String tagName, String orderBy, String orderType);
 }

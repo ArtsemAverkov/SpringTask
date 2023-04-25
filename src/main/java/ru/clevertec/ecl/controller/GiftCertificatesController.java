@@ -73,8 +73,13 @@ public class GiftCertificatesController {
      */
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<GiftCertificates> readAll() {
-        return giftCertificatesService.readAll();
+    public List<Object[]> readAll(@RequestParam(required = false) String tagName,
+                                  @RequestParam(required = false) String sort,
+                                  @RequestParam(required = false) String order) {
+        String orderBy = sort != null ? sort : "gc.name";
+        String orderType = order != null ? order : "ASC";
+        return giftCertificatesService.readAll(tagName, orderBy, orderType);
     }
-
 }
+
+
