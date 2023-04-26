@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS giftCertificates (
                                                 name VARCHAR(255) NOT NULL,
     description TEXT,
     price NUMERIC(10, 2) NOT NULL,
-    duration VARCHAR(255),
+    duration  BIGINT,
     create_date VARCHAR(255) NOT NULL,
     last_update_date VARCHAR(255) NOT NULL,
     tag_id BIGINT REFERENCES tag(id) ON DELETE SET NULL)

@@ -27,7 +27,7 @@ public class GiftCertificatesApiRepository implements GiftCertificatesRepository
            session.beginTransaction();
            session.save(giftCertificates);
            session.getTransaction().commit();
-           return 0;
+           return giftCertificates.getId();
        }
     }
 
@@ -36,9 +36,7 @@ public class GiftCertificatesApiRepository implements GiftCertificatesRepository
         SessionFactory sessionFactory = hibernateI.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
             GiftCertificates certificates = session.get(GiftCertificates.class, id);
-            String name = certificates.getTag().getName();
-            System.out.println("name = " + name);
-
+            certificates.getTag().getName();
             return certificates;
         }
     }

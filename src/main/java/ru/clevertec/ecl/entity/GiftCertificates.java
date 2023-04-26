@@ -29,7 +29,7 @@ public class GiftCertificates {
     private String name;
     private String description;
     private Double price;
-    private String duration;
+    private Long duration;
     private String create_date;
     private String last_update_date;
 

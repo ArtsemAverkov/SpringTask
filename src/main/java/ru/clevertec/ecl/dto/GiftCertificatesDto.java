@@ -19,7 +19,7 @@ public class GiftCertificatesDto {
     @JsonProperty("price")
     private Double price;
     @JsonProperty("duration")
-    private String duration;
+    private Long duration;
 
     private TagDto tagDto;
 }

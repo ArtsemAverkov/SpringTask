@@ -1,6 +1,5 @@
 package ru.clevertec.ecl.controller;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
@@ -9,7 +8,6 @@ import ru.clevertec.ecl.entity.GiftCertificates;
 import ru.clevertec.ecl.service.giftCertificates.GiftCertificatesService;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("/certificates")
@@ -25,7 +23,6 @@ public class GiftCertificatesController {
      * @param giftCertificates get from server
      * @return the long id of the created giftCertificates
      */
-
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
@@ -52,8 +49,6 @@ public class GiftCertificatesController {
     public boolean update (@PathVariable Long id, @RequestBody GiftCertificatesDto giftCertificates) {
         return giftCertificatesService.update(giftCertificates, id);
     }
-
-
 
     /**
      * this method removes the giftCertificates from the database
