@@ -9,6 +9,14 @@ import ru.clevertec.ecl.service.giftCertificates.GiftCertificatesService;
 
 import java.util.List;
 
+/**
+
+ This class represents the REST API controller for managing GiftCertificates resources.
+ All requests related to GiftCertificates are handled by this controller.
+ @author [ArtsemAverkov]
+ @version [1.0]
+ */
+
 @RestController
 @RequestMapping("/certificates")
 public class GiftCertificatesController {
@@ -19,8 +27,9 @@ public class GiftCertificatesController {
     }
 
     /**
-     * this method creates a new giftCertificates
-     * @param giftCertificates get from server
+     * Create a new gift certificate.
+     *
+     * @param giftCertificates the GiftCertificatesDto to be created
      * @return the long id of the created giftCertificates
      */
 
@@ -31,16 +40,26 @@ public class GiftCertificatesController {
         return giftCertificatesService.create(giftCertificates);
     }
 
+    /**
+     * Read a gift certificate by id.
+     *
+     * @param id the id of the gift certificate to be read
+     * @return the gift certificate with the given id
+     * @throws Exception if the gift certificate is not found
+     */
+
     @GetMapping(value = "{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
     public GiftCertificates read(@PathVariable Long id) throws Exception {
         return giftCertificatesService.read(id);
     }
+
     /**
-     * this method updates giftCertificates by id
-     * @param giftCertificates get from server
-     * @param id         get from server
-     * @return successful and unsuccessful update
+     * Update a gift certificate by id.
+     *
+     * @param id the id of the gift certificate to be updated
+     * @param giftCertificates the updated GiftCertificatesDto
+     * @return true if the update is successful, false otherwise
      */
 
     @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
@@ -51,9 +70,10 @@ public class GiftCertificatesController {
     }
 
     /**
-     * this method removes the giftCertificates from the database
-     * @param id get from server
-     * @return successful and unsuccessful delete
+     * Delete a gift certificate by id.
+     *
+     * @param id the id of the gift certificate to be deleted
+     * @return true if the delete is successful, false otherwise
      */
 
     @DeleteMapping("{id}")
@@ -63,8 +83,12 @@ public class GiftCertificatesController {
     }
 
     /**
-     * this method returns a collection of all giftCertificates in the database
-     * @return collection of all giftCertificates
+     * Get a collection of all gift certificates in the database.
+     *
+     * @param tagName the tag name used to filter the gift certificates
+     * @param sort the field used for sorting the gift certificates
+     * @param order the order used for sorting the gift certificates (ASC or DESC)
+     * @return a collection of all giftCertificates
      */
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)

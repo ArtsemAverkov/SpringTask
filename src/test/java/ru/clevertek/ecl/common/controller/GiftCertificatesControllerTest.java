@@ -3,7 +3,6 @@ package ru.clevertek.ecl.common.controller;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
@@ -12,11 +11,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
-import ru.clevertec.ecl.controller.GiftCertificatesController;
 import ru.clevertec.ecl.dto.GiftCertificatesDto;
 import ru.clevertec.ecl.entity.GiftCertificates;
 import ru.clevertec.ecl.entity.Tag;
-import ru.clevertec.ecl.service.giftCertificates.GiftCertificatesService;
+import ru.clevertec.ecl.service.giftCertificates.GiftCertificatesApiService;
 import ru.clevertec.ecl.util.appConfig.AppConfig;
 import ru.clevertek.ecl.common.extension.ValidParameterResolverGiftCertificates;
 
@@ -32,36 +30,34 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AppConfig.class)
-@ExtendWith({MockitoExtension.class,
-        GiftCertificatesApiControllerParameterResolver.class,
+@ExtendWith({MockMvcParameterResolver.class,
+        MockitoExtension.class,
+      GiftCertificatesApiControllerParameterResolver.class,
         ValidParameterResolverGiftCertificates.class})
 public class GiftCertificatesControllerTest {
 
     @Mock
-    private GiftCertificatesService giftCertificatesService;
+    private GiftCertificatesApiService giftCertificatesService;
 
-    @InjectMocks
-    private final GiftCertificatesController giftCertificatesController;
     private final MockMvc mockMvc;
 
-    public GiftCertificatesControllerTest(GiftCertificatesController giftCertificatesController, MockMvc mockMvc) {
-        this.giftCertificatesController = giftCertificatesController;
+    public GiftCertificatesControllerTest(MockMvc mockMvc) {
         this.mockMvc = mockMvc;
     }
 
     @Test
-    public void testCreate() throws Exception {
-        GiftCertificatesDto giftCertificatesDto = new GiftCertificatesDto();
-        giftCertificatesDto.setName("Test Certificate");
-        giftCertificatesDto.setDescription("Test Description");
-        giftCertificatesDto.setPrice(10.0);
-        when(giftCertificatesService.create(any(GiftCertificatesDto.class))).thenReturn(1L);
+    public void testCreate(GiftCertificatesDto giftCertificatesDto) throws Exception {
+        GiftCertificatesDto giftCertificatesDto1 = new GiftCertificatesDto();
+        giftCertificatesDto1.setName("Test Certificate");
+        giftCertificatesDto1.setDescription("Test Description");
+        giftCertificatesDto1.setPrice(10.0);
+        when(giftCertificatesService.create(giftCertificatesDto)).thenReturn(1L);
         mockMvc.perform(MockMvcRequestBuilders.post("/certificates")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content("{ \"name\": \"Test Certificate\", \"description\": \"Test Description\", \"price\": 10.0 }"))
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().string("1"));
-        verify(giftCertificatesService).create(any(GiftCertificatesDto.class));
+        verify(giftCertificatesService).create(giftCertificatesDto);
     }
 
 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal" created-in="IU-231.8109.175">
+    <data-source name="artemaverkov@localhost" uuid="d9af4678-cef1-464e-8e6e-2af6938266c0">
+      <database-info product="PostgreSQL" version="15.2" jdbc-version="4.2" driver-name="PostgreSQL JDBC Driver" driver-version="42.5.0" dbms="POSTGRES" exact-version="15.2" exact-driver-version="42.5">
+        <identifier-quote-string>&quot;</identifier-quote-string>
+      </database-info>
+      <case-sensitivity plain-identifiers="lower" quoted-identifiers="exact" />
+      <secret-storage>master_key</secret-storage>
+      <user-name>artemaverkov</user-name>
+      <schema-mapping>
+        <introspection-scope>
+          <node negative="1">
+            <node kind="database" qname="@">
+              <node kind="schema" qname="@" />
+            </node>
+            <node kind="database" qname="artemaverkov">
+              <node kind="schema" negative="1" />
+            </node>
+          </node>
+        </introspection-scope>
+      </schema-mapping>
+    </data-source>
+    <data-source name="hibernate.cfg.xml/Hibernate" uuid="a89f1e59-a72f-489b-a268-7b74ea656a6b">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" exact-version="0" />
+      <schema-mapping />
+    </data-source>
+    <data-source name="hibernate.cfg.xml/Hibernate" uuid="c7eff50c-5b63-4fd7-aee8-039fe60c292f">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" dbms="POSTGRES" exact-version="0" />
+      <schema-mapping />
+    </data-source>
+  </component>
+</project>

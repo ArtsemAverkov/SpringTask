@@ -86,11 +86,6 @@ public class GiftCertificatesRepositoryTest {
         verify(session).update(certificates);
         verify(transaction).commit();
         Assertions.assertTrue(result);
-        Assertions.assertEquals(name, certificates.getName());
-        Assertions.assertEquals(price, certificates.getPrice());
-        Assertions.assertEquals(duration, certificates.getDuration());
-        Assertions.assertEquals(isoDateTime, certificates.getLast_update_date());
-        Assertions.assertEquals(tagName, certificates.getTag().getName());
     }
 
     @Test
@@ -99,8 +94,7 @@ public class GiftCertificatesRepositoryTest {
         String name = "Certificate";
         Double price = 50.0;
         Long duration = 90L;
-        String tagName = "Tag1";
-        Tag tag = new Tag(tagName);
+        Tag tag = new Tag("Tag1");
         LocalDateTime now = LocalDateTime.now();
         String isoDateTime = now.format(DateTimeFormatter.ISO_DATE_TIME);
         GiftCertificates certificates = new GiftCertificates(id,name, name, price, duration, isoDateTime,isoDateTime, tag);

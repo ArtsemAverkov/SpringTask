@@ -11,6 +11,12 @@ import ru.clevertec.ecl.util.hibernate.HibernateI;
 
 import java.util.List;
 
+/**
+ The {@code GiftCertificatesApiRepository} class is responsible for performing CRUD operations on GiftCertificates
+ objects using Hibernate ORM.
+ @author [ArtsemAverkov]
+ @version [1.0]
+ */
 @Repository
 public class GiftCertificatesApiRepository implements GiftCertificatesRepository{
 
@@ -20,16 +26,33 @@ public class GiftCertificatesApiRepository implements GiftCertificatesRepository
         this.hibernateI = hibernateI;
     }
 
+
+    /**
+     * Creates a new GiftCertificates object in the database.
+     *
+     * @param giftCertificates a GiftCertificates object to be added to the database
+     * @return the ID of the newly created GiftCertificates object
+     */
     @Override
     public long create(GiftCertificates giftCertificates) {
         SessionFactory sessionFactory = hibernateI.getSessionFactory();
        try (Session session = sessionFactory.openSession()) {
-           session.beginTransaction();
+           //session.beginTransaction();
+           Transaction transaction = session.beginTransaction();
            session.save(giftCertificates);
-           session.getTransaction().commit();
+           //session.getTransaction().commit();
+           transaction.commit();
            return giftCertificates.getId();
        }
     }
+
+    /**
+     * Reads a GiftCertificates object from the database.
+     *
+     * @param id the ID of the GiftCertificates object to be retrieved
+     * @return the GiftCertificates object with the specified ID
+     * @throws Exception if a GiftCertificates object with the specified ID cannot be found
+     */
 
     @Override
     public GiftCertificates read(long id) throws Exception {
@@ -40,6 +63,14 @@ public class GiftCertificatesApiRepository implements GiftCertificatesRepository
             return certificates;
         }
     }
+
+    /**
+     * Updates a GiftCertificates object in the database.
+     *
+     * @param giftCertificates a GiftCertificates object containing updated information
+     * @param id the ID of the GiftCertificates object to be updated
+     * @return {@code true} if the GiftCertificates object was updated successfully, {@code false} otherwise
+     */
 
     @Override
     public boolean update(GiftCertificates giftCertificates, Long id) {
@@ -58,6 +89,13 @@ public class GiftCertificatesApiRepository implements GiftCertificatesRepository
         }
     }
 
+    /**
+     * Deletes a GiftCertificates object from the database.
+     *
+     * @param id the ID of the GiftCertificates object to be deleted
+     * @return {@code true} if the GiftCertificates object was deleted successfully, {@code false} otherwise
+     */
+
     @Override
     public boolean delete(Long id) {
         SessionFactory sessionFactory = hibernateI.getSessionFactory();
@@ -67,6 +105,16 @@ public class GiftCertificatesApiRepository implements GiftCertificatesRepository
             return true;
         }
     }
+
+    /**
+
+     Returns a list of Object arrays representing GiftCertificates and their corresponding Tag names.
+     The list is filtered by the provided tagName parameter and ordered by the provided orderBy and orderType parameters.
+     @param tagName a String representing the name of the Tag to filter by, or null to return all GiftCertificates
+     @param orderBy a String representing the property to order by
+     @param orderType a String representing the order type, either "ASC" or "DESC"
+     @return a List of Object arrays representing GiftCertificates and their corresponding Tag names
+     */
 
     @Override
     public List<Object[]> readAll(String tagName, String orderBy, String orderType) {
