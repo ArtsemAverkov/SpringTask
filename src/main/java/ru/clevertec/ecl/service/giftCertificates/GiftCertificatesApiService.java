@@ -1,5 +1,8 @@
 package ru.clevertec.ecl.service.giftCertificates;
 
+
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.clevertec.ecl.dto.GiftCertificatesDto;
 import ru.clevertec.ecl.entity.GiftCertificates;
@@ -25,6 +28,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
     public GiftCertificatesApiService(GiftCertificatesRepository giftCertificatesRepository) {
         this.giftCertificatesRepository = giftCertificatesRepository;
     }
+
 
     /**
      * Creates a new GiftCertificates entity based on the specified GiftCertificatesDto and returns its id.

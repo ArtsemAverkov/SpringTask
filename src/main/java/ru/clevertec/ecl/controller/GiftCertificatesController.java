@@ -1,5 +1,6 @@
 package ru.clevertec.ecl.controller;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
@@ -19,12 +20,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/certificates")
-public class GiftCertificatesController {
-    private final GiftCertificatesService giftCertificatesService;
 
+public class GiftCertificatesController {
     public GiftCertificatesController(GiftCertificatesService giftCertificatesService) {
         this.giftCertificatesService = giftCertificatesService;
     }
+
+    private final GiftCertificatesService giftCertificatesService;
+
 
     /**
      * Create a new gift certificate.

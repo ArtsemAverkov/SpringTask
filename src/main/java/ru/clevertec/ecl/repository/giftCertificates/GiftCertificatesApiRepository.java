@@ -1,9 +1,11 @@
 package ru.clevertec.ecl.repository.giftCertificates;
 
+import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.clevertec.ecl.entity.GiftCertificates;
 import ru.clevertec.ecl.entity.Tag;
