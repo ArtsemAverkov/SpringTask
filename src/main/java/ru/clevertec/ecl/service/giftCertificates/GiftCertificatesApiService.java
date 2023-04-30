@@ -1,12 +1,10 @@
 package ru.clevertec.ecl.service.giftCertificates;
 
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.clevertec.ecl.dto.GiftCertificatesDto;
-import ru.clevertec.ecl.entity.GiftCertificates;
-import ru.clevertec.ecl.entity.Tag;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
+import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
+import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
 
 import java.time.LocalDateTime;

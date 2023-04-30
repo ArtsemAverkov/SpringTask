@@ -1,6 +1,8 @@
-package ru.clevertec.ecl.entity;
+package ru.clevertec.ecl.entity.tag;
 
 import lombok.*;
+import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +10,7 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -20,6 +23,7 @@ public class Tag {
     private String name;
 
     @OneToMany(mappedBy ="tag", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @Builder.Default
     private List<GiftCertificates> giftCertificatesList = new ArrayList<>();
 
     public Tag(String name) {

@@ -15,8 +15,8 @@ import org.mockito.MockitoAnnotations;
 
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import ru.clevertec.ecl.entity.GiftCertificates;
-import ru.clevertec.ecl.entity.Tag;
+import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
+import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesApiRepository;
 import ru.clevertec.ecl.util.appConfig.AppConfig;
 import ru.clevertec.ecl.util.hibernate.HibernateI;

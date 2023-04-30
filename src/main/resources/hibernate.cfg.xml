@@ -11,8 +11,9 @@
     <property name="connection.password">root</property>
     <property name="show_sql">true</property>
     <property name="format_sql">true</property>
-    <mapping class="ru.clevertec.ecl.entity.Tag"/>
-    <mapping class="ru.clevertec.ecl.entity.GiftCertificates"/>
+    <mapping class="ru.clevertec.ecl.entity.tag.Tag"/>
+    <mapping class="ru.clevertec.ecl.entity.giftCertificates.GiftCertificates"/>
+    <mapping class="ru.clevertec.ecl.entity.user.User"/>
 
   </session-factory>
 </hibernate-configuration>

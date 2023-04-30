@@ -4,7 +4,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
-import ru.clevertec.ecl.controller.GiftCertificatesController;
+import ru.clevertec.ecl.controller.giftCertificates.GiftCertificatesController;
 
 public class GiftCertificatesApiControllerParameterResolver implements ParameterResolver {
 

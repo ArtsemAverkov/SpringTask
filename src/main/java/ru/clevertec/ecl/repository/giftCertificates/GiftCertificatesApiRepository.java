@@ -1,14 +1,12 @@
 package ru.clevertec.ecl.repository.giftCertificates;
 
-import lombok.RequiredArgsConstructor;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import ru.clevertec.ecl.entity.GiftCertificates;
-import ru.clevertec.ecl.entity.Tag;
+import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
+import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.util.hibernate.HibernateI;
 
 import java.util.List;
@@ -39,10 +37,8 @@ public class GiftCertificatesApiRepository implements GiftCertificatesRepository
     public long create(GiftCertificates giftCertificates) {
         SessionFactory sessionFactory = hibernateI.getSessionFactory();
        try (Session session = sessionFactory.openSession()) {
-           //session.beginTransaction();
            Transaction transaction = session.beginTransaction();
            session.save(giftCertificates);
-           //session.getTransaction().commit();
            transaction.commit();
            return giftCertificates.getId();
        }
@@ -122,7 +118,6 @@ public class GiftCertificatesApiRepository implements GiftCertificatesRepository
     public List<Object[]> readAll(String tagName, String orderBy, String orderType) {
         SessionFactory sessionFactory = hibernateI.getSessionFactory();
         try (Session session = sessionFactory.openSession()) {
-
             Query<Object[]> query = session.createQuery("SELECT gc, t.name FROM GiftCertificates gc " +
                     "JOIN gc.tag t where (:tagName IS NULL OR t.name = :tagName) " +
                     "ORDER BY " + orderBy + " " + orderType, Object[].class);

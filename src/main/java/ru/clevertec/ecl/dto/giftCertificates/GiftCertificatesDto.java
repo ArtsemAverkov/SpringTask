@@ -1,8 +1,9 @@
-package ru.clevertec.ecl.dto;
+package ru.clevertec.ecl.dto.giftCertificates;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.stereotype.Component;
+import ru.clevertec.ecl.dto.tag.TagDto;
 
 @Component
 @Getter

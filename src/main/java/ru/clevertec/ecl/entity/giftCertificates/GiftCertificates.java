@@ -1,15 +1,16 @@
-package ru.clevertec.ecl.entity;
+package ru.clevertec.ecl.entity.giftCertificates;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import lombok.*;
 import lombok.Builder;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
+import ru.clevertec.ecl.entity.tag.Tag;
 
 import javax.persistence.*;
-
 
 @Entity
 @Getter

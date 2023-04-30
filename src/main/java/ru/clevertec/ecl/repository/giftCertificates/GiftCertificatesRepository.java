@@ -1,6 +1,6 @@
 package ru.clevertec.ecl.repository.giftCertificates;
 
-import ru.clevertec.ecl.entity.GiftCertificates;
+import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 
 import java.util.List;
 
