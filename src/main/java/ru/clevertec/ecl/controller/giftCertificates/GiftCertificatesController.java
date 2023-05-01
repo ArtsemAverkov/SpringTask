@@ -1,5 +1,7 @@
 package ru.clevertec.ecl.controller.giftCertificates;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
@@ -21,11 +23,12 @@ import java.util.List;
 @RequestMapping("/certificates")
 
 public class GiftCertificatesController {
-
     private final GiftCertificatesService giftCertificatesService;
+
     public GiftCertificatesController(GiftCertificatesService giftCertificatesService) {
         this.giftCertificatesService = giftCertificatesService;
     }
+
 
     /**
      * Create a new gift certificate.
@@ -37,7 +40,7 @@ public class GiftCertificatesController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public Long create(@RequestBody GiftCertificatesDto giftCertificates) {
+    public long create(@RequestBody GiftCertificatesDto giftCertificates) {
         return giftCertificatesService.create(giftCertificates);
     }
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.clevertek.ecl.common.repository.GiftCertificatesRepositoryTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-05-01T12:03:35" hostname="MacBook-Air-Artem.local" time="4.764">
+  <properties/>
+  <testcase name="testRead()" classname="ru.clevertek.ecl.common.repository.GiftCertificatesRepositoryTest" time="3.554"/>
+  <testcase name="testReadAll()" classname="ru.clevertek.ecl.common.repository.GiftCertificatesRepositoryTest" time="1.13"/>
+  <testcase name="testCreate()" classname="ru.clevertek.ecl.common.repository.GiftCertificatesRepositoryTest" time="0.013"/>
+  <testcase name="testDelete()" classname="ru.clevertek.ecl.common.repository.GiftCertificatesRepositoryTest" time="0.01"/>
+  <testcase name="testUpdate()" classname="ru.clevertek.ecl.common.repository.GiftCertificatesRepositoryTest" time="0.026"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

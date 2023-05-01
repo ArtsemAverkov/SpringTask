@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
@@ -19,8 +20,7 @@ import java.util.List;
  */
 @Repository
 public class GiftCertificatesApiRepository implements GiftCertificatesRepository{
-
-    private final HibernateI hibernateI;
+private final HibernateI hibernateI;
 
     public GiftCertificatesApiRepository(HibernateI hibernateI) {
         this.hibernateI = hibernateI;

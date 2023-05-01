@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
 import ru.clevertec.ecl.dto.tag.TagDto;
-import ru.clevertec.ecl.entity.tag.Tag;
+import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.service.tag.TagService;
 
 import java.util.List;
@@ -29,7 +29,7 @@ public class TagController {
 
     @GetMapping(value= "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public Tag read(@PathVariable Long id) throws Exception {
+    public TagDtoResponse read(@PathVariable Long id) throws Exception {
         return tagService.read(id);
     }
 

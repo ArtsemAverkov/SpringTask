@@ -21,6 +21,13 @@ public class GiftCertificatesDto {
     private Double price;
     @JsonProperty("duration")
     private Long duration;
-
     private TagDto tagDto;
+
+    public GiftCertificatesDto(Long id, String name, String description, Double price, Long duration) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.duration = duration;
+    }
 }

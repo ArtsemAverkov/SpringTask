@@ -1,6 +1,7 @@
 package ru.clevertec.ecl.service.giftCertificates;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
@@ -21,11 +22,10 @@ import java.util.List;
  */
 @Service
 public class GiftCertificatesApiService implements GiftCertificatesService{
-    private final GiftCertificatesRepository giftCertificatesRepository;
+    @Autowired
+    private  GiftCertificatesRepository giftCertificatesRepository;
 
-    public GiftCertificatesApiService(GiftCertificatesRepository giftCertificatesRepository) {
-        this.giftCertificatesRepository = giftCertificatesRepository;
-    }
+
 
 
     /**

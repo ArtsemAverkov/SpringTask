@@ -2,6 +2,7 @@ package ru.clevertec.ecl.service.tag;
 
 import org.springframework.stereotype.Service;
 import ru.clevertec.ecl.dto.tag.TagDto;
+import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.repository.tag.TagRepository;
 
@@ -22,7 +23,7 @@ public class TagApiService implements TagService{
     }
 
     @Override
-    public Tag read(long id) throws Exception {
+    public TagDtoResponse read(long id) throws Exception {
         return tagRepository.read(id);
     }
 

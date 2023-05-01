@@ -23,6 +23,7 @@ public class ValidParameterResolverGiftCertificates implements ParameterResolver
                     new TagDto(
                             1L,
                             ""
+
                     )
             ),
             new GiftCertificatesDto(

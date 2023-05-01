@@ -18,7 +18,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesApiRepository;
-import ru.clevertec.ecl.util.appConfig.AppConfig;
 import ru.clevertec.ecl.util.hibernate.HibernateI;
 
 import java.time.LocalDateTime;
@@ -30,8 +29,6 @@ import java.util.List;
 import static org.mockito.Mockito.*;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = AppConfig.class)
-@ExtendWith(GiftCertificatesApiRepositoryParameterResolver.class)
 public class GiftCertificatesRepositoryTest {
 
     @Mock
@@ -47,11 +44,7 @@ public class GiftCertificatesRepositoryTest {
     private Transaction transaction;
 
     @InjectMocks
-    private final GiftCertificatesApiRepository repository;
-
-    public GiftCertificatesRepositoryTest(GiftCertificatesApiRepository repository) {
-        this.repository = repository;
-    }
+    private  GiftCertificatesApiRepository repository;
 
     @BeforeEach
     void setUp() {
