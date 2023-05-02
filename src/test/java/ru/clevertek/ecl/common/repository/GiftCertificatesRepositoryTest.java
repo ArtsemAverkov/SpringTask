@@ -7,13 +7,12 @@ import org.hibernate.query.Query;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
@@ -28,7 +27,6 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 public class GiftCertificatesRepositoryTest {
 
     @Mock
@@ -109,9 +107,9 @@ public class GiftCertificatesRepositoryTest {
         String tagName = "Tag1";
         Tag tag = new Tag(tagName);
         GiftCertificates certificates = new GiftCertificates(id, name,name, price, duration, isoDateTime,isoDateTime, tag);
-        when(session.get(GiftCertificates.class, id)).thenReturn(certificates);
+        Mockito.when(session.get(GiftCertificates.class, id)).thenReturn(certificates);
         GiftCertificates result = repository.read(id);
-        verify(session).get(GiftCertificates.class, id);
+        Mockito.verify(session).get(GiftCertificates.class, id);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(name, result.getName());
         Assertions.assertEquals(price, result.getPrice());

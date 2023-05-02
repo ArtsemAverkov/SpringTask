@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Random;
 
 
+
 public class ValidParameterResolverGiftCertificates implements ParameterResolver {
     public static List<GiftCertificatesDto> validList = Arrays.asList(
             new GiftCertificatesDto(

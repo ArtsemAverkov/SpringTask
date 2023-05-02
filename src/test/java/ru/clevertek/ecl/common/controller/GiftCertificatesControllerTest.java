@@ -19,7 +19,6 @@ import ru.clevertec.ecl.controller.giftCertificates.GiftCertificatesController;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.service.giftCertificates.GiftCertificatesService;
-import ru.clevertek.ecl.common.extension.ValidParameterResolverGiftCertificates;
 
 
 import static org.mockito.ArgumentMatchers.any;
@@ -29,7 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = SpringTaskApplication.class)
 @WebMvcTest(GiftCertificatesController.class)
 @RunWith(SpringRunner.class)
-@ExtendWith(ValidParameterResolverGiftCertificates.class)
 public class GiftCertificatesControllerTest {
 
     @MockBean
@@ -37,9 +35,6 @@ public class GiftCertificatesControllerTest {
 
     @Autowired
     private  MockMvc mockMvc;
-
-
-
 
     @Test
     public void testCreate() throws Exception {
@@ -88,7 +83,7 @@ public class GiftCertificatesControllerTest {
     }
 
     @Test
-    public void testDelete(GiftCertificatesDto giftCertificatesDto) throws Exception {
+    public void testDelete() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.delete("/certificates/1"))
                 .andExpect(status().isOk());
         Mockito.verify(giftCertificatesService).delete(anyLong());

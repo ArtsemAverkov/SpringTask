@@ -5,8 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
-import ru.clevertec.ecl.dto.tag.TagDto;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.util.hibernate.HibernateI;
@@ -41,8 +40,8 @@ public class TagApiRepository implements TagRepository{
             Tag tag = session.createQuery("SELECT t FROM Tag t LEFT JOIN FETCH t.giftCertificatesList WHERE t.id = :id", Tag.class)
                     .setParameter("id", id)
                     .getSingleResult();
-            List<GiftCertificatesDto> giftCertificatesDto = tag.getGiftCertificatesList().stream()
-                    .map(gc -> new GiftCertificatesDto(gc.getId(), gc.getName(), gc.getDescription(), gc.getPrice(), gc.getDuration()))
+            List<GiftCertificatesResponseDto> giftCertificatesDto = tag.getGiftCertificatesList().stream()
+                    .map(gc -> new GiftCertificatesResponseDto(gc.getId(), gc.getName(), gc.getDescription(), gc.getPrice(), gc.getDuration()))
                     .collect(Collectors.toList());
             return new TagDtoResponse(tag.getId(), tag.getName(), giftCertificatesDto);
         }

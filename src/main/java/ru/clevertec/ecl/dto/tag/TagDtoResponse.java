@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class TagDtoResponse {
     private Long id;
     @JsonProperty("name")
     private String name;
-    private List<GiftCertificatesDto> giftCertificates;
+    private List<GiftCertificatesResponseDto> giftCertificates;
 
 
 }

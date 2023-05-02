@@ -1,6 +1,5 @@
 package ru.clevertek.ecl.common.service;
 
-import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -39,7 +38,8 @@ public class GiftCertificatesServiceImplTest {
         private GiftCertificatesRepository giftCertificatesRepository;
 
         @Test
-        void shouldGetGiftCertificatesWhenGiftCertificatesValid(GiftCertificatesDto giftCertificatesDto) throws Exception {
+        void shouldGetGiftCertificatesWhenGiftCertificatesValid(GiftCertificatesDto giftCertificatesDto)
+                throws Exception {
             GiftCertificates certificates = buildGiftCertificates(giftCertificatesDto);
             Mockito.when(giftCertificatesRepository.read(giftCertificatesDto.getId())).thenReturn(certificates);
             Assertions.assertEquals(certificates, giftCertificatesApiService.read(giftCertificatesDto.getId()));
@@ -47,7 +47,7 @@ public class GiftCertificatesServiceImplTest {
         }
 
         @Test
-        void shouldDeleteGiftCertificatesGiftCertificatesIsValid(GiftCertificatesDto giftCertificatesDto) throws Exception {
+        void shouldDeleteGiftCertificatesGiftCertificatesIsValid(GiftCertificatesDto giftCertificatesDto) {
             GiftCertificates certificates = buildGiftCertificates(giftCertificatesDto);
             Mockito.when(giftCertificatesRepository.delete(giftCertificatesDto.getId())).thenReturn(true);
             Assertions.assertTrue(giftCertificatesApiService.delete(giftCertificatesDto.getId()));
@@ -56,7 +56,7 @@ public class GiftCertificatesServiceImplTest {
 
         @Disabled("This test is currently not working")
         @Test
-        void shouldUpdateGiftCertificatesWhenGiftCertificatesIsValid(GiftCertificatesDto giftCertificatesDto) throws Exception {
+        void shouldUpdateGiftCertificatesWhenGiftCertificatesIsValid(GiftCertificatesDto giftCertificatesDto)  {
             GiftCertificates certificates = buildGiftCertificates(giftCertificatesDto);
             Mockito.when(giftCertificatesRepository.update(certificates, 1L)).thenReturn(true);
             Assertions.assertTrue(giftCertificatesApiService.update(giftCertificatesDto, 1L));
