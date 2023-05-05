@@ -12,11 +12,11 @@ import javax.persistence.*;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
     private String name;
 
 

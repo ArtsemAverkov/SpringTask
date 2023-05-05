@@ -1,15 +1,12 @@
 package ru.clevertec.ecl.repository.giftCertificates;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
-import ru.clevertec.ecl.util.hibernate.HibernateI;
+import ru.clevertec.ecl.util.hibernate.JPA;
 
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
@@ -20,12 +17,12 @@ import java.util.List;
  */
 @Repository
 public class GiftCertificatesApiRepository implements GiftCertificatesRepository{
-private final HibernateI hibernateI;
 
-    public GiftCertificatesApiRepository(HibernateI hibernateI) {
-        this.hibernateI = hibernateI;
+    private final JPA jpa;
+
+    public GiftCertificatesApiRepository(JPA jpa) {
+        this.jpa = jpa;
     }
-
 
     /**
      * Creates a new GiftCertificates object in the database.
@@ -35,13 +32,11 @@ private final HibernateI hibernateI;
      */
     @Override
     public long create(GiftCertificates giftCertificates) {
-        SessionFactory sessionFactory = hibernateI.getSessionFactory();
-       try (Session session = sessionFactory.openSession()) {
-           Transaction transaction = session.beginTransaction();
-           session.save(giftCertificates);
-           transaction.commit();
-           return giftCertificates.getId();
-       }
+        EntityManager entityManager = jpa.getEntityManager();
+        entityManager.getTransaction().begin();
+        entityManager.persist(giftCertificates);
+        entityManager.getTransaction().commit();
+        return giftCertificates.getId();
     }
 
     /**
@@ -54,12 +49,13 @@ private final HibernateI hibernateI;
 
     @Override
     public GiftCertificates read(long id) throws Exception {
-        SessionFactory sessionFactory = hibernateI.getSessionFactory();
-        try (Session session = sessionFactory.openSession()) {
-            GiftCertificates certificates = session.get(GiftCertificates.class, id);
-            certificates.getTag().getName();
-            return certificates;
+        EntityManager entityManager = jpa.getEntityManager();
+        GiftCertificates certificates = entityManager.find(GiftCertificates.class, id);
+        if (certificates == null) {
+            throw new Exception("GiftCertificates object with id " + id + " not found.");
         }
+        certificates.getTag().getName();
+        return certificates;
     }
 
     /**
@@ -72,19 +68,20 @@ private final HibernateI hibernateI;
 
     @Override
     public boolean update(GiftCertificates giftCertificates, Long id) {
-        SessionFactory sessionFactory = hibernateI.getSessionFactory();
-        try (Session session = sessionFactory.openSession()) {
-            Transaction transaction = session.beginTransaction();
-            GiftCertificates certificates = session.get(GiftCertificates.class, id);
-            certificates.setName(giftCertificates.getName());
-            certificates.setPrice(giftCertificates.getPrice());
-            certificates.setDuration(giftCertificates.getDuration());
-            certificates.setLast_update_date(giftCertificates.getLast_update_date());
-            certificates.setTag(new Tag(giftCertificates.getTag().getName()));
-            session.update(certificates);
-            transaction.commit();
-            return true;
+        EntityManager entityManager = jpa.getEntityManager();
+        GiftCertificates certificates = entityManager.find(GiftCertificates.class, id);
+        if (certificates == null) {
+            return false;
         }
+        certificates.setName(giftCertificates.getName());
+        certificates.setPrice(giftCertificates.getPrice());
+        certificates.setDuration(giftCertificates.getDuration());
+        certificates.setLast_update_date(giftCertificates.getLast_update_date());
+        certificates.setTag(new Tag(giftCertificates.getTag().getName()));
+        entityManager.getTransaction().begin();
+        entityManager.merge(certificates);
+        entityManager.getTransaction().commit();
+        return true;
     }
 
     /**
@@ -96,12 +93,15 @@ private final HibernateI hibernateI;
 
     @Override
     public boolean delete(Long id) {
-        SessionFactory sessionFactory = hibernateI.getSessionFactory();
-        try (Session session = sessionFactory.openSession()) {
-            GiftCertificates giftCertificates = session.get(GiftCertificates.class, id);
-            session.delete(giftCertificates);
-            return true;
+        EntityManager entityManager = jpa.getEntityManager();
+        GiftCertificates giftCertificates = entityManager.find(GiftCertificates.class, id);
+        if (giftCertificates == null) {
+            return false;
         }
+        entityManager.getTransaction().begin();
+        entityManager.remove(giftCertificates);
+        entityManager.getTransaction().commit();
+        return true;
     }
 
     /**
@@ -116,13 +116,16 @@ private final HibernateI hibernateI;
 
     @Override
     public List<Object[]> readAll(String tagName, String orderBy, String orderType) {
-        SessionFactory sessionFactory = hibernateI.getSessionFactory();
-        try (Session session = sessionFactory.openSession()) {
-            Query<Object[]> query = session.createQuery("SELECT gc, t.name FROM GiftCertificates gc " +
-                    "JOIN gc.tag t where (:tagName IS NULL OR t.name = :tagName) " +
-                    "ORDER BY " + orderBy + " " + orderType, Object[].class);
-            query.setParameter("tagName", tagName);
-            return query.getResultList();
+        EntityManager entityManager = jpa.getEntityManager();
+        String jpql = "SELECT gc, t.name FROM GiftCertificates gc JOIN gc.tag t ";
+        if (tagName != null) {
+            jpql += "WHERE t.name = :tagName ";
         }
+        jpql += "ORDER BY " + orderBy + " " + orderType;
+        TypedQuery<Object[]> query = entityManager.createQuery(jpql, Object[].class);
+        if (tagName != null) {
+            query.setParameter("tagName", tagName);
+        }
+        return query.getResultList();
     }
 }

@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.clevertec.ecl.entity.user.User;
 import ru.clevertec.ecl.repository.user.UserRepository;
 
+import java.util.List;
+
 @Service
 public class UserApiService implements UserService{
     private final UserRepository userRepository;
@@ -13,7 +15,7 @@ public class UserApiService implements UserService{
     }
 
     @Override
-    public User read(Long id) {
+    public List<User> read(Long id) {
         return userRepository.read(id);
     }
 }

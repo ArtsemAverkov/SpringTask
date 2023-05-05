@@ -1,7 +1,5 @@
 package ru.clevertec.ecl.service.giftCertificates;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
@@ -12,7 +10,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-
 /**
 
  The {@code GiftCertificatesApiService} class represents a service layer that provides methods
@@ -22,10 +19,11 @@ import java.util.List;
  */
 @Service
 public class GiftCertificatesApiService implements GiftCertificatesService{
-    @Autowired
-    private  GiftCertificatesRepository giftCertificatesRepository;
+    private final GiftCertificatesRepository giftCertificatesRepository;
 
-
+    public GiftCertificatesApiService(GiftCertificatesRepository giftCertificatesRepository) {
+        this.giftCertificatesRepository = giftCertificatesRepository;
+    }
 
 
     /**
