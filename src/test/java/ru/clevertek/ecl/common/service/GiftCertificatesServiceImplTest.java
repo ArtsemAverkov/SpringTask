@@ -10,7 +10,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
-import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
 import ru.clevertec.ecl.service.giftCertificates.GiftCertificatesApiService;
 import ru.clevertek.ecl.common.extension.InvalidParameterResolverGiftCertificates;
 import ru.clevertek.ecl.common.extension.ValidParameterResolverGiftCertificates;

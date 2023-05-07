@@ -1,16 +1,9 @@
 package ru.clevertec.ecl.repository.tag;
 
-
-import ru.clevertec.ecl.dto.tag.TagDto;
-import ru.clevertec.ecl.dto.tag.TagDtoResponse;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import ru.clevertec.ecl.entity.tag.Tag;
 
-import java.util.List;
-
-public interface TagRepository {
-    long create(Tag tag);
-    TagDtoResponse read (long id) throws Exception;
-    boolean update (Tag tag, Long id);
-    boolean delete (Long id);
-    List<Object> readAll ();
+@Repository
+public interface TagRepository extends JpaRepository<Tag, Long> {
 }

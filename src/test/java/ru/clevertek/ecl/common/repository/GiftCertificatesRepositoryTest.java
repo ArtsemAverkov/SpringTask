@@ -7,17 +7,15 @@ import org.hibernate.query.Query;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
-import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesApiRepository;
-import ru.clevertec.ecl.util.hibernate.HibernateI;
+import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
+import ru.clevertec.ecl.util.jpa.HibernateI;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -42,7 +40,7 @@ public class GiftCertificatesRepositoryTest {
     private Transaction transaction;
 
     @InjectMocks
-    private  GiftCertificatesApiRepository repository;
+    private GiftCertificatesRepository repository;
 
     @BeforeEach
     void setUp() {

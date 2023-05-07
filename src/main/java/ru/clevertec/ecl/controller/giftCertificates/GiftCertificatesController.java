@@ -2,6 +2,8 @@ package ru.clevertec.ecl.controller.giftCertificates;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
@@ -86,22 +88,11 @@ public class GiftCertificatesController {
         return giftCertificatesService.delete(id);
     }
 
-    /**
-     * Get a collection of all gift certificates in the database.
-     *
-     * @param tagName the tag name used to filter the gift certificates
-     * @param sort the field used for sorting the gift certificates
-     * @param order the order used for sorting the gift certificates (ASC or DESC)
-     * @return a collection of all giftCertificates
-     */
+
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Object[]> readAll(@RequestParam(required = false) String tagName,
-                                  @RequestParam(required = false) String sort,
-                                  @RequestParam(required = false) String order) {
-        String orderBy = sort != null ? sort : "gc.name";
-        String orderType = order != null ? order : "ASC";
-        return giftCertificatesService.readAll(tagName, orderBy, orderType);
+    public List<GiftCertificates> readAll(@PageableDefault(page = 0)Pageable pageable) {
+        return giftCertificatesService.readAll(pageable);
     }
 }
 

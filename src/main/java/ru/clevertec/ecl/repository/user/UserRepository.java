@@ -1,9 +1,9 @@
 package ru.clevertec.ecl.repository.user;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 import ru.clevertec.ecl.entity.user.User;
 
-import java.util.List;
-
-public interface UserRepository {
-    List<User> read (Long id);
+@Repository
+public interface UserRepository extends JpaRepository<User, Long> {
 }

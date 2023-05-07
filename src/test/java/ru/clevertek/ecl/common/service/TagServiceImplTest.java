@@ -13,7 +13,6 @@ import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
 import ru.clevertec.ecl.dto.tag.TagDto;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.entity.tag.Tag;
-import ru.clevertec.ecl.repository.tag.TagRepository;
 import ru.clevertec.ecl.service.tag.TagApiService;
 import ru.clevertek.ecl.common.extension.ValidParameterResolverGiftCertificates;
 import ru.clevertek.ecl.common.extension.tag.InvalidParameterResolverTag;

@@ -5,5 +5,5 @@ import ru.clevertec.ecl.entity.user.User;
 import java.util.List;
 
 public interface UserService {
-    List<User> read (Long id);
+    User read (Long id);
 }

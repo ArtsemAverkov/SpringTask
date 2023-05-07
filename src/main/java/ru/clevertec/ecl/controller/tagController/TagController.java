@@ -1,5 +1,7 @@
 package ru.clevertec.ecl.controller.tagController;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
@@ -47,7 +49,7 @@ public class TagController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Object> readAll(){
-        return tagService.readAll();
+    public List<TagDtoResponse> readAll(@PageableDefault(page = 0)Pageable pageable){
+        return tagService.readAll(pageable);
     }
 }
