@@ -17,8 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TagDto {
-    @JsonProperty("id")
     private Long id;
-    @JsonProperty("name")
     private String name;
 }

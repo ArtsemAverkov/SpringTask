@@ -3,14 +3,17 @@ package ru.clevertec.ecl.service.giftCertificates;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
+import ru.clevertec.ecl.dto.tag.TagDto;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 /**
 
@@ -23,10 +26,10 @@ import java.util.NoSuchElementException;
 public class GiftCertificatesApiService implements GiftCertificatesService{
     private final GiftCertificatesRepository giftCertificatesRepository;
 
+
     public GiftCertificatesApiService(GiftCertificatesRepository giftCertificatesRepository) {
         this.giftCertificatesRepository = giftCertificatesRepository;
     }
-
 
     /**
      * Creates a new GiftCertificates entity based on the specified GiftCertificatesDto and returns its id.
@@ -50,8 +53,11 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      */
 
     @Override
-    public GiftCertificates read(long id) {
-        return giftCertificatesRepository.findById(id).orElseThrow(NoSuchElementException::new);
+    public GiftCertificatesDto read(long id) {
+        GiftCertificates giftCertificates = giftCertificatesRepository.findById(id)
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Invalid GiftCertificates Id:" + id));
+        return convertToGiftCertificatesDto(giftCertificates);
     }
 
     /**
@@ -86,19 +92,10 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
         return true;
     }
 
-    /**
-     * Retrieves a list of GiftCertificates and their corresponding Tag entities based on the specified parameters.
-     *
-     * @param tagName the name of the Tag entity to filter the GiftCertificates entities by
-     * @param orderBy the name of the field to order the GiftCertificates entities by
-     * @param orderType the order type (ascending or descending) to sort the GiftCertificates entities by
-     * @return a list of Object arrays where the first element is a GiftCertificates entity and the second element
-     * is the name of the corresponding Tag entity
-     */
-
     @Override
-    public List<GiftCertificates> readAll(Pageable pageable) {
-        return giftCertificatesRepository.findAll();
+    public List<GiftCertificatesDto> readAll(Pageable pageable) {
+        List<GiftCertificates> all = giftCertificatesRepository.findAll(pageable).getContent();
+        return convertToDtoList(all);
     }
 
     /**
@@ -112,7 +109,6 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
         LocalDateTime now = LocalDateTime.now();
         String isoDateTime = now.format(DateTimeFormatter.ISO_DATE_TIME);
         return GiftCertificates.builder()
-                //.id(giftCertificatesDto.getId())
                 .name(giftCertificatesDto.getName())
                 .price(giftCertificatesDto.getPrice())
                 .description(giftCertificatesDto.getDescription())
@@ -121,5 +117,22 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
                 .create_date(isoDateTime)
                 .last_update_date(isoDateTime)
                 .build();
+    }
+
+    private GiftCertificatesDto convertToGiftCertificatesDto( GiftCertificates giftCertificates){
+        return GiftCertificatesDto.builder()
+                .id(giftCertificates.getId())
+                .name(giftCertificates.getName())
+                .price(giftCertificates.getPrice())
+                .duration(giftCertificates.getDuration())
+                .description(giftCertificates.getDescription())
+                .tagDto(new TagDto(giftCertificates.getTag().getId(),giftCertificates.getTag().getName()))
+                .build();
+    }
+
+    public List<GiftCertificatesDto> convertToDtoList(List<GiftCertificates> giftCertificatesList) {
+        return giftCertificatesList.stream()
+                .map(this::convertToGiftCertificatesDto)
+                .collect(Collectors.toList());
     }
 }

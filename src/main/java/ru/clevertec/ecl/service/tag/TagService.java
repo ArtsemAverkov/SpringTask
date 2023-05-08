@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface TagService {
     long create(TagDto tagDto);
-    TagDtoResponse read (long id) throws Exception;
+    TagDtoResponse read (long id) ;
     boolean update (TagDto tagDto, Long id);
     boolean delete (Long id);
     List<TagDtoResponse> readAll (Pageable pageable);

@@ -10,7 +10,7 @@ import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import ru.clevertec.ecl.entity.tag.Tag;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 @Getter

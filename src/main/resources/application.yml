@@ -1,11 +1,4 @@
 spring:
-  profiles:
-    active: dev
-
----
-
-spring:
-  profiles: dev
   datasource:
     url: jdbc:postgresql://localhost:5432/artemaverkov
     username: artemaverkov
@@ -17,19 +10,3 @@ spring:
     hibernate:
       ddl-auto: create-drop
     show-sql: true
-
----
-
-spring:
-  profiles: production
-  datasource:
-    url: jdbc:postgresql://localhost:5432/prod_db
-    username: prod_user
-    password: prod_password
-    driver-class-name: org.postgresql.Driver
-  jpa:
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
-    hibernate:
-      ddl-auto: none
-    show-sql: false

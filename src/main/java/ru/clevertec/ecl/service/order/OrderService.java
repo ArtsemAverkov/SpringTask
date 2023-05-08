@@ -1,10 +1,11 @@
 package ru.clevertec.ecl.service.order;
 
+import ru.clevertec.ecl.dto.order.OrderDto;
 import ru.clevertec.ecl.entity.Order;
 
 import java.util.List;
 
 public interface OrderService {
-    Order buyGiftCertificate(Long userId, Long certificateId, Double total_price);
-    List<Order> getOrdersByUserId(Long userId);
+    boolean buyGiftCertificate(Long userId, Long certificateId);
+    List<OrderDto> getOrdersByUserId(Long userId);
 }

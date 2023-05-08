@@ -31,7 +31,7 @@ public class TagController {
 
     @GetMapping(value= "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public TagDtoResponse read(@PathVariable Long id) throws Exception {
+    public TagDtoResponse read(@PathVariable  Long id) {
         return tagService.read(id);
     }
 

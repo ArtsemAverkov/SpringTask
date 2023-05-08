@@ -11,14 +11,9 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GiftCertificatesResponseDto {
-    @JsonProperty("id")
     private Long id;
-    @JsonProperty("name")
     private String name;
-    @JsonProperty("description")
     private String description;
-    @JsonProperty("price")
     private Double price;
-    @JsonProperty("duration")
     private Long duration;
 }

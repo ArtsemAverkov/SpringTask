@@ -6,8 +6,6 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.user.User;
-
-import javax.persistence.Entity;
 import java.time.LocalDateTime;
 
 @Entity
@@ -18,6 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -33,9 +32,9 @@ public class Order {
     private User user;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "gift_certificates_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private GiftCertificates giftCertificates;
-
     public Order(Double cost, LocalDateTime purchaseTime, User user, GiftCertificates giftCertificates) {
         this.cost = cost;
         this.purchaseTime = purchaseTime;

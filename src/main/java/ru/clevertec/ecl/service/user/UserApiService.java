@@ -1,6 +1,7 @@
 package ru.clevertec.ecl.service.user;
 
 import org.springframework.stereotype.Service;
+import ru.clevertec.ecl.dto.userDto.UserDto;
 import ru.clevertec.ecl.entity.user.User;
 import ru.clevertec.ecl.repository.user.UserRepository;
 
@@ -18,5 +19,18 @@ public class UserApiService implements UserService{
     @Override
     public User read(Long id) {
         return userRepository.findById(id).orElseThrow(NoSuchElementException::new);
+    }
+
+    @Override
+    public long create(UserDto userDto) {
+        User user = builderUserDto(userDto);
+        return userRepository.save(user).getId();
+    }
+    private User builderUserDto(UserDto userDto){
+        return User.builder()
+                .name(userDto.getName())
+                .email(userDto.getEmail())
+                .password(userDto.getEmail())
+                .build();
     }
 }

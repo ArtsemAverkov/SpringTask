@@ -3,7 +3,7 @@ package ru.clevertec.ecl.entity.tag;
 import lombok.*;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 

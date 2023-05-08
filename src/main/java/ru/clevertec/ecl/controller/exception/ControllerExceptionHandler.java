@@ -1,5 +1,6 @@
 package ru.clevertec.ecl.controller.exception;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.clevertec.ecl.dto.exceptions.ResponseError;
 
-import javax.persistence.EntityNotFoundException;
+
 import java.util.NoSuchElementException;
 @RestControllerAdvice
 public class ControllerExceptionHandler {

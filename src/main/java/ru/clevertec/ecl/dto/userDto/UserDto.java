@@ -13,8 +13,7 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDto {
-    @JsonProperty("id")
-    private Long id;
-    @JsonProperty("name")
     private String name;
+    private String email;
+    private String password;
 }

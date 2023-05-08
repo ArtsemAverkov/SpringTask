@@ -3,7 +3,7 @@ package ru.clevertec.ecl.entity.user;
 import lombok.*;
 import ru.clevertec.ecl.entity.Order;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +24,7 @@ public class User {
     private String email;
     private String password;
 
-    @OneToMany(mappedBy ="user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @Builder.Default
     private List<Order> orders = new ArrayList<>();
-
 }

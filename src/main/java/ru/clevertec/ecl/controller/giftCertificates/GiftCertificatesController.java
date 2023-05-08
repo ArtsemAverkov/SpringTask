@@ -56,7 +56,7 @@ public class GiftCertificatesController {
 
     @GetMapping(value = "{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public GiftCertificates read(@PathVariable Long id) throws Exception {
+    public GiftCertificatesDto read(@PathVariable Long id) throws Exception {
         return giftCertificatesService.read(id);
     }
 
@@ -91,7 +91,7 @@ public class GiftCertificatesController {
 
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<GiftCertificates> readAll(@PageableDefault(page = 0)Pageable pageable) {
+    public List<GiftCertificatesDto> readAll(@PageableDefault(page = 0)Pageable pageable) {
         return giftCertificatesService.readAll(pageable);
     }
 }
