@@ -21,7 +21,7 @@ import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
 import ru.clevertec.ecl.dto.tag.TagDto;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.service.tag.TagService;
-import ru.clevertek.ecl.common.extension.ValidParameterResolverGiftCertificates;
+import ru.clevertek.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
 import ru.clevertek.ecl.common.extension.tag.ValidParameterResolverTag;
 
 import java.util.Arrays;

@@ -5,7 +5,6 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import ru.clevertec.ecl.dto.order.OrderDto;
 import ru.clevertec.ecl.dto.userDto.UserDto;
-import ru.clevertec.ecl.entity.Order;
 import ru.clevertec.ecl.entity.user.User;
 import ru.clevertec.ecl.service.order.OrderService;
 import ru.clevertec.ecl.service.user.UserService;
@@ -50,4 +49,11 @@ public class UserController {
                                     @RequestParam(name = "certificateId") Long certificateId) {
         return orderService.buyGiftCertificate(userId, certificateId);
     }
+
+    @GetMapping(value = "/getAPopularCertificate",produces = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseStatus(HttpStatus.OK)
+    public List<Object[]> getAPopularCertificate(){
+        return orderService.getAPopularCertificate();
+    }
+
 }

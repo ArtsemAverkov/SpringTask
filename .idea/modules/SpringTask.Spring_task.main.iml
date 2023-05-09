@@ -12,7 +12,6 @@
         <setting name="provider-name" value="OpenJPA" />
         <datasource-mapping>
           <factory-entry name="SpringTask.Spring_task.main" />
-          <factory-entry name="default" />
           <factory-entry name="entityManagerFactory" />
         </datasource-mapping>
         <naming-strategy-map />

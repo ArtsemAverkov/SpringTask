@@ -51,6 +51,12 @@ public class OrderApiService implements OrderService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Object[]> getAPopularCertificate() {
+        return orderRepository.findMostUsedTagWithHighestOrderCost();
+    }
+
+
     private OrderDto convertToDto(Order order) {
         return OrderDto.builder()
                 .id(order.getId())

@@ -2,6 +2,7 @@ package ru.clevertec.ecl.service.giftCertificates;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
 import ru.clevertec.ecl.dto.tag.TagDto;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
@@ -70,6 +71,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
 
 
     @Override
+    @Transactional
     public boolean update(GiftCertificatesDto giftCertificates, Long id) {
         read(id);
         GiftCertificates certificates = buildGiftCertificates(giftCertificates);
@@ -86,9 +88,10 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      */
 
     @Override
+    @Transactional
     public boolean delete(Long id) {
         read(id);
-        giftCertificatesRepository.findById(id);
+        giftCertificatesRepository.deleteById(id);
         return true;
     }
 

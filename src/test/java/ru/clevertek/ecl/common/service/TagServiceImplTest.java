@@ -8,18 +8,21 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Pageable;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
 import ru.clevertec.ecl.dto.tag.TagDto;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.entity.tag.Tag;
+import ru.clevertec.ecl.repository.tag.TagRepository;
 import ru.clevertec.ecl.service.tag.TagApiService;
-import ru.clevertek.ecl.common.extension.ValidParameterResolverGiftCertificates;
+import ru.clevertek.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
 import ru.clevertek.ecl.common.extension.tag.InvalidParameterResolverTag;
 import ru.clevertek.ecl.common.extension.tag.ValidParameterResolverTag;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -37,45 +40,47 @@ public class TagServiceImplTest {
         private TagRepository tagRepository;
 
         @Test
-        void shouldGetTagWhenTagValid(TagDto tagDto, GiftCertificatesDto giftCertificatesDto) throws Exception {
+        void shouldGetTagWhenTagValid(TagDto tagDto, GiftCertificatesDto giftCertificatesDto){
+            Tag tag = buildTag(tagDto);
             TagDtoResponse tagDtoResponse = buildTagDtoResponse(tagDto, giftCertificatesDto);
-            Mockito.when(tagRepository.read(tagDto.getId())).thenReturn(tagDtoResponse);
+            Mockito.when(tagRepository.findById(tagDto.getId())).thenReturn(Optional.ofNullable(tag));
             Assertions.assertEquals(tagDtoResponse, tagApiService.read(tagDto.getId()));
-            Mockito.verify(tagRepository, Mockito.times(1)).read(tagDtoResponse.getId());
+            Mockito.verify(tagRepository, Mockito.times(1)).findById(tagDtoResponse.getId());
         }
 
         @Test
         void shouldDeleteTagWhenTagIsValid(TagDto tagDto){
-            Mockito.when(tagRepository.delete(tagDto.getId())).thenReturn(true);
+            Tag tag = buildTag(tagDto);
+            Mockito.when(tagRepository.findById(tagDto.getId())).thenReturn(Optional.ofNullable(tag));
             Assertions.assertTrue(tagApiService.delete(tagDto.getId()));
-            Mockito.verify(tagRepository, Mockito.timeout(1)).delete(tagDto.getId());
+            Mockito.verify(tagRepository, Mockito.timeout(1)).deleteById(tagDto.getId());
         }
 
 
         @Test
         void shouldUpdateTagWhenTagIsValid(TagDto tagDto){
             Tag tag = buildTag(tagDto);
-            Mockito.when(tagRepository.update(tag, 1L)).thenReturn(true);
-            Assertions.assertTrue(tagApiService.update(tagDto, 1L));
-            Mockito.verify(tagRepository, Mockito.timeout(1)).update(tag, 1L);
+            Mockito.when(tagRepository.findById(tagDto.getId())).thenReturn(Optional.ofNullable(tag));
+            Assertions.assertTrue(tagApiService.update(tagDto, tagDto.getId()));
+            Mockito.verify(tagRepository, Mockito.timeout(1)).save(tag);
         }
 
         @Test
         void shouldCreateTagWhenTagIsValid(TagDto tagDto){
             Tag tag = buildTag(tagDto);
-            Mockito.when(tagRepository.create(tag)).thenReturn(1L);
+            Mockito.when(tagRepository.save(tag)).thenReturn(tag);
             Assertions.assertEquals(1L, tagApiService.create(tagDto));
-            Mockito.verify(tagRepository, Mockito.timeout(1)).create(tag);
+            Mockito.verify(tagRepository, Mockito.timeout(1)).save(tag);
         }
 
         @Test
-        void shouldReadAllTagWhenTagIsValid(TagDto tagDto, GiftCertificatesDto giftCertificatesDto){
-            TagDtoResponse tagDtoResponse = buildTagDtoResponse(tagDto, giftCertificatesDto);
-            List<Object> resultList = new ArrayList<>();
-            resultList.add(tagDtoResponse);
-            Mockito.when(tagRepository.readAll()).thenReturn(resultList);
-            Assertions.assertEquals(resultList, tagApiService.readAll());
-            Mockito.verify(tagRepository, Mockito.timeout(1)).readAll();
+        void shouldReadAllTagWhenTagIsValid(TagDto tagDto){
+            Tag tag = buildTag(tagDto);
+            List<Tag> resultList = new ArrayList<>();
+            resultList.add(tag);
+            Mockito.when(tagRepository.findAll()).thenReturn(resultList);
+            Assertions.assertEquals(resultList, tagApiService.readAll(Pageable.ofSize(10).withPage(0)));
+            Mockito.verify(tagRepository, Mockito.timeout(1)).findAll();
         }
 
         private Tag buildTag(TagDto tagDto){

@@ -54,7 +54,7 @@ public class GiftCertificatesControllerTest {
 
     @Test
     public void testRead() throws Exception {
-        GiftCertificates giftCertificates = new GiftCertificates();
+        GiftCertificatesDto giftCertificates = new GiftCertificatesDto();
         giftCertificates.setName("Test Certificate");
         giftCertificates.setDescription("Test Description");
         giftCertificates.setPrice(10.0);
