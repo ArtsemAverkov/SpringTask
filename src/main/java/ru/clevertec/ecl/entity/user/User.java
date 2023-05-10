@@ -1,7 +1,7 @@
 package ru.clevertec.ecl.entity.user;
 
 import lombok.*;
-import ru.clevertec.ecl.entity.Order;
+import ru.clevertec.ecl.entity.order.Order;
 
 import jakarta.persistence.*;
 import java.util.ArrayList;

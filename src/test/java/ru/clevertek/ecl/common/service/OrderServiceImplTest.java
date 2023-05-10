@@ -9,12 +9,12 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
 import ru.clevertec.ecl.dto.order.OrderDto;
-import ru.clevertec.ecl.dto.userDto.UserDto;
-import ru.clevertec.ecl.entity.Order;
+import ru.clevertec.ecl.dto.user.UserDto;
+import ru.clevertec.ecl.entity.order.Order;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.entity.user.User;
-import ru.clevertec.ecl.repository.OrderRepository;
+import ru.clevertec.ecl.repository.order.OrderRepository;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
 import ru.clevertec.ecl.repository.user.UserRepository;
 import ru.clevertec.ecl.service.order.OrderApiService;
@@ -41,8 +41,6 @@ public class OrderServiceImplTest {
     public class ValidData {
         @InjectMocks
         private OrderApiService orderApiService;
-        @InjectMocks
-        private UserApiService userApiService;
 
         @Mock
         private OrderRepository orderRepository;
@@ -79,7 +77,6 @@ public class OrderServiceImplTest {
 
         @Test
         public void getAPopularCertificateWhenValidInputShouldReturnListOfObjectArrays(OrderDto orderDto) {
-
             Object[] testDataOne = new Object[]{orderDto};
             Object[] testDataTwo = new Object[]{orderDto};
             Mockito.when(orderRepository.findMostUsedTagWithHighestOrderCost())

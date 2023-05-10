@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.entity;
+package ru.clevertec.ecl.entity.order;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -16,10 +16,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.clevertec.ecl.SpringTaskApplication;
 import ru.clevertec.ecl.controller.user.UserController;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
 import ru.clevertec.ecl.dto.order.OrderDto;
-import ru.clevertec.ecl.dto.userDto.UserDto;
+import ru.clevertec.ecl.dto.user.UserDto;
 import ru.clevertec.ecl.service.order.OrderService;
 import ru.clevertec.ecl.service.user.UserService;
+import ru.clevertek.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
 import ru.clevertek.ecl.common.extension.order.ValidParameterResolverOrder;
 import ru.clevertek.ecl.common.extension.user.ValidParameterResolverUser;
 
@@ -34,7 +36,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = SpringTaskApplication.class)
 @WebMvcTest(UserController.class)
 @RunWith(SpringRunner.class)
-@ExtendWith({ValidParameterResolverUser.class,  ValidParameterResolverOrder.class})
+@ExtendWith({ValidParameterResolverUser.class,
+        ValidParameterResolverOrder.class,
+        ValidParameterResolverGiftCertificates.class})
 public class UserControllerTest {
     @MockBean
     private UserService userService;
@@ -110,22 +114,18 @@ public class UserControllerTest {
 
 
     @Test
-    public void getAPopularCertificate() throws Exception {
+    public void getAPopularCertificate(GiftCertificatesDto giftCertificatesDto, OrderDto orderDto) throws Exception {
         List<Object[]> orders = new ArrayList<>();
-        orders.add(new Object[]{1L, "Gift certificate 1", 5});
-        orders.add(new Object[]{2L, "Gift certificate 2", 3});
-
+        orders.add(new Object[]{orderDto, giftCertificatesDto});
         Mockito.when(orderService.getAPopularCertificate()).thenReturn(orders);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/user/getAPopularCertificate")
         .contentType(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andExpect(MockMvcResultMatchers.jsonPath("$[0][0]").value(1L))
-        .andExpect(MockMvcResultMatchers.jsonPath("$[0][1]").value("Gift certificate 1"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$[0][2]").value(5))
-        .andExpect(MockMvcResultMatchers.jsonPath("$[1][0]").value(2L))
-        .andExpect(MockMvcResultMatchers.jsonPath("$[1][1]").value("Gift certificate 2"))
-        .andExpect(MockMvcResultMatchers.jsonPath("$[1][2]").value(3));
+        .andExpect(MockMvcResultMatchers.jsonPath("$[0][0]").value(orderDto.getId()))
+        .andExpect(MockMvcResultMatchers.jsonPath("$[0][2]").value(giftCertificatesDto))
+        .andExpect(MockMvcResultMatchers.jsonPath("$[0][1]").value(orderDto.getPurchaseTime()));
+
 
         Mockito.verify(orderService).getAPopularCertificate();
         }

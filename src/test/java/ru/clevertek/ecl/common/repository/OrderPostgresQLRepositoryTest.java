@@ -1,6 +1,7 @@
 package ru.clevertek.ecl.common.repository;
 
 import jakarta.persistence.EntityManager;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +15,8 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
-import ru.clevertec.ecl.entity.Order;
-import ru.clevertec.ecl.repository.OrderRepository;
+import ru.clevertec.ecl.entity.order.Order;
+import ru.clevertec.ecl.repository.order.OrderRepository;
 
 import java.util.List;
 
@@ -56,10 +57,10 @@ public class OrderPostgresQLRepositoryTest {
 
     @Test
     @Sql("/INITIAL_ORDER_DB_SCRIPT.sql")
-    void shouldFindActiveProductId(){
+    void shouldFindByUserId(){
         List<Order> byUserId = orderRepository.findByUserId(1L);
         testEntityManager.flush();
         testEntityManager.getEntityManager().getTransaction().commit();
-        //Assertions.assertEquals(1, activeProductId);
+       // Assertions.assertEquals(1, activeProductId);
     }
 }

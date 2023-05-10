@@ -11,9 +11,7 @@ import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 /**
@@ -34,7 +32,6 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
 
     /**
      * Creates a new GiftCertificates entity based on the specified GiftCertificatesDto and returns its id.
-     *
      * @param giftCertificates a DTO object that contains data for a new GiftCertificates entity
      * @return the id of the newly created GiftCertificates entity
      */
@@ -47,7 +44,6 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
 
     /**
      * Retrieves a GiftCertificates entity with the specified id.
-     *
      * @param id the id of the GiftCertificates entity to retrieve
      * @return the GiftCertificates entity with the specified id
      * @throws Exception if there is no GiftCertificates entity with the specified id
@@ -63,7 +59,6 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
 
     /**
      * Updates a GiftCertificates entity with the specified id based on the data in the specified GiftCertificatesDto.
-     *
      * @param giftCertificates a DTO object that contains data to update a GiftCertificates entity
      * @param id the id of the GiftCertificates entity to update
      * @return true if the GiftCertificates entity was updated successfully, false otherwise
@@ -95,6 +90,11 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
         return true;
     }
 
+    /**
+     * Retrieves all gift certificates from the repository and converts them to a List of GiftCertificatesDto.
+     * @param pageable an object containing pagination information for the query
+     * @return a List of GiftCertificatesDto objects
+     */
     @Override
     public List<GiftCertificatesDto> readAll(Pageable pageable) {
         List<GiftCertificates> all = giftCertificatesRepository.findAll(pageable).getContent();
@@ -102,10 +102,9 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
     }
 
     /**
-     * Builds a new GiftCertificates entity based on the specified GiftCertificatesDto.
-     *
-     * @param giftCertificatesDto a DTO object that contains data for a new GiftCertificates entity
-     * @return the newly created GiftCertificates entity
+     * Builds and returns a new GiftCertificates object based on the provided GiftCertificatesDto.
+     * @param giftCertificatesDto a GiftCertificatesDto object containing the data to be used in building the new GiftCertificates object
+     * @return a new GiftCertificates object
      */
 
     private GiftCertificates buildGiftCertificates(GiftCertificatesDto giftCertificatesDto){
@@ -122,6 +121,12 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
                 .build();
     }
 
+    /**
+     * Converts a GiftCertificates object to a GiftCertificatesDto object.
+     * @param giftCertificates a GiftCertificates object to be converted
+     * @return a GiftCertificatesDto object
+     */
+
     private GiftCertificatesDto convertToGiftCertificatesDto( GiftCertificates giftCertificates){
         return GiftCertificatesDto.builder()
                 .id(giftCertificates.getId())
@@ -132,6 +137,12 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
                 .tagDto(new TagDto(giftCertificates.getTag().getId(),giftCertificates.getTag().getName()))
                 .build();
     }
+
+    /**
+     * Converts a List of GiftCertificates objects to a List of GiftCertificatesDto objects using the convertToGiftCertificatesDto() method.
+     * @param giftCertificatesList a List of GiftCertificates objects to be converted
+     * @return a List of GiftCertificatesDto objects
+     */
 
     public List<GiftCertificatesDto> convertToDtoList(List<GiftCertificates> giftCertificatesList) {
         return giftCertificatesList.stream()

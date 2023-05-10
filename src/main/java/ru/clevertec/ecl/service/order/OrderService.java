@@ -1,7 +1,6 @@
 package ru.clevertec.ecl.service.order;
 
 import ru.clevertec.ecl.dto.order.OrderDto;
-import ru.clevertec.ecl.entity.Order;
 
 import java.util.List;
 

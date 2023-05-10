@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.clevertec.ecl.dto.userDto.UserDto;
+import ru.clevertec.ecl.dto.user.UserDto;
 import ru.clevertec.ecl.entity.user.User;
 import ru.clevertec.ecl.repository.user.UserRepository;
 import ru.clevertec.ecl.service.user.UserApiService;

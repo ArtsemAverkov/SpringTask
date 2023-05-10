@@ -1,14 +1,11 @@
 package ru.clevertec.ecl.controller.giftCertificates;
 
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.MediaType;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
-import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.service.giftCertificates.GiftCertificatesService;
 
 import java.util.List;
@@ -77,7 +74,6 @@ public class GiftCertificatesController {
 
     /**
      * Delete a gift certificate by id.
-     *
      * @param id the id of the gift certificate to be deleted
      * @return true if the delete is successful, false otherwise
      */
@@ -88,7 +84,17 @@ public class GiftCertificatesController {
         return giftCertificatesService.delete(id);
     }
 
-
+    /**
+     * Retrieves a list of gift certificates as GiftCertificatesDto objects.
+     * @param pageable the pageable object used for pagination
+     *  @return a List of GiftCertificatesDto objects
+     * @throws Exception if an error occurs while retrieving the gift certificates
+     * @GetMapping annotation is used to map HTTP GET requests onto this method.
+     * The produces attribute is set to MediaType.APPLICATION_JSON_VALUE to indicate
+     * that the response should be in JSON format.
+     * The @PageableDefault annotation is used to provide default values for page and size
+     * parameters in case they are not present in the request. By default, page is set to 0.
+     */
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<GiftCertificatesDto> readAll(@PageableDefault(page = 0)Pageable pageable) {

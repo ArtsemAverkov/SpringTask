@@ -3,10 +3,10 @@ package ru.clevertec.ecl.service.order;
 import org.springframework.stereotype.Service;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
 import ru.clevertec.ecl.dto.order.OrderDto;
-import ru.clevertec.ecl.entity.Order;
+import ru.clevertec.ecl.entity.order.Order;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.user.User;
-import ru.clevertec.ecl.repository.OrderRepository;
+import ru.clevertec.ecl.repository.order.OrderRepository;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
 import ru.clevertec.ecl.repository.user.UserRepository;
 
@@ -27,7 +27,13 @@ public class OrderApiService implements OrderService {
         this.orderRepository = orderRepository;
     }
 
-
+    /**
+     * Method to buy a gift certificate for a user.
+     * @param userId the ID of the user
+     * @param certificateId the ID of the gift certificate
+     * @return true if the gift certificate was successfully purchased, false otherwise
+     * @throws IllegalArgumentException if the user ID or gift certificate ID is invalid
+     */
     @Override
     public boolean buyGiftCertificate(Long userId, Long certificateId) {
         User user = userRepository.findById(userId).orElseThrow(() ->
@@ -43,29 +49,51 @@ public class OrderApiService implements OrderService {
         return true;
     }
 
+    /**
+     * Method to get a list of orders for a user.
+     * @param userId the ID of the user
+     * @return a list of OrderDto objects representing the orders for the user
+     */
+
     @Override
     public List<OrderDto> getOrdersByUserId(Long userId) {
         List<Order> orderList = orderRepository.findByUserId(userId);
         return orderList.stream()
-                .map(this::convertToDto)
+                .map(this::convertOrderToOrderDto)
                 .collect(Collectors.toList());
     }
 
+    /**
+     * Method to get the most popular gift certificate.
+     * @return a list of Object[] arrays representing the most popular gift certificate(s)
+     */
     @Override
     public List<Object[]> getAPopularCertificate() {
         return orderRepository.findMostUsedTagWithHighestOrderCost();
     }
 
+    /**
+     * Method to convert an Order object to an OrderDto object.
+     * @param order the Order object to convert
+     * @return an OrderDto object representing the Order
+     */
 
-    private OrderDto convertToDto(Order order) {
+
+    private OrderDto convertOrderToOrderDto(Order order) {
         return OrderDto.builder()
                 .id(order.getId())
                 .purchaseTime(order.getPurchaseTime())
-                .giftCertificates(convertToDtoList(order.getGiftCertificates()))
+                .giftCertificates(convertGiftCertificatesToGiftCertificatesDtoList(order.getGiftCertificates()))
                 .build();
     }
 
-    private List<GiftCertificatesResponseDto> convertToDtoList(GiftCertificates giftCertificates) {
+    /**
+     * Method to convert a GiftCertificates object to a list of GiftCertificatesResponseDto objects.
+     * @param giftCertificates the GiftCertificates object to convert
+     * @return a list of GiftCertificatesResponseDto objects representing the GiftCertificates
+     */
+    private List<GiftCertificatesResponseDto> convertGiftCertificatesToGiftCertificatesDtoList
+    (GiftCertificates giftCertificates) {
         List<GiftCertificatesResponseDto> giftCertificatesResponseDtoList = new ArrayList<>();
         if (giftCertificates != null) {
             GiftCertificatesResponseDto giftCertificatesDto = GiftCertificatesResponseDto.builder()
