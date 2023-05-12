@@ -1,8 +1,9 @@
 package ru.clevertec.ecl.service.order;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
-import ru.clevertec.ecl.dto.order.OrderDto;
+import ru.clevertec.ecl.dto.order.OrderDtoRequest;
 import ru.clevertec.ecl.entity.order.Order;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.user.User;
@@ -16,16 +17,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class OrderApiService implements OrderService {
     private final GiftCertificatesRepository giftCertificateRepository;
     private final UserRepository userRepository;
     private final OrderRepository orderRepository;
-
-    public OrderApiService(GiftCertificatesRepository giftCertificateRepository, UserRepository userRepository, OrderRepository orderRepository) {
-        this.giftCertificateRepository = giftCertificateRepository;
-        this.userRepository = userRepository;
-        this.orderRepository = orderRepository;
-    }
 
     /**
      * Method to buy a gift certificate for a user.
@@ -56,7 +52,7 @@ public class OrderApiService implements OrderService {
      */
 
     @Override
-    public List<OrderDto> getOrdersByUserId(Long userId) {
+    public List<OrderDtoRequest> getOrdersByUserId(Long userId) {
         List<Order> orderList = orderRepository.findByUserId(userId);
         return orderList.stream()
                 .map(this::convertOrderToOrderDto)
@@ -79,8 +75,8 @@ public class OrderApiService implements OrderService {
      */
 
 
-    private OrderDto convertOrderToOrderDto(Order order) {
-        return OrderDto.builder()
+    private OrderDtoRequest convertOrderToOrderDto(Order order) {
+        return OrderDtoRequest.builder()
                 .id(order.getId())
                 .purchaseTime(order.getPurchaseTime())
                 .giftCertificates(convertGiftCertificatesToGiftCertificatesDtoList(order.getGiftCertificates()))

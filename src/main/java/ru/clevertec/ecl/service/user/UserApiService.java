@@ -1,19 +1,18 @@
 package ru.clevertec.ecl.service.user;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.clevertec.ecl.dto.user.UserDto;
+import ru.clevertec.ecl.dto.user.UserDtoRequest;
 import ru.clevertec.ecl.entity.user.User;
 import ru.clevertec.ecl.repository.user.UserRepository;
 
 import java.util.NoSuchElementException;
 
 @Service
+@RequiredArgsConstructor
 public class UserApiService implements UserService{
-    private final UserRepository userRepository;
 
-    public UserApiService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
 
     /**
      * Retrieves a User object with the specified ID.
@@ -34,7 +33,7 @@ public class UserApiService implements UserService{
      */
 
     @Override
-    public long create(UserDto userDto) {
+    public long create(UserDtoRequest userDto) {
         User user = builderUserDto(userDto);
         return userRepository.save(user).getId();
     }
@@ -44,7 +43,7 @@ public class UserApiService implements UserService{
      * @param userDto the UserDto object containing the data to create the new User object.
      * @return the newly created User object.
      */
-    private User builderUserDto(UserDto userDto){
+    private User builderUserDto(UserDtoRequest userDto){
         return User.builder()
                 .name(userDto.getName())
                 .email(userDto.getEmail())

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.entity.tag.Tag;
 
-@Repository
 public interface TagRepository extends JpaRepository<Tag, Long> {
     @Query("SELECT DISTINCT t FROM Tag t LEFT JOIN FETCH t.giftCertificatesList WHERE t.id = :id")
     TagDtoResponse readTag(@Param("id") long id);

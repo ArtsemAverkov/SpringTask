@@ -1,16 +1,23 @@
 package ru.clevertec.ecl.controller.user;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
-import ru.clevertec.ecl.dto.order.OrderDto;
-import ru.clevertec.ecl.dto.user.UserDto;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+import ru.clevertec.ecl.dto.order.OrderDtoRequest;
+import ru.clevertec.ecl.dto.user.UserDtoRequest;
 import ru.clevertec.ecl.entity.user.User;
 import ru.clevertec.ecl.service.order.OrderService;
 import ru.clevertec.ecl.service.user.UserService;
 
 import java.util.List;
-
 
 /**
  * Controller for handling User-related requests.
@@ -20,24 +27,20 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
     private final OrderService orderService;
-
-    public UserController(UserService userService, OrderService orderService) {
-        this.userService = userService;
-        this.orderService = orderService;
-    }
 
     /**
      * Retrieves a user with the specified ID.
      * @param id the ID of the user to retrieve
      * @return a User object representing the user
      */
-    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public User read(@PathVariable Long id) {
+    public User read(@PathVariable @Valid Long id) {
         return userService.read(id);
     }
 
@@ -47,10 +50,9 @@ public class UserController {
      * @return the ID of the newly created user
      */
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public long create(@RequestBody UserDto userDto){
+    public long create(@RequestBody @Valid UserDtoRequest userDto){
         return userService.create(userDto);
     }
 
@@ -59,9 +61,9 @@ public class UserController {
      * @param userId the ID of the user to retrieve orders for
      * @return a List of OrderDto objects representing the user's orders
      */
-    @GetMapping(value = "/{userId}/orders", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{userId}/orders")
     @ResponseStatus(HttpStatus.OK)
-    public List<OrderDto> getOrdersByUserId(@PathVariable Long userId) {
+    public List<OrderDtoRequest> getOrdersByUserId(@PathVariable @Valid Long userId) {
         return orderService.getOrdersByUserId(userId);
     }
     /**
@@ -70,9 +72,9 @@ public class UserController {
      * @param certificateId the ID of the gift certificate to buy
      * @return true if the purchase was successful, false otherwise
      */
-    @GetMapping(value = "/buy", produces = MediaType.APPLICATION_JSON_VALUE)
-    public boolean buyGiftCertificate(@RequestParam(name = "userId") Long userId,
-                                    @RequestParam(name = "certificateId") Long certificateId) {
+    @GetMapping(value = "/buy")
+    public boolean buyGiftCertificate(@RequestParam(name = "userId") @Valid Long userId,
+                                    @RequestParam(name = "certificateId") @Valid Long certificateId) {
         return orderService.buyGiftCertificate(userId, certificateId);
     }
 
@@ -80,7 +82,7 @@ public class UserController {
      * Retrieves the most popular gift certificate.
      * @return a list of objects containing information about the certificate and its total number of orders.
      */
-    @GetMapping(value = "/getAPopularCertificate",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/getAPopularCertificate")
     @ResponseStatus(HttpStatus.OK)
     public List<Object[]> getAPopularCertificate(){
         return orderService.getAPopularCertificate();

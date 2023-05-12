@@ -4,20 +4,20 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
-import ru.clevertec.ecl.dto.user.UserDto;
+import ru.clevertec.ecl.dto.user.UserDtoRequest;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class ValidParameterResolverUser implements ParameterResolver {
-    private List<UserDto> userDtoList = Arrays.asList(
-            new UserDto(
+    private List<UserDtoRequest> userDtoList = Arrays.asList(
+            new UserDtoRequest(
                     "name",
                     "email",
                     "password"
             ),
-            new UserDto(
+            new UserDtoRequest(
                     "names",
                     "emails",
                     "passwords"
@@ -25,7 +25,7 @@ public class ValidParameterResolverUser implements ParameterResolver {
     );
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return parameterContext.getParameter().getType()==UserDto.class;
+        return parameterContext.getParameter().getType()== UserDtoRequest.class;
     }
 
     @Override

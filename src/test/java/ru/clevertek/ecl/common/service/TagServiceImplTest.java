@@ -9,9 +9,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Pageable;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
-import ru.clevertec.ecl.dto.tag.TagDto;
+import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.repository.tag.TagRepository;
@@ -40,7 +40,7 @@ public class TagServiceImplTest {
         private TagRepository tagRepository;
 
         @Test
-        void shouldGetTagWhenTagValid(TagDto tagDto, GiftCertificatesDto giftCertificatesDto){
+        void shouldGetTagWhenTagValid(TagDtoRequest tagDto, GiftCertificatesDtoRequest giftCertificatesDto){
             Tag tag = buildTag(tagDto);
             TagDtoResponse tagDtoResponse = buildTagDtoResponse(tagDto, giftCertificatesDto);
             Mockito.when(tagRepository.findById(tagDto.getId())).thenReturn(Optional.ofNullable(tag));
@@ -49,7 +49,7 @@ public class TagServiceImplTest {
         }
 
         @Test
-        void shouldDeleteTagWhenTagIsValid(TagDto tagDto){
+        void shouldDeleteTagWhenTagIsValid(TagDtoRequest tagDto){
             Tag tag = buildTag(tagDto);
             Mockito.when(tagRepository.findById(tagDto.getId())).thenReturn(Optional.ofNullable(tag));
             Assertions.assertTrue(tagApiService.delete(tagDto.getId()));
@@ -58,7 +58,7 @@ public class TagServiceImplTest {
 
 
         @Test
-        void shouldUpdateTagWhenTagIsValid(TagDto tagDto){
+        void shouldUpdateTagWhenTagIsValid(TagDtoRequest tagDto){
             Tag tag = buildTag(tagDto);
             Mockito.when(tagRepository.findById(tagDto.getId())).thenReturn(Optional.ofNullable(tag));
             Assertions.assertTrue(tagApiService.update(tagDto, tagDto.getId()));
@@ -66,7 +66,7 @@ public class TagServiceImplTest {
         }
 
         @Test
-        void shouldCreateTagWhenTagIsValid(TagDto tagDto){
+        void shouldCreateTagWhenTagIsValid(TagDtoRequest tagDto){
             Tag tag = buildTag(tagDto);
             Mockito.when(tagRepository.save(tag)).thenReturn(tag);
             Assertions.assertEquals(1L, tagApiService.create(tagDto));
@@ -74,7 +74,7 @@ public class TagServiceImplTest {
         }
 
         @Test
-        void shouldReadAllTagWhenTagIsValid(TagDto tagDto){
+        void shouldReadAllTagWhenTagIsValid(TagDtoRequest tagDto){
             Tag tag = buildTag(tagDto);
             List<Tag> resultList = new ArrayList<>();
             resultList.add(tag);
@@ -83,13 +83,13 @@ public class TagServiceImplTest {
             Mockito.verify(tagRepository, Mockito.timeout(1)).findAll();
         }
 
-        private Tag buildTag(TagDto tagDto){
+        private Tag buildTag(TagDtoRequest tagDto){
             return Tag.builder()
                     .name(tagDto.getName())
                     .build();
         }
-        private TagDtoResponse buildTagDtoResponse(TagDto tagDto,
-                                                   GiftCertificatesDto giftCertificatesDto){
+        private TagDtoResponse buildTagDtoResponse(TagDtoRequest tagDto,
+                                                   GiftCertificatesDtoRequest giftCertificatesDto){
             GiftCertificatesResponseDto giftCertificatesResponseDto = GiftCertificatesResponseDto.builder()
                     .id(giftCertificatesDto.getId())
                     .name(giftCertificatesDto.getName())
@@ -112,25 +112,25 @@ public class TagServiceImplTest {
         private TagApiService tagApiService;
 
         @Test
-        void shouldGetTagWhenTagIsInvalid(TagDto tagDto){
+        void shouldGetTagWhenTagIsInvalid(TagDtoRequest tagDto){
             Assertions.assertThrows(NullPointerException.class,
                     ()-> tagApiService.read(tagDto.getId()));
         }
 
         @Test
-        void shouldCreateTagWhenTagIsInvalid(TagDto tagDto){
+        void shouldCreateTagWhenTagIsInvalid(TagDtoRequest tagDto){
             Assertions.assertThrows(NullPointerException.class,
                     ()-> tagApiService.create(tagDto));
         }
 
         @Test
-        void shouldUpdateTagWhenTasIsInvalid(TagDto tagDto){
+        void shouldUpdateTagWhenTasIsInvalid(TagDtoRequest tagDto){
             Assertions.assertThrows(NullPointerException.class,
                     ()->tagApiService.update(tagDto, 1L));
         }
 
         @Test
-        void shouldDeleteTagWhenTagIsInvalid(TagDto tagDto){
+        void shouldDeleteTagWhenTagIsInvalid(TagDtoRequest tagDto){
             Assertions.assertThrows(NullPointerException.class,
                     ()->tagApiService.delete(tagDto.getId()));
         }

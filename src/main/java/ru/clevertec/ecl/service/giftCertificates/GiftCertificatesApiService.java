@@ -1,10 +1,11 @@
 package ru.clevertec.ecl.service.giftCertificates;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
-import ru.clevertec.ecl.dto.tag.TagDto;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
+import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
@@ -22,13 +23,9 @@ import java.util.stream.Collectors;
  @version [1.0]
  */
 @Service
+@RequiredArgsConstructor
 public class GiftCertificatesApiService implements GiftCertificatesService{
     private final GiftCertificatesRepository giftCertificatesRepository;
-
-
-    public GiftCertificatesApiService(GiftCertificatesRepository giftCertificatesRepository) {
-        this.giftCertificatesRepository = giftCertificatesRepository;
-    }
 
     /**
      * Creates a new GiftCertificates entity based on the specified GiftCertificatesDto and returns its id.
@@ -37,7 +34,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      */
 
     @Override
-    public long create(GiftCertificatesDto giftCertificates) {
+    public long create(GiftCertificatesDtoRequest giftCertificates) {
         GiftCertificates certificates = buildGiftCertificates(giftCertificates);
         return giftCertificatesRepository.save(certificates).getId();
     }
@@ -50,7 +47,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      */
 
     @Override
-    public GiftCertificatesDto read(long id) {
+    public GiftCertificatesDtoRequest read(long id) {
         GiftCertificates giftCertificates = giftCertificatesRepository.findById(id)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Invalid GiftCertificates Id:" + id));
@@ -64,10 +61,9 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      * @return true if the GiftCertificates entity was updated successfully, false otherwise
      */
 
-
     @Override
     @Transactional
-    public boolean update(GiftCertificatesDto giftCertificates, Long id) {
+    public boolean update(GiftCertificatesDtoRequest giftCertificates, Long id) {
         read(id);
         GiftCertificates certificates = buildGiftCertificates(giftCertificates);
         certificates.setId(id);
@@ -96,7 +92,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      * @return a List of GiftCertificatesDto objects
      */
     @Override
-    public List<GiftCertificatesDto> readAll(Pageable pageable) {
+    public List<GiftCertificatesDtoRequest> readAll(Pageable pageable) {
         List<GiftCertificates> all = giftCertificatesRepository.findAll(pageable).getContent();
         return convertToDtoList(all);
     }
@@ -107,7 +103,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      * @return a new GiftCertificates object
      */
 
-    private GiftCertificates buildGiftCertificates(GiftCertificatesDto giftCertificatesDto){
+    private GiftCertificates buildGiftCertificates(GiftCertificatesDtoRequest giftCertificatesDto){
         LocalDateTime now = LocalDateTime.now();
         String isoDateTime = now.format(DateTimeFormatter.ISO_DATE_TIME);
         return GiftCertificates.builder()
@@ -127,14 +123,14 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      * @return a GiftCertificatesDto object
      */
 
-    private GiftCertificatesDto convertToGiftCertificatesDto( GiftCertificates giftCertificates){
-        return GiftCertificatesDto.builder()
+    private GiftCertificatesDtoRequest convertToGiftCertificatesDto(GiftCertificates giftCertificates){
+        return GiftCertificatesDtoRequest.builder()
                 .id(giftCertificates.getId())
                 .name(giftCertificates.getName())
                 .price(giftCertificates.getPrice())
                 .duration(giftCertificates.getDuration())
                 .description(giftCertificates.getDescription())
-                .tagDto(new TagDto(giftCertificates.getTag().getId(),giftCertificates.getTag().getName()))
+                .tagDto(new TagDtoRequest(giftCertificates.getTag().getId(),giftCertificates.getTag().getName()))
                 .build();
     }
 
@@ -144,7 +140,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      * @return a List of GiftCertificatesDto objects
      */
 
-    public List<GiftCertificatesDto> convertToDtoList(List<GiftCertificates> giftCertificatesList) {
+    public List<GiftCertificatesDtoRequest> convertToDtoList(List<GiftCertificates> giftCertificatesList) {
         return giftCertificatesList.stream()
                 .map(this::convertToGiftCertificatesDto)
                 .collect(Collectors.toList());

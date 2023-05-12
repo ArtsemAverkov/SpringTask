@@ -7,9 +7,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
-import ru.clevertec.ecl.dto.order.OrderDto;
-import ru.clevertec.ecl.dto.user.UserDto;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
+import ru.clevertec.ecl.dto.order.OrderDtoRequest;
+import ru.clevertec.ecl.dto.user.UserDtoRequest;
 import ru.clevertec.ecl.entity.order.Order;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
@@ -18,7 +18,6 @@ import ru.clevertec.ecl.repository.order.OrderRepository;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
 import ru.clevertec.ecl.repository.user.UserRepository;
 import ru.clevertec.ecl.service.order.OrderApiService;
-import ru.clevertec.ecl.service.user.UserApiService;
 import ru.clevertek.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
 import ru.clevertek.ecl.common.extension.order.ValidParameterResolverOrder;
 import ru.clevertek.ecl.common.extension.user.ValidParameterResolverUser;
@@ -52,7 +51,7 @@ public class OrderServiceImplTest {
 
         @Test
         public void buyGiftCertificateWhenValidInputShouldReturnTrue
-                (UserDto userDto, GiftCertificatesDto giftCertificatesDto) {
+                (UserDtoRequest userDto, GiftCertificatesDtoRequest giftCertificatesDto) {
             User user = builderUserDto(userDto);
             GiftCertificates giftCertificates = buildGiftCertificates(giftCertificatesDto);
             Long userId = 1L;
@@ -65,18 +64,18 @@ public class OrderServiceImplTest {
         }
 
         @Test
-        public void getOrdersByUserIdWhenValidInputShouldReturnOrderDtoList(OrderDto orderDto) {
+        public void getOrdersByUserIdWhenValidInputShouldReturnOrderDtoList(OrderDtoRequest orderDto) {
             Long userId = 1L;
             Order order = convertToDto(orderDto);
             Mockito.when(orderRepository.findByUserId(userId)).thenReturn(Collections.singletonList(order));
-            List<OrderDto> result = orderApiService.getOrdersByUserId(userId);
+            List<OrderDtoRequest> result = orderApiService.getOrdersByUserId(userId);
             assertEquals(1, result.size());
             assertEquals(order.getId(), result.get(0).getId());
             assertEquals(order.getPurchaseTime(), result.get(0).getPurchaseTime());
         }
 
         @Test
-        public void getAPopularCertificateWhenValidInputShouldReturnListOfObjectArrays(OrderDto orderDto) {
+        public void getAPopularCertificateWhenValidInputShouldReturnListOfObjectArrays(OrderDtoRequest orderDto) {
             Object[] testDataOne = new Object[]{orderDto};
             Object[] testDataTwo = new Object[]{orderDto};
             Mockito.when(orderRepository.findMostUsedTagWithHighestOrderCost())
@@ -89,7 +88,7 @@ public class OrderServiceImplTest {
             assertEquals(testDataOne[1], result.get(1)[1]);
         }
 
-        private User builderUserDto(UserDto userDto){
+        private User builderUserDto(UserDtoRequest userDto){
             return User.builder()
                     .name(userDto.getName())
                     .email(userDto.getEmail())
@@ -97,7 +96,7 @@ public class OrderServiceImplTest {
                     .build();
         }
 
-        private GiftCertificates buildGiftCertificates(GiftCertificatesDto giftCertificatesDto) {
+        private GiftCertificates buildGiftCertificates(GiftCertificatesDtoRequest giftCertificatesDto) {
             LocalDateTime now = LocalDateTime.now();
             String isoDateTime = now.format(DateTimeFormatter.ISO_DATE_TIME);
             return GiftCertificates.builder()
@@ -112,7 +111,7 @@ public class OrderServiceImplTest {
                     .build();
         }
 
-        private Order convertToDto(OrderDto order) {
+        private Order convertToDto(OrderDtoRequest order) {
             return Order.builder()
                     .id(order.getId())
                     .purchaseTime(order.getPurchaseTime())

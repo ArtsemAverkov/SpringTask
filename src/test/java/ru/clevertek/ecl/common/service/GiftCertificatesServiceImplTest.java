@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Pageable;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
@@ -38,7 +38,7 @@ public class GiftCertificatesServiceImplTest {
         private GiftCertificatesRepository giftCertificatesRepository;
 
         @Test
-        void shouldGetGiftCertificatesWhenGiftCertificatesValid(GiftCertificatesDto giftCertificatesDto) {
+        void shouldGetGiftCertificatesWhenGiftCertificatesValid(GiftCertificatesDtoRequest giftCertificatesDto) {
             GiftCertificates certificates = buildGiftCertificates(giftCertificatesDto);
             Mockito.when(giftCertificatesRepository.findById(giftCertificatesDto.getId()))
                     .thenReturn(Optional.ofNullable(certificates));
@@ -48,7 +48,7 @@ public class GiftCertificatesServiceImplTest {
         }
 
         @Test
-        void shouldDeleteGiftCertificatesGiftCertificatesIsValid(GiftCertificatesDto giftCertificatesDto) {
+        void shouldDeleteGiftCertificatesGiftCertificatesIsValid(GiftCertificatesDtoRequest giftCertificatesDto) {
             GiftCertificates certificates = buildGiftCertificates(giftCertificatesDto);
             Mockito.when(giftCertificatesRepository.findById(giftCertificatesDto.getId()))
                     .thenReturn(Optional.ofNullable(certificates));
@@ -58,7 +58,7 @@ public class GiftCertificatesServiceImplTest {
 
         @Disabled("This test is currently not working")
         @Test
-        void shouldUpdateGiftCertificatesWhenGiftCertificatesIsValid(GiftCertificatesDto giftCertificatesDto) {
+        void shouldUpdateGiftCertificatesWhenGiftCertificatesIsValid(GiftCertificatesDtoRequest giftCertificatesDto) {
             GiftCertificates certificates = buildGiftCertificates(giftCertificatesDto);
             Mockito.when(giftCertificatesRepository.findById(giftCertificatesDto.getId()))
                     .thenReturn(Optional.ofNullable(certificates));
@@ -69,7 +69,7 @@ public class GiftCertificatesServiceImplTest {
 
         @Disabled("This test is currently not working")
         @Test
-        void shouldCreateGiftCertificatesWhenGiftCertificatesIsValid(GiftCertificatesDto giftCertificatesDto) {
+        void shouldCreateGiftCertificatesWhenGiftCertificatesIsValid(GiftCertificatesDtoRequest giftCertificatesDto) {
             GiftCertificates certificates = buildGiftCertificates(giftCertificatesDto);
             Mockito.when(giftCertificatesRepository.save(certificates)).thenReturn(certificates);
             Assertions.assertEquals(1L, giftCertificatesApiService.create(giftCertificatesDto));
@@ -77,7 +77,7 @@ public class GiftCertificatesServiceImplTest {
         }
 
         @Test
-        void shouldReadAllGiftCertificatesWhenGiftCertificatesIsValid(GiftCertificatesDto giftCertificatesDto) {
+        void shouldReadAllGiftCertificatesWhenGiftCertificatesIsValid(GiftCertificatesDtoRequest giftCertificatesDto) {
             List<GiftCertificates> giftCertificatesList = new ArrayList<>();
             giftCertificatesList.add(buildGiftCertificates(giftCertificatesDto));
             Mockito.when(giftCertificatesRepository.findAll()).thenReturn(giftCertificatesList);
@@ -87,7 +87,7 @@ public class GiftCertificatesServiceImplTest {
         }
 
 
-        private GiftCertificates buildGiftCertificates(GiftCertificatesDto giftCertificatesDto) {
+        private GiftCertificates buildGiftCertificates(GiftCertificatesDtoRequest giftCertificatesDto) {
             LocalDateTime now = LocalDateTime.now();
             String isoDateTime = now.format(DateTimeFormatter.ISO_DATE_TIME);
             return GiftCertificates.builder()
@@ -110,7 +110,7 @@ public class GiftCertificatesServiceImplTest {
             private GiftCertificatesApiService giftCertificatesApiService;
 
             @Test
-            void shouldUpdateProductWheProductIsInvalid(GiftCertificatesDto giftCertificatesDto) {
+            void shouldUpdateProductWheProductIsInvalid(GiftCertificatesDtoRequest giftCertificatesDto) {
                 Assertions.assertThrows(NullPointerException.class,
                         () -> giftCertificatesApiService.update(giftCertificatesDto, null));
             }
@@ -130,7 +130,7 @@ public class GiftCertificatesServiceImplTest {
             }
 
             @Test
-            void shouldGetProductWheProductIsInvalid(GiftCertificatesDto giftCertificatesDto) {
+            void shouldGetProductWheProductIsInvalid(GiftCertificatesDtoRequest giftCertificatesDto) {
                 Assertions.assertThrows(NullPointerException.class,
                         () -> giftCertificatesApiService.read(giftCertificatesDto.getId()));
             }

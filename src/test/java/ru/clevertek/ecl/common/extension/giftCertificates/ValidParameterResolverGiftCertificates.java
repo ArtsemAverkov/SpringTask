@@ -4,8 +4,8 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
-import ru.clevertec.ecl.dto.tag.TagDto;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
+import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,26 +14,26 @@ import java.util.Random;
 
 
 public class ValidParameterResolverGiftCertificates implements ParameterResolver {
-    public static List<GiftCertificatesDto> validList = Arrays.asList(
-            new GiftCertificatesDto(
+    public static List<GiftCertificatesDtoRequest> validList = Arrays.asList(
+            new GiftCertificatesDtoRequest(
                     1L,
                     "Certificates",
                     "50%",
                     23.3,
                     30L,
-                    new TagDto(
+                    new TagDtoRequest(
                             1L,
                             ""
 
                     )
             ),
-            new GiftCertificatesDto(
+            new GiftCertificatesDtoRequest(
                     1L,
                     "Certificates",
                     "25%",
                     10.5,
                     30L,
-                    new TagDto(
+                    new TagDtoRequest(
                             1L,
                             ""
                     )));
@@ -42,7 +42,7 @@ public class ValidParameterResolverGiftCertificates implements ParameterResolver
 
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return parameterContext.getParameter().getType()==GiftCertificatesDto.class;
+        return parameterContext.getParameter().getType()== GiftCertificatesDtoRequest.class;
     }
 
     @Override

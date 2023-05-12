@@ -1,9 +1,10 @@
 package ru.clevertec.ecl.service.tag;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
-import ru.clevertec.ecl.dto.tag.TagDto;
+import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
@@ -18,12 +19,9 @@ import java.util.stream.Collectors;
  on Tag entities, using a TagRepository to access the data source.
  */
 @Service
+@RequiredArgsConstructor
 public class TagApiService implements TagService{
     private final TagRepository tagRepository;
-
-    public TagApiService(TagRepository tagRepository) {
-        this.tagRepository = tagRepository;
-    }
 
     /**
      * Creates a new Tag entity from the provided TagDto, and saves it to the data source.
@@ -32,7 +30,7 @@ public class TagApiService implements TagService{
      */
 
     @Override
-    public long create(TagDto tagDto) {
+    public long create(TagDtoRequest tagDto) {
         Tag tag = buildTag(tagDto);
         return tagRepository.save(tag).getId();
     }
@@ -59,7 +57,7 @@ public class TagApiService implements TagService{
      */
 
     @Override
-    public boolean update(TagDto tagDto, Long id) {
+    public boolean update(TagDtoRequest tagDto, Long id) {
         read(id);
         Tag tag = buildTag(tagDto);
         tag.setId(id);
@@ -99,7 +97,7 @@ public class TagApiService implements TagService{
      * @return a new Tag entity.
      */
 
-    private Tag buildTag(TagDto tagDto){
+    private Tag buildTag(TagDtoRequest tagDto){
         return Tag.builder()
                 .name(tagDto.getName())
                 .build();

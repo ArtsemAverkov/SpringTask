@@ -1,7 +1,6 @@
 package ru.clevertec.ecl.controller.exception;
 
 import jakarta.persistence.EntityNotFoundException;
-import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -37,9 +36,4 @@ public class ControllerExceptionHandler {
     private ResponseError messageNotReadable (MissingServletRequestParameterException ex) {
         return new ResponseError("NO CORRECT REQUEST", ex.toString());
     }
-
-
-
-
-
 }

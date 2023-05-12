@@ -1,7 +1,21 @@
 package ru.clevertec.ecl.entity.order;
 
-import jakarta.persistence.*;
-import lombok.*;
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.Table;
+import jakarta.persistence.JoinColumn;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
@@ -35,10 +49,4 @@ public class Order {
     @JoinColumn(name = "gift_certificates_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private GiftCertificates giftCertificates;
-    public Order(Double cost, LocalDateTime purchaseTime, User user, GiftCertificates giftCertificates) {
-        this.cost = cost;
-        this.purchaseTime = purchaseTime;
-        this.user = user;
-        this.giftCertificates = giftCertificates;
-    }
 }

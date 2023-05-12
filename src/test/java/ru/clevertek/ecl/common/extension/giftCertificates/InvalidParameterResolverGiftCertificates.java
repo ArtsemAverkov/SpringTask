@@ -4,22 +4,22 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
-import ru.clevertec.ecl.dto.tag.TagDto;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
+import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class InvalidParameterResolverGiftCertificates implements ParameterResolver {
-    public static List<GiftCertificatesDto> validList = Arrays.asList(
-            new GiftCertificatesDto(
+    public static List<GiftCertificatesDtoRequest> validList = Arrays.asList(
+            new GiftCertificatesDtoRequest(
                     null,
                     null,
                     null,
                     null,
                     null,
-                    new TagDto(
+                    new TagDtoRequest(
                             null,
                             null
                     )
@@ -27,7 +27,7 @@ public class InvalidParameterResolverGiftCertificates implements ParameterResolv
 
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return parameterContext.getParameter().getType()==GiftCertificatesDto.class;
+        return parameterContext.getParameter().getType()== GiftCertificatesDtoRequest.class;
     }
 
     @Override

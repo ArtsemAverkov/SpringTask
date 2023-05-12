@@ -8,7 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.clevertec.ecl.dto.user.UserDto;
+import ru.clevertec.ecl.dto.user.UserDtoRequest;
 import ru.clevertec.ecl.entity.user.User;
 import ru.clevertec.ecl.repository.user.UserRepository;
 import ru.clevertec.ecl.service.user.UserApiService;
@@ -27,7 +27,7 @@ public class UserServiceImplTest {
         private UserRepository userRepository;
 
         @Test
-        void shouldGetUserWhenUserValid(UserDto userDto) {
+        void shouldGetUserWhenUserValid(UserDtoRequest userDto) {
             User user = builderUserDto(userDto);
             Mockito.when(userRepository.findById(1L))
                     .thenReturn(Optional.ofNullable(user));
@@ -37,14 +37,14 @@ public class UserServiceImplTest {
         }
 
         @Test
-        void shouldCreateUserWhenUserIsValid(UserDto userDto) {
+        void shouldCreateUserWhenUserIsValid(UserDtoRequest userDto) {
             User user = builderUserDto(userDto);
             Mockito.when(userRepository.save(user)).thenReturn(user);
             Assertions.assertEquals(1L, userApiService.create(userDto));
             Mockito.verify(userRepository, Mockito.times(1)).save(user);
         }
 
-        private User builderUserDto(UserDto userDto){
+        private User builderUserDto(UserDtoRequest userDto){
             return User.builder()
                     .name(userDto.getName())
                     .email(userDto.getEmail())

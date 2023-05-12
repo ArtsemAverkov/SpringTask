@@ -1,11 +1,20 @@
 package ru.clevertec.ecl.controller.giftCertificates;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.MediaType;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.service.giftCertificates.GiftCertificatesService;
 
 import java.util.List;
@@ -20,14 +29,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/certificates")
-
+@RequiredArgsConstructor
 public class GiftCertificatesController {
     private final GiftCertificatesService giftCertificatesService;
-
-    public GiftCertificatesController(GiftCertificatesService giftCertificatesService) {
-        this.giftCertificatesService = giftCertificatesService;
-    }
-
 
     /**
      * Create a new gift certificate.
@@ -36,10 +40,9 @@ public class GiftCertificatesController {
      * @return the long id of the created giftCertificates
      */
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public long create(@RequestBody GiftCertificatesDto giftCertificates) {
+    public long create(@RequestBody @Valid GiftCertificatesDtoRequest giftCertificates) {
         return giftCertificatesService.create(giftCertificates);
     }
 
@@ -51,9 +54,9 @@ public class GiftCertificatesController {
      * @throws Exception if the gift certificate is not found
      */
 
-    @GetMapping(value = "{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public GiftCertificatesDto read(@PathVariable Long id) throws Exception {
+    public GiftCertificatesDtoRequest read(@PathVariable @Valid Long id) throws Exception {
         return giftCertificatesService.read(id);
     }
 
@@ -65,10 +68,9 @@ public class GiftCertificatesController {
      * @return true if the update is successful, false otherwise
      */
 
-    @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE, path = "{id}")
+    @PatchMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public boolean update (@PathVariable Long id, @RequestBody GiftCertificatesDto giftCertificates) {
+    public boolean update (@PathVariable @Valid Long id, @RequestBody @Valid GiftCertificatesDtoRequest giftCertificates) {
         return giftCertificatesService.update(giftCertificates, id);
     }
 
@@ -78,9 +80,9 @@ public class GiftCertificatesController {
      * @return true if the delete is successful, false otherwise
      */
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public boolean delete(@PathVariable Long id) {
+    public boolean delete(@PathVariable @Valid Long id) {
         return giftCertificatesService.delete(id);
     }
 
@@ -96,8 +98,8 @@ public class GiftCertificatesController {
      * parameters in case they are not present in the request. By default, page is set to 0.
      */
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<GiftCertificatesDto> readAll(@PageableDefault(page = 0)Pageable pageable) {
+    @GetMapping
+    public List<GiftCertificatesDtoRequest> readAll(@PageableDefault(page = 0)Pageable pageable) {
         return giftCertificatesService.readAll(pageable);
     }
 }

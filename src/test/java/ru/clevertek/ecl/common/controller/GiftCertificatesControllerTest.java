@@ -16,11 +16,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.clevertec.ecl.SpringTaskApplication;
 import ru.clevertec.ecl.controller.giftCertificates.GiftCertificatesController;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
-import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.service.giftCertificates.GiftCertificatesService;
 import ru.clevertek.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
-import ru.clevertek.ecl.common.extension.tag.ValidParameterResolverTag;
 
 
 import static org.mockito.ArgumentMatchers.any;
@@ -40,8 +38,8 @@ public class GiftCertificatesControllerTest {
     private  MockMvc mockMvc;
 
     @Test
-    public void testCreate(GiftCertificatesDto giftCertificatesDto) throws Exception {
-        Mockito.when(giftCertificatesService.create(any(GiftCertificatesDto.class))).thenReturn(1L);
+    public void testCreate(GiftCertificatesDtoRequest giftCertificatesDto) throws Exception {
+        Mockito.when(giftCertificatesService.create(any(GiftCertificatesDtoRequest.class))).thenReturn(1L);
         mockMvc.perform(MockMvcRequestBuilders.post("/certificates")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content("{ \"name\": \""+giftCertificatesDto.getName()+"\"," +
@@ -49,12 +47,12 @@ public class GiftCertificatesControllerTest {
                                 "\"price\": "+giftCertificatesDto.getPrice()+" }"))
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().string("1"));
-        Mockito.verify(giftCertificatesService).create(any(GiftCertificatesDto.class));
+        Mockito.verify(giftCertificatesService).create(any(GiftCertificatesDtoRequest.class));
     }
 
 
     @Test
-    public void testRead(GiftCertificatesDto giftCertificatesDto) throws Exception {
+    public void testRead(GiftCertificatesDtoRequest giftCertificatesDto) throws Exception {
         Mockito.when(giftCertificatesService.read(anyLong())).thenReturn(giftCertificatesDto);
         mockMvc.perform(MockMvcRequestBuilders.get("/certificates/1"))
                 .andExpect(status().isOk())
@@ -65,8 +63,8 @@ public class GiftCertificatesControllerTest {
     }
 
     @Test
-    public void testUpdate(GiftCertificatesDto giftCertificatesDto) throws Exception {
-        Mockito.when(giftCertificatesService.update(any(GiftCertificatesDto.class), anyLong())).thenReturn(true);
+    public void testUpdate(GiftCertificatesDtoRequest giftCertificatesDto) throws Exception {
+        Mockito.when(giftCertificatesService.update(any(GiftCertificatesDtoRequest.class), anyLong())).thenReturn(true);
         mockMvc.perform(MockMvcRequestBuilders.patch("/certificates/1")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content("{ \"name\": \""+giftCertificatesDto.getName()+"\"," +
@@ -74,7 +72,7 @@ public class GiftCertificatesControllerTest {
                                 "\"price\": "+giftCertificatesDto.getPrice()+" }"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("true"));
-        Mockito.verify(giftCertificatesService).update(any(GiftCertificatesDto.class), anyLong());
+        Mockito.verify(giftCertificatesService).update(any(GiftCertificatesDtoRequest.class), anyLong());
     }
 
     @Test

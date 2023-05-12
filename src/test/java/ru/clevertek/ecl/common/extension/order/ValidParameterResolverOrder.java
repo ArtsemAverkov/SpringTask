@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
-import ru.clevertec.ecl.dto.order.OrderDto;
+import ru.clevertec.ecl.dto.order.OrderDtoRequest;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -28,8 +28,8 @@ public class ValidParameterResolverOrder implements ParameterResolver {
                     10.5,
                     30L));
 
-    private List<OrderDto> orderDtoList = Arrays.asList(
-            new OrderDto(
+    private List<OrderDtoRequest> orderDtoList = Arrays.asList(
+            new OrderDtoRequest(
                  1L,
                  LocalDateTime.now(),
                     validList
@@ -38,7 +38,7 @@ public class ValidParameterResolverOrder implements ParameterResolver {
 
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return parameterContext.getParameter().getType()==OrderDto.class;
+        return parameterContext.getParameter().getType()== OrderDtoRequest.class;
     }
 
     @Override

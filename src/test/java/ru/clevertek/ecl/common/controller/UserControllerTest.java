@@ -16,9 +16,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.clevertec.ecl.SpringTaskApplication;
 import ru.clevertec.ecl.controller.user.UserController;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
-import ru.clevertec.ecl.dto.order.OrderDto;
-import ru.clevertec.ecl.dto.user.UserDto;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
+import ru.clevertec.ecl.dto.order.OrderDtoRequest;
+import ru.clevertec.ecl.dto.user.UserDtoRequest;
 import ru.clevertec.ecl.service.order.OrderService;
 import ru.clevertec.ecl.service.user.UserService;
 import ru.clevertek.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
@@ -49,9 +49,9 @@ public class UserControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void read(UserDto userDto) throws Exception {
+    public void read(UserDtoRequest userDto) throws Exception {
         Long userId = 1L;
-        Mockito.when(userService.create(any(UserDto.class))).thenReturn(1L);
+        Mockito.when(userService.create(any(UserDtoRequest.class))).thenReturn(1L);
         mockMvc.perform(MockMvcRequestBuilders.get("/user/{id}", userId)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
@@ -62,13 +62,13 @@ public class UserControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is(userDto.getName())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is(userDto.getEmail())));
-        Mockito.verify(userService).create(any(UserDto.class));
+        Mockito.verify(userService).create(any(UserDtoRequest.class));
     }
 
     @Test
-    public void create(UserDto userDto) throws Exception {
+    public void create(UserDtoRequest userDto) throws Exception {
         Long expectedUserId = 1L;
-        Mockito.when(userService.create(any(UserDto.class))).thenReturn(expectedUserId);
+        Mockito.when(userService.create(any(UserDtoRequest.class))).thenReturn(expectedUserId);
         mockMvc.perform(MockMvcRequestBuilders.post("/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
@@ -78,13 +78,13 @@ public class UserControllerTest {
                                 "}"))
                 .andExpect(status().isCreated())
                 .andExpect(content().string(String.valueOf(1L)));
-        Mockito.verify(userService).create(any(UserDto.class));
+        Mockito.verify(userService).create(any(UserDtoRequest.class));
     }
 
     @Test
-    public void getOrdersByUserId(OrderDto orderDto) throws Exception {
+    public void getOrdersByUserId(OrderDtoRequest orderDto) throws Exception {
         Long userId = 1L;
-        List<OrderDto> expectedOrders = Arrays.asList(orderDto, orderDto);
+        List<OrderDtoRequest> expectedOrders = Arrays.asList(orderDto, orderDto);
         Mockito.when(orderService.getOrdersByUserId(userId)).thenReturn(expectedOrders);
 
         mockMvc.perform(MockMvcRequestBuilders.get("/user/{userId}/orders", userId)
@@ -114,7 +114,7 @@ public class UserControllerTest {
 
 
     @Test
-    public void getAPopularCertificate(GiftCertificatesDto giftCertificatesDto, OrderDto orderDto) throws Exception {
+    public void getAPopularCertificate(GiftCertificatesDtoRequest giftCertificatesDto, OrderDtoRequest orderDto) throws Exception {
         List<Object[]> orders = new ArrayList<>();
         orders.add(new Object[]{orderDto, giftCertificatesDto});
         Mockito.when(orderService.getAPopularCertificate()).thenReturn(orders);

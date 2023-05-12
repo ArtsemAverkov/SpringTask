@@ -1,11 +1,20 @@
 package ru.clevertec.ecl.controller.tagController;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.http.MediaType;
-import ru.clevertec.ecl.dto.tag.TagDto;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.service.tag.TagService;
 
@@ -19,14 +28,11 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/tag")
+@RequestMapping("/tags")
+@RequiredArgsConstructor
 public class TagController {
 
     private final TagService tagService;
-
-    public TagController(TagService tagService) {
-        this.tagService = tagService;
-    }
 
     /**
      * Creates a new tag based on the provided TagDto object.
@@ -35,10 +41,9 @@ public class TagController {
      * @throws Exception if an error occurs while creating the tag
      */
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Long create(@RequestBody TagDto tagDto){
+    public Long create(@RequestBody @Valid TagDtoRequest tagDto){
         return tagService.create(tagDto);
     }
 
@@ -49,9 +54,9 @@ public class TagController {
      * @throws Exception if an error occurs while retrieving the tag
      */
 
-    @GetMapping(value= "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value= "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public TagDtoResponse read(@PathVariable  Long id) {
+    public TagDtoResponse read(@PathVariable  @Valid Long id) {
         return tagService.read(id);
     }
 
@@ -62,10 +67,9 @@ public class TagController {
      * @return true if the update was successful, false otherwise
      * @throws Exception if an error occurs while updating the tag
      */
-    @PatchMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-    produces = MediaType.APPLICATION_JSON_VALUE, path = "{id}")
+    @PatchMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public boolean update(@PathVariable Long id, @RequestBody TagDto tagDto){
+    public boolean update(@PathVariable @Valid Long id, @RequestBody @Valid TagDtoRequest tagDto){
         return tagService.update(tagDto, id);
     }
 
@@ -75,9 +79,9 @@ public class TagController {
      * @return true if the deletion was successful, false otherwise
      * @throws Exception if an error occurs while deleting the tag
      */
-    @DeleteMapping("{id}")
+    @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public boolean delete(@PathVariable Long id){
+    public boolean delete(@PathVariable @Valid Long id){
         return tagService.delete(id);
     }
 
@@ -88,7 +92,7 @@ public class TagController {
      * @throws Exception if an error occurs while retrieving the tags
      */
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping
     public List<TagDtoResponse> readAll(@PageableDefault(page = 0)Pageable pageable){
         return tagService.readAll(pageable);
     }
