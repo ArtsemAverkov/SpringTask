@@ -1,0 +1,36 @@
+# Default ignored files
+bash
+Copy code
+# Ignore build output directories
+build/
+dist/
+out/
+bin/
+
+# Ignore IDE and editor files
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+*.idea_modules/
+*.class
+*.log
+# Ignore Gradle files
+.gradle/
+/build/
+/out/
+*.iml
+*.ipr
+*.iws
+
+# Ignore miscellaneous files
+.DS_Store
+log/
+logs/
+*.swp
+*.lock
+*.bak
+*.pyc
+*.sqlite
+*.pdf
