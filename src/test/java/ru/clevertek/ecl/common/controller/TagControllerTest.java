@@ -16,12 +16,12 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.clevertec.ecl.SpringTaskApplication;
 import ru.clevertec.ecl.controller.tagController.TagController;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
-import ru.clevertec.ecl.dto.tag.TagDto;
+import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.service.tag.TagService;
-import ru.clevertek.ecl.common.extension.ValidParameterResolverGiftCertificates;
+import ru.clevertek.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
 import ru.clevertek.ecl.common.extension.tag.ValidParameterResolverTag;
 
 import java.util.Arrays;
@@ -43,8 +43,8 @@ public class TagControllerTest {
     private MockMvc mockMvc;
 
     @Test
-    public void testCreateTag(TagDto tagDto) throws Exception {
-        Mockito.when(tagService.create(any(TagDto.class))).thenReturn(tagDto.getId());
+    public void testCreateTag(TagDtoRequest tagDto) throws Exception {
+        Mockito.when(tagService.create(any(TagDtoRequest.class))).thenReturn(tagDto.getId());
         mockMvc.perform(MockMvcRequestBuilders.post("/tag")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
@@ -53,11 +53,11 @@ public class TagControllerTest {
                                 "}"))
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().string(tagDto.getId().toString()));
-        Mockito.verify(tagService).create(any(TagDto.class));
+        Mockito.verify(tagService).create(any(TagDtoRequest.class));
     }
 
     @Test
-    public void testReadTag(TagDto tagDto, GiftCertificatesDto giftCertificatesDto) throws Exception {
+    public void testReadTag(TagDtoRequest tagDto, GiftCertificatesDtoRequest giftCertificatesDto) throws Exception {
         List<GiftCertificatesResponseDto> giftCertificatesDtoList = Arrays.asList(
                 new GiftCertificatesResponseDto(
                         giftCertificatesDto.getId(),
@@ -73,8 +73,8 @@ public class TagControllerTest {
         Mockito.verify(tagService).read(anyLong());
     }
     @Test
-    public void testUpdateTag(TagDto tagDto) throws Exception {
-        Mockito.when(tagService.update(any(TagDto.class), anyLong())).thenReturn(true);
+    public void testUpdateTag(TagDtoRequest tagDto) throws Exception {
+        Mockito.when(tagService.update(any(TagDtoRequest.class), anyLong())).thenReturn(true);
         mockMvc.perform(MockMvcRequestBuilders.patch("/tag/"+tagDto.getId()+"")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
@@ -83,11 +83,11 @@ public class TagControllerTest {
                         "}"))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("true"));
-        Mockito.verify(tagService).update(any(TagDto.class), anyLong());
+        Mockito.verify(tagService).update(any(TagDtoRequest.class), anyLong());
     }
 
     @Test
-    public void testDeleteTag(TagDto tagDto) throws Exception {
+    public void testDeleteTag(TagDtoRequest tagDto) throws Exception {
         Mockito.when(tagService.delete(tagDto.getId())).thenReturn(true);
         mockMvc.perform(MockMvcRequestBuilders.delete("/tag/"+tagDto.getId()+""))
                 .andExpect(status().isOk())

@@ -2,15 +2,27 @@ package ru.clevertec.ecl.entity.giftCertificates;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import lombok.*;
+
 import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.OptimisticLockType;
 import org.hibernate.annotations.OptimisticLocking;
 import ru.clevertec.ecl.entity.tag.Tag;
 
-import javax.persistence.*;
+import jakarta.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.FetchType;
 
 @Entity
 @Getter
