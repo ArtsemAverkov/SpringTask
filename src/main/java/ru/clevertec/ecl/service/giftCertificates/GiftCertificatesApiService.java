@@ -1,16 +1,15 @@
 package ru.clevertec.ecl.service.giftCertificates;
 
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
-import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
-import ru.clevertec.ecl.entity.tag.Tag;
+import ru.clevertec.ecl.dto.GiftCertificatesDto;
+import ru.clevertec.ecl.entity.GiftCertificates;
+import ru.clevertec.ecl.entity.Tag;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.NoSuchElementException;
+
 
 /**
 
@@ -27,7 +26,6 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
         this.giftCertificatesRepository = giftCertificatesRepository;
     }
 
-
     /**
      * Creates a new GiftCertificates entity based on the specified GiftCertificatesDto and returns its id.
      *
@@ -38,7 +36,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
     @Override
     public long create(GiftCertificatesDto giftCertificates) {
         GiftCertificates certificates = buildGiftCertificates(giftCertificates);
-        return giftCertificatesRepository.save(certificates).getId();
+        return giftCertificatesRepository.create(certificates);
     }
 
     /**
@@ -50,8 +48,8 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      */
 
     @Override
-    public GiftCertificates read(long id) {
-        return giftCertificatesRepository.findById(id).orElseThrow(NoSuchElementException::new);
+    public GiftCertificates read(long id) throws Exception {
+        return giftCertificatesRepository.read(id);
     }
 
     /**
@@ -65,11 +63,8 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
 
     @Override
     public boolean update(GiftCertificatesDto giftCertificates, Long id) {
-        read(id);
         GiftCertificates certificates = buildGiftCertificates(giftCertificates);
-        certificates.setId(id);
-        giftCertificatesRepository.save(certificates);
-        return true;
+        return giftCertificatesRepository.update(certificates, id);
     }
 
     /**
@@ -81,9 +76,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
 
     @Override
     public boolean delete(Long id) {
-        read(id);
-        giftCertificatesRepository.findById(id);
-        return true;
+        return giftCertificatesRepository.delete(id);
     }
 
     /**
@@ -97,8 +90,8 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      */
 
     @Override
-    public List<GiftCertificates> readAll(Pageable pageable) {
-        return giftCertificatesRepository.findAll();
+    public List<Object[]> readAll(String tagName, String orderBy, String orderType) {
+        return giftCertificatesRepository.readAll(tagName, orderBy, orderType);
     }
 
     /**
@@ -112,7 +105,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
         LocalDateTime now = LocalDateTime.now();
         String isoDateTime = now.format(DateTimeFormatter.ISO_DATE_TIME);
         return GiftCertificates.builder()
-                //.id(giftCertificatesDto.getId())
+                .id(giftCertificatesDto.getId())
                 .name(giftCertificatesDto.getName())
                 .price(giftCertificatesDto.getPrice())
                 .description(giftCertificatesDto.getDescription())

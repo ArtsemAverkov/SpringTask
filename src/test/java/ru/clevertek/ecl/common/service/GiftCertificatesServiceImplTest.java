@@ -3,14 +3,19 @@ package ru.clevertek.ecl.common.service;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
-import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
-import ru.clevertec.ecl.entity.tag.Tag;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import ru.clevertec.ecl.dto.GiftCertificatesDto;
+import ru.clevertec.ecl.entity.GiftCertificates;
+import ru.clevertec.ecl.entity.Tag;
+import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
 import ru.clevertec.ecl.service.giftCertificates.GiftCertificatesApiService;
+import ru.clevertec.ecl.util.appConfig.AppConfig;
 import ru.clevertek.ecl.common.extension.InvalidParameterResolverGiftCertificates;
 import ru.clevertek.ecl.common.extension.ValidParameterResolverGiftCertificates;
 
@@ -20,54 +25,60 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.Mockito.when;
 
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = AppConfig.class)
 @DisplayName("Testing GiftCertificates Service for Valid and Invalid")
 public class GiftCertificatesServiceImplTest {
 
 
     @Nested
-    @ExtendWith({MockitoExtension.class, ValidParameterResolverGiftCertificates.class})
+    @ExtendWith({MockitoExtension.class,
+            GiftCertificatesApiServiceParameterResolver.class,
+            ValidParameterResolverGiftCertificates.class})
     public class ValidData {
 
         @InjectMocks
-        private  GiftCertificatesApiService giftCertificatesApiService;
+        private final GiftCertificatesApiService giftCertificatesApiService;
 
         @Mock
         private GiftCertificatesRepository giftCertificatesRepository;
 
+
+        public ValidData(GiftCertificatesApiService giftCertificatesApiService) {
+            this.giftCertificatesApiService = giftCertificatesApiService;
+        }
+
         @Test
-        void shouldGetGiftCertificatesWhenGiftCertificatesValid(GiftCertificatesDto giftCertificatesDto)
-                throws Exception {
+        void shouldGetGiftCertificatesWhenGiftCertificatesValid(GiftCertificatesDto giftCertificatesDto) throws Exception {
             GiftCertificates certificates = buildGiftCertificates(giftCertificatesDto);
-            Mockito.when(giftCertificatesRepository.read(giftCertificatesDto.getId())).thenReturn(certificates);
+            when(giftCertificatesRepository.read(giftCertificatesDto.getId())).thenReturn(certificates);
             Assertions.assertEquals(certificates, giftCertificatesApiService.read(giftCertificatesDto.getId()));
             Mockito.verify(giftCertificatesRepository, Mockito.times(1)).read(certificates.getId());
         }
 
         @Test
-        void shouldDeleteGiftCertificatesGiftCertificatesIsValid(GiftCertificatesDto giftCertificatesDto) {
+        void shouldDeleteGiftCertificatesGiftCertificatesIsValid(GiftCertificatesDto giftCertificatesDto) throws Exception {
             GiftCertificates certificates = buildGiftCertificates(giftCertificatesDto);
-            Mockito.when(giftCertificatesRepository.delete(giftCertificatesDto.getId())).thenReturn(true);
+            when(giftCertificatesRepository.delete(giftCertificatesDto.getId())).thenReturn(true);
             Assertions.assertTrue(giftCertificatesApiService.delete(giftCertificatesDto.getId()));
             Mockito.verify(giftCertificatesRepository, Mockito.timeout(1)).delete(certificates.getId());
         }
 
-        @Disabled("This test is currently not working")
         @Test
-        void shouldUpdateGiftCertificatesWhenGiftCertificatesIsValid(GiftCertificatesDto giftCertificatesDto)  {
+        void shouldUpdateGiftCertificatesWhenGiftCertificatesIsValid(GiftCertificatesDto giftCertificatesDto) throws Exception {
             GiftCertificates certificates = buildGiftCertificates(giftCertificatesDto);
-            Mockito.when(giftCertificatesRepository.update(certificates, 1L)).thenReturn(true);
+            when(giftCertificatesRepository.update(certificates, 1L)).thenReturn(true);
             Assertions.assertTrue(giftCertificatesApiService.update(giftCertificatesDto, 1L));
             Mockito.verify(giftCertificatesRepository, Mockito.times(1)).update(certificates, 1L);
         }
 
-
-        @Disabled("This test is currently not working")
         @Test
         void shouldCreateGiftCertificatesWhenGiftCertificatesIsValid(GiftCertificatesDto giftCertificatesDto){
             GiftCertificates certificates = buildGiftCertificates(giftCertificatesDto);
-            Mockito.when(giftCertificatesRepository.create(certificates)).thenReturn(1L);
+            when(giftCertificatesRepository.create(certificates)).thenReturn(1L);
             Assertions.assertEquals(1L, giftCertificatesApiService.create(giftCertificatesDto));
             Mockito.verify(giftCertificatesRepository, Mockito.times(1)).create(certificates);
         }
@@ -79,7 +90,7 @@ public class GiftCertificatesServiceImplTest {
             GiftCertificates[] certificatesArray = {certificates};
             List<Object[]> certificatesList = new ArrayList<>();
             certificatesList.add(Arrays.asList(certificatesArray).toArray());
-            Mockito.when(giftCertificatesRepository.readAll(param,param,param)).thenReturn(certificatesList);
+            when(giftCertificatesRepository.readAll(param,param,param)).thenReturn(certificatesList);
             Assertions.assertEquals(certificatesList, giftCertificatesApiService.readAll(param,param,param));
             Mockito.verify(giftCertificatesRepository, Mockito.times(1)).readAll(param,param,param);
         }
@@ -101,10 +112,15 @@ public class GiftCertificatesServiceImplTest {
     }
     @Nested
     @ExtendWith({MockitoExtension.class,
+            GiftCertificatesApiServiceParameterResolver.class,
             InvalidParameterResolverGiftCertificates.class})
     public class InvalidData{
         @InjectMocks
-        private GiftCertificatesApiService giftCertificatesApiService;
+        private final GiftCertificatesApiService giftCertificatesApiService;
+
+        public InvalidData(GiftCertificatesApiService giftCertificatesApiService) {
+            this.giftCertificatesApiService = giftCertificatesApiService;
+        }
 
         @Test
         void shouldUpdateProductWheProductIsInvalid (GiftCertificatesDto giftCertificatesDto){

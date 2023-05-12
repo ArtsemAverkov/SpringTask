@@ -7,15 +7,19 @@ import org.hibernate.query.Query;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
-import ru.clevertec.ecl.entity.tag.Tag;
-import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
-import ru.clevertec.ecl.util.jpa.HibernateI;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import ru.clevertec.ecl.entity.GiftCertificates;
+import ru.clevertec.ecl.entity.Tag;
+import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesApiRepository;
+import ru.clevertec.ecl.util.appConfig.AppConfig;
+import ru.clevertec.ecl.util.hibernate.HibernateI;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,6 +29,9 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(classes = AppConfig.class)
+@ExtendWith(GiftCertificatesApiRepositoryParameterResolver.class)
 public class GiftCertificatesRepositoryTest {
 
     @Mock
@@ -40,7 +47,11 @@ public class GiftCertificatesRepositoryTest {
     private Transaction transaction;
 
     @InjectMocks
-    private GiftCertificatesRepository repository;
+    private final GiftCertificatesApiRepository repository;
+
+    public GiftCertificatesRepositoryTest(GiftCertificatesApiRepository repository) {
+        this.repository = repository;
+    }
 
     @BeforeEach
     void setUp() {
@@ -105,9 +116,9 @@ public class GiftCertificatesRepositoryTest {
         String tagName = "Tag1";
         Tag tag = new Tag(tagName);
         GiftCertificates certificates = new GiftCertificates(id, name,name, price, duration, isoDateTime,isoDateTime, tag);
-        Mockito.when(session.get(GiftCertificates.class, id)).thenReturn(certificates);
+        when(session.get(GiftCertificates.class, id)).thenReturn(certificates);
         GiftCertificates result = repository.read(id);
-        Mockito.verify(session).get(GiftCertificates.class, id);
+        verify(session).get(GiftCertificates.class, id);
         Assertions.assertNotNull(result);
         Assertions.assertEquals(name, result.getName());
         Assertions.assertEquals(price, result.getPrice());

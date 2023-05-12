@@ -7,8 +7,8 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.24/lombok-1.18.24.jar" />
         </processorPath>
-        <module name="SpringTask.Spring_task.main" />
-        <module name="SpringTask.Spring_task.test" />
+        <module name="Spring_task.test" />
+        <module name="Spring_task.main" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="17" />

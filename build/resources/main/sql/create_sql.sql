@@ -11,4 +11,4 @@ CREATE TABLE IF NOT EXISTS giftCertificates (
     duration  BIGINT,
     create_date VARCHAR(255) NOT NULL,
     last_update_date VARCHAR(255) NOT NULL,
-    tag_id BIGINT REFERENCES tag(id) ON DELETE SET NULL);
+    tag_id BIGINT REFERENCES tag(id) ON DELETE SET NULL)
