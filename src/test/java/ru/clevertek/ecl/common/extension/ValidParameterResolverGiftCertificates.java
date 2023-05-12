@@ -4,12 +4,13 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
-import ru.clevertec.ecl.dto.GiftCertificatesDto;
-import ru.clevertec.ecl.dto.TagDto;
+import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDto;
+import ru.clevertec.ecl.dto.tag.TagDto;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
 
 
 public class ValidParameterResolverGiftCertificates implements ParameterResolver {
@@ -23,6 +24,7 @@ public class ValidParameterResolverGiftCertificates implements ParameterResolver
                     new TagDto(
                             1L,
                             ""
+
                     )
             ),
             new GiftCertificatesDto(
