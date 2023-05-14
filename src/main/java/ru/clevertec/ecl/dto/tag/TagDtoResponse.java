@@ -3,6 +3,8 @@ package ru.clevertec.ecl.dto.tag;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Builder;
+import lombok.ToString;
+import lombok.EqualsAndHashCode;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -14,6 +16,8 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
+@ToString
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class TagDtoResponse {

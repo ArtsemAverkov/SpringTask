@@ -1,7 +1,9 @@
 package ru.clevertec.ecl.service.user;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.user.UserDtoRequest;
 import ru.clevertec.ecl.entity.user.User;
 import ru.clevertec.ecl.repository.user.UserRepository;
@@ -21,9 +23,11 @@ public class UserApiService implements UserService{
      * @throws NoSuchElementException if no User object with the specified ID is found.
      */
 
+    @Cacheable("UsersCache")
     @Override
     public User read(Long id) {
-        return userRepository.findById(id).orElseThrow(NoSuchElementException::new);
+        return userRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("Invalid User Id:" + id));
     }
 
     /**
@@ -32,8 +36,14 @@ public class UserApiService implements UserService{
      * @return the ID of the newly created User object.
      */
 
+    @Cacheable("UsersCache")
+    @Transactional
     @Override
     public long create(UserDtoRequest userDto) {
+        int existingUsersCount = userRepository.existActiveUserName(userDto.getName());
+        if (existingUsersCount > 0) {
+            throw new IllegalArgumentException("User with name '" + userDto.getName() + "' already exists");
+        }
         User user = builderUserDto(userDto);
         return userRepository.save(user).getId();
     }

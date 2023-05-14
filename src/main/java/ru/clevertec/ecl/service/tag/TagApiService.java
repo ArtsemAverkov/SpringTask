@@ -1,23 +1,23 @@
 package ru.clevertec.ecl.service.tag;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
+import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
-import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.repository.tag.TagRepository;
+import ru.clevertec.ecl.utils.TagsMapper;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  This class represents the implementation of the TagService interface. It provides methods for CRUD operations
  on Tag entities, using a TagRepository to access the data source.
  */
+
 @Service
 @RequiredArgsConstructor
 public class TagApiService implements TagService{
@@ -29,9 +29,10 @@ public class TagApiService implements TagService{
      * @return the ID of the newly created Tag entity.
      */
 
+    @Cacheable("TagCache")
     @Override
     public long create(TagDtoRequest tagDto) {
-        Tag tag = buildTag(tagDto);
+        Tag tag = TagsMapper.buildTag(tagDto);
         return tagRepository.save(tag).getId();
     }
 
@@ -41,11 +42,13 @@ public class TagApiService implements TagService{
      * @return a TagDtoResponse instance representing the Tag entity with the specified ID.
      * @throws IllegalArgumentException if no Tag entity with the specified ID exists in the data source.
      */
+
+    @Cacheable("TagCache")
     @Override
     public TagDtoResponse read(long id) {
         Tag tag = tagRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("Invalid tag Id:" + id));
-        return convertTagToTagDtoResponse(tag);
+        return TagsMapper.convertTagToTagDtoResponse(tag);
     }
 
     /**
@@ -53,13 +56,14 @@ public class TagApiService implements TagService{
      * @param tagDto a TagDto instance containing the updated data for the Tag entity.
      * @param id the ID of the Tag entity to update.
      * @return true if the update was successful, false otherwise.
-     * @throws IllegalArgumentException if no Tag entity with the specified ID exists in the data source.
      */
 
+    @Cacheable("TagCache")
     @Override
+    @Transactional
     public boolean update(TagDtoRequest tagDto, Long id) {
         read(id);
-        Tag tag = buildTag(tagDto);
+        Tag tag = TagsMapper.buildTag(tagDto);
         tag.setId(id);
         tagRepository.save(tag);
         return true;
@@ -69,10 +73,11 @@ public class TagApiService implements TagService{
      * Deletes a Tag entity from the data source with the specified ID.
      * @param id the ID of the Tag entity to delete.
      * @return true if the deletion was successful, false otherwise.
-     * @throws IllegalArgumentException if no Tag entity with the specified ID exists in the data source.
      */
 
+    @Cacheable("TagCache")
     @Override
+    @Transactional
     public boolean delete(Long id) {
         read(id);
         tagRepository.deleteById(id);
@@ -88,47 +93,6 @@ public class TagApiService implements TagService{
     @Override
     public List<TagDtoResponse> readAll(Pageable pageable) {
         List<Tag> content = tagRepository.findAll(pageable).getContent();
-        return getTagDtoResponseList(content);
-    }
-
-    /**
-     * Builds a new Tag entity from the provided TagDto.
-     * @param tagDto a TagDto instance containing the data to create the Tag entity with.
-     * @return a new Tag entity.
-     */
-
-    private Tag buildTag(TagDtoRequest tagDto){
-        return Tag.builder()
-                .name(tagDto.getName())
-                .build();
-    }
-
-    /**
-     * Converts a Tag entity to a TagDtoResponse instance.
-     * @param tag a Tag entity to convert.
-     * @return a Tag
-     */
-    public TagDtoResponse convertTagToTagDtoResponse(Tag tag) {
-        List<GiftCertificatesResponseDto> giftCertificates = new ArrayList<>();
-        for (GiftCertificates giftCertificate : tag.getGiftCertificatesList()) {
-            giftCertificates.add(GiftCertificatesResponseDto.builder()
-                    .id(giftCertificate.getId())
-                    .name(giftCertificate.getName())
-                    .description(giftCertificate.getDescription())
-                    .price(giftCertificate.getPrice())
-                    .duration(giftCertificate.getDuration())
-                    .build());
-        }
-        return TagDtoResponse.builder()
-                .id(tag.getId())
-                .name(tag.getName())
-                .giftCertificates(giftCertificates)
-                .build();
-    }
-
-    private List<TagDtoResponse> getTagDtoResponseList(List<Tag> tagPage) {
-       return tagPage.stream()
-                .map(this::convertTagToTagDtoResponse)
-                .collect(Collectors.toList());
+        return TagsMapper.getTagDtoResponseList(content);
     }
 }

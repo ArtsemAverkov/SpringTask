@@ -26,8 +26,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
+@ToString(exclude = "orders")
+@EqualsAndHashCode(exclude = "orders")
 @Table(name = "users")
 public class User {
     @Id

@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * The TagController class is a RestController that handles HTTP requests related to tags.
- * This controller maps all requests to the "/tag" endpoint and delegates their processing
+ * This controller maps all requests to the "/tags" endpoint and delegates their processing
  * to the TagService class.
  * The class defines methods for creating, reading, updating, and deleting tags.
  */
@@ -38,7 +38,6 @@ public class TagController {
      * Creates a new tag based on the provided TagDto object.
      * @param tagDto the TagDto object containing the data for the new tag
      * @return the ID of the newly created tag
-     * @throws Exception if an error occurs while creating the tag
      */
 
     @PostMapping
@@ -51,7 +50,6 @@ public class TagController {
      * Retrieves a tag with the specified ID.
      * @param id the ID of the tag to retrieve
      * @return the TagDtoResponse object representing the tag with the specified ID
-     * @throws Exception if an error occurs while retrieving the tag
      */
 
     @GetMapping(value= "/{id}")
@@ -65,8 +63,8 @@ public class TagController {
      * @param id the ID of the tag to update
      * @param tagDto the TagDto object containing the updated data for the tag
      * @return true if the update was successful, false otherwise
-     * @throws Exception if an error occurs while updating the tag
      */
+
     @PatchMapping(path = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public boolean update(@PathVariable @Valid Long id, @RequestBody @Valid TagDtoRequest tagDto){
@@ -77,8 +75,8 @@ public class TagController {
      * Deletes the tag with the specified ID.
      * @param id the ID of the tag to delete
      * @return true if the deletion was successful, false otherwise
-     * @throws Exception if an error occurs while deleting the tag
      */
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public boolean delete(@PathVariable @Valid Long id){
@@ -89,11 +87,10 @@ public class TagController {
      * Retrieves all tags, with pagination support.
      * @param pageable the pageable object containing pagination parameters
      * @return a List of TagDtoResponse objects representing the tags
-     * @throws Exception if an error occurs while retrieving the tags
      */
 
     @GetMapping
-    public List<TagDtoResponse> readAll(@PageableDefault(page = 0)Pageable pageable){
+    public List<TagDtoResponse> readAll(@PageableDefault Pageable pageable){
         return tagService.readAll(pageable);
     }
 }

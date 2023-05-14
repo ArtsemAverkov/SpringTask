@@ -49,4 +49,15 @@ public class GiftCertificates {
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Tag tag;
+
+    public GiftCertificates(Long id, String name, String description, Double price,
+                            Long duration, String create_date, String last_update_date) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.duration = duration;
+        this.create_date = create_date;
+        this.last_update_date = last_update_date;
+    }
 }

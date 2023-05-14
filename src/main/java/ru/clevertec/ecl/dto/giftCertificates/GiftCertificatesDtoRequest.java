@@ -4,6 +4,8 @@ import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import jakarta.validation.constraints.PositiveOrZero;
+import lombok.ToString;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Builder;
@@ -13,11 +15,11 @@ import lombok.NoArgsConstructor;
 @Getter
 @Setter
 @Builder
+@ToString
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class GiftCertificatesDtoRequest {
-    @NotNull
-    private Long id;
 
     @NotNull
     @Size(min = 1, max = 255)
@@ -37,8 +39,8 @@ public class GiftCertificatesDtoRequest {
 
     @NotNull
     private TagDtoRequest tagDto;
-    public GiftCertificatesDtoRequest(Long id, String name, String description, Double price, Long duration) {
-        this.id = id;
+
+    public GiftCertificatesDtoRequest(String name, String description, Double price, Long duration) {
         this.name = name;
         this.description = description;
         this.price = price;

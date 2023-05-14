@@ -13,6 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDtoRequest {
+
     @NotNull
     @Size(min = 1, max = 255)
     private String name;

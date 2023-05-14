@@ -21,10 +21,10 @@ import java.util.List;
 
 /**
  * Controller for handling User-related requests.
- * @RestController annotation is used to indicate that this class is a controller
- * and that all methods should return JSON-formatted responses by default.
- * @RequestMapping annotation is used to map all requests with "/user" URI to this controller.
+ * This controller maps all requests to the "/user" endpoint and delegates their processing
+ * to the UserService and  OrderService class.
  */
+
 @RestController
 @RequestMapping("/user")
 @RequiredArgsConstructor
@@ -38,6 +38,7 @@ public class UserController {
      * @param id the ID of the user to retrieve
      * @return a User object representing the user
      */
+
     @GetMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.OK)
     public User read(@PathVariable @Valid Long id) {
@@ -61,17 +62,20 @@ public class UserController {
      * @param userId the ID of the user to retrieve orders for
      * @return a List of OrderDto objects representing the user's orders
      */
+
     @GetMapping(value = "/{userId}/orders")
     @ResponseStatus(HttpStatus.OK)
     public List<OrderDtoRequest> getOrdersByUserId(@PathVariable @Valid Long userId) {
         return orderService.getOrdersByUserId(userId);
     }
+
     /**
      * Buys a gift certificate for the specified user.
      * @param userId the ID of the user who is buying the gift certificate
      * @param certificateId the ID of the gift certificate to buy
      * @return true if the purchase was successful, false otherwise
      */
+
     @GetMapping(value = "/buy")
     public boolean buyGiftCertificate(@RequestParam(name = "userId") @Valid Long userId,
                                     @RequestParam(name = "certificateId") @Valid Long certificateId) {
@@ -82,10 +86,10 @@ public class UserController {
      * Retrieves the most popular gift certificate.
      * @return a list of objects containing information about the certificate and its total number of orders.
      */
+
     @GetMapping(value = "/getAPopularCertificate")
     @ResponseStatus(HttpStatus.OK)
     public List<Object[]> getAPopularCertificate(){
         return orderService.getAPopularCertificate();
     }
-
 }

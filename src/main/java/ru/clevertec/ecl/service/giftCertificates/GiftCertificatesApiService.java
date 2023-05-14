@@ -1,22 +1,18 @@
 package ru.clevertec.ecl.service.giftCertificates;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
-import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
-import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
+import ru.clevertec.ecl.utils.GiftCertificatesMapper;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
-
  The {@code GiftCertificatesApiService} class represents a service layer that provides methods
  to interact with GiftCertificates entities. This class implements the {@code GiftCertificatesService} interface.
  @author [ArtsemAverkov]
@@ -33,9 +29,11 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      * @return the id of the newly created GiftCertificates entity
      */
 
+    @Cacheable("GiftCertificatesCache")
     @Override
     public long create(GiftCertificatesDtoRequest giftCertificates) {
-        GiftCertificates certificates = buildGiftCertificates(giftCertificates);
+        GiftCertificates certificates =
+                GiftCertificatesMapper.buildGiftCertificates(giftCertificates, true);
         return giftCertificatesRepository.save(certificates).getId();
     }
 
@@ -43,15 +41,15 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      * Retrieves a GiftCertificates entity with the specified id.
      * @param id the id of the GiftCertificates entity to retrieve
      * @return the GiftCertificates entity with the specified id
-     * @throws Exception if there is no GiftCertificates entity with the specified id
      */
 
+    @Cacheable("GiftCertificatesCache")
     @Override
     public GiftCertificatesDtoRequest read(long id) {
         GiftCertificates giftCertificates = giftCertificatesRepository.findById(id)
                 .orElseThrow(() ->
                         new IllegalArgumentException("Invalid GiftCertificates Id:" + id));
-        return convertToGiftCertificatesDto(giftCertificates);
+        return GiftCertificatesMapper.convertToGiftCertificatesDto(giftCertificates);
     }
 
     /**
@@ -61,11 +59,12 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      * @return true if the GiftCertificates entity was updated successfully, false otherwise
      */
 
+    @Cacheable("GiftCertificatesCache")
     @Override
     @Transactional
     public boolean update(GiftCertificatesDtoRequest giftCertificates, Long id) {
         read(id);
-        GiftCertificates certificates = buildGiftCertificates(giftCertificates);
+        GiftCertificates certificates = GiftCertificatesMapper.buildGiftCertificates(giftCertificates, false);
         certificates.setId(id);
         giftCertificatesRepository.save(certificates);
         return true;
@@ -73,11 +72,11 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
 
     /**
      * Deletes a GiftCertificates entity with the specified id.
-     *
      * @param id the id of the GiftCertificates entity to delete
      * @return true if the GiftCertificates entity was deleted successfully, false otherwise
      */
 
+    @Cacheable("GiftCertificatesCache")
     @Override
     @Transactional
     public boolean delete(Long id) {
@@ -94,55 +93,6 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
     @Override
     public List<GiftCertificatesDtoRequest> readAll(Pageable pageable) {
         List<GiftCertificates> all = giftCertificatesRepository.findAll(pageable).getContent();
-        return convertToDtoList(all);
-    }
-
-    /**
-     * Builds and returns a new GiftCertificates object based on the provided GiftCertificatesDto.
-     * @param giftCertificatesDto a GiftCertificatesDto object containing the data to be used in building the new GiftCertificates object
-     * @return a new GiftCertificates object
-     */
-
-    private GiftCertificates buildGiftCertificates(GiftCertificatesDtoRequest giftCertificatesDto){
-        LocalDateTime now = LocalDateTime.now();
-        String isoDateTime = now.format(DateTimeFormatter.ISO_DATE_TIME);
-        return GiftCertificates.builder()
-                .name(giftCertificatesDto.getName())
-                .price(giftCertificatesDto.getPrice())
-                .description(giftCertificatesDto.getDescription())
-                .duration(giftCertificatesDto.getDuration())
-                .tag(new Tag(giftCertificatesDto.getTagDto().getName()))
-                .create_date(isoDateTime)
-                .last_update_date(isoDateTime)
-                .build();
-    }
-
-    /**
-     * Converts a GiftCertificates object to a GiftCertificatesDto object.
-     * @param giftCertificates a GiftCertificates object to be converted
-     * @return a GiftCertificatesDto object
-     */
-
-    private GiftCertificatesDtoRequest convertToGiftCertificatesDto(GiftCertificates giftCertificates){
-        return GiftCertificatesDtoRequest.builder()
-                .id(giftCertificates.getId())
-                .name(giftCertificates.getName())
-                .price(giftCertificates.getPrice())
-                .duration(giftCertificates.getDuration())
-                .description(giftCertificates.getDescription())
-                .tagDto(new TagDtoRequest(giftCertificates.getTag().getId(),giftCertificates.getTag().getName()))
-                .build();
-    }
-
-    /**
-     * Converts a List of GiftCertificates objects to a List of GiftCertificatesDto objects using the convertToGiftCertificatesDto() method.
-     * @param giftCertificatesList a List of GiftCertificates objects to be converted
-     * @return a List of GiftCertificatesDto objects
-     */
-
-    public List<GiftCertificatesDtoRequest> convertToDtoList(List<GiftCertificates> giftCertificatesList) {
-        return giftCertificatesList.stream()
-                .map(this::convertToGiftCertificatesDto)
-                .collect(Collectors.toList());
+        return GiftCertificatesMapper.convertToDtoList(all);
     }
 }

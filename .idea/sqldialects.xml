@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/src/main/java/ru/clevertec/ecl/repository/tag/TagRepository.java" dialect="GenericSQL" />
-    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/d9af4678-cef1-464e-8e6e-2af6938266c0/console_4.sql" dialect="PostgreSQL" />
-  </component>
-</project>

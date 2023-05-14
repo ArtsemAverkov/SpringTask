@@ -28,8 +28,8 @@ import java.time.LocalDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-@EqualsAndHashCode
+@ToString(exclude = "user")
+@EqualsAndHashCode(exclude = "user")
 @Table(name = "orders")
 public class Order {
 
@@ -49,4 +49,11 @@ public class Order {
     @JoinColumn(name = "gift_certificates_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private GiftCertificates giftCertificates;
+
+    public Order(Long id, Double cost, LocalDateTime purchaseTime, GiftCertificates giftCertificates) {
+        this.id = id;
+        this.cost = cost;
+        this.purchaseTime = purchaseTime;
+        this.giftCertificates = giftCertificates;
+    }
 }
