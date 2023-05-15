@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.clevertec.ecl.SpringTaskApplication;
+import ru.clevertec.ecl.common.mapper.controllerMapper.UserControllerTestMapper;
 import ru.clevertec.ecl.controller.user.UserController;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.dto.order.OrderDtoRequest;
@@ -60,15 +61,15 @@ public class UserControllerTest {
 
     @Test
     public void read(UserDtoRequest userDto) throws Exception {
-        User builderuser = builderUser(userDto);
-        when(userService.read(builderuser.getId())).thenReturn(builderuser);
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/{id}",builderuser.getId())
+        User builderUser = UserControllerTestMapper.builderUser(userDto);
+        when(userService.read(builderUser.getId())).thenReturn(builderUser);
+        mockMvc.perform(MockMvcRequestBuilders.get("/user/{id}",builderUser.getId())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(buildJson(userDto)))
+                .content(UserControllerTestMapper.buildJson(userDto)))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is(userDto.getName())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email", Matchers.is(userDto.getEmail())));
-        verify(userService).read(builderuser.getId());
+        verify(userService).read(builderUser.getId());
     }
 
     @Test
@@ -76,7 +77,7 @@ public class UserControllerTest {
         when(userService.create(any(UserDtoRequest.class))).thenReturn(RequestId.VALUE_1.getValue());
         mockMvc.perform(MockMvcRequestBuilders.post("/user")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(buildJson(userDto)))
+                        .content(UserControllerTestMapper.buildJson(userDto)))
                 .andExpect(status().isCreated())
                 .andExpect(content().string(String.valueOf(RequestId.VALUE_1.getValue())));
         verify(userService).create(any(UserDtoRequest.class));
@@ -109,14 +110,13 @@ public class UserControllerTest {
 
     @Test
     public void buyGiftCertificate() throws Exception {
-        when(orderService.buyGiftCertificate(RequestId.VALUE_1.getValue(), RequestId.VALUE_2.getValue())).thenReturn(true);
-
+        when(orderService.buyGiftCertificate(RequestId.VALUE_1.getValue(),
+                RequestId.VALUE_2.getValue())).thenReturn(true);
         mockMvc.perform(MockMvcRequestBuilders.get("/user/buy")
                         .param("userId", RequestId.VALUE_1.getValue().toString())
                         .param("certificateId", RequestId.VALUE_2.getValue().toString()))
                 .andExpect(status().isOk())
                 .andExpect(content().string("true"));
-
         verify(orderService).buyGiftCertificate(RequestId.VALUE_1.getValue(), RequestId.VALUE_2.getValue());
     }
 
@@ -131,23 +131,5 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0][0].id").value(orderDto.getId()));
         verify(orderService).getAPopularCertificate();
-        }
-
-        private User builderUser(UserDtoRequest userDtoRequest){
-        return User.builder()
-                .id(RequestId.VALUE_1.getValue())
-                .name(userDtoRequest.getName())
-                .email(userDtoRequest.getEmail())
-                .password(userDtoRequest.getPassword())
-                .build();
-
-        }
-
-        private String buildJson(UserDtoRequest userDto){
-        return "{\n" +
-                "  \"name\": \""+userDto.getName()+"\",\n" +
-                "  \"email\": \""+userDto.getEmail()+"\",\n" +
-                "  \"password\": \""+userDto.getPassword()+"\"\n" +
-                "}";
         }
 }

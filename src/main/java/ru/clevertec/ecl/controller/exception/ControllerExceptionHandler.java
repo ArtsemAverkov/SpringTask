@@ -1,8 +1,9 @@
 package ru.clevertec.ecl.controller.exception;
 
-import jakarta.persistence.EntityNotFoundException;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -13,16 +14,11 @@ import ru.clevertec.ecl.dto.exceptions.ResponseError;
 import java.util.NoSuchElementException;
 @RestControllerAdvice
 public class ControllerExceptionHandler {
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseError handlerEntityNotFountException (EntityNotFoundException e){
-        return new ResponseError("INCORRECT REQUEST", e.toString());
-    }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(RuntimeException.class)
     private ResponseError serverErrorRuntime (RuntimeException ex) {
-        return new ResponseError("INTERNAL SERVER ERROR", ex.toString());
+        return new ResponseError("INCORRECT REQUEST", ex.toString());
     }
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -36,4 +32,16 @@ public class ControllerExceptionHandler {
     private ResponseError messageNotReadable (MissingServletRequestParameterException ex) {
         return new ResponseError("NO CORRECT REQUEST", ex.toString());
     }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    protected ResponseError  handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException ex) {
+        return new ResponseError("METHOD NOT ALLOWED", ex.toString());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseError handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        return new ResponseError("VALIDATION ERROR", ex.toString());
+    }
+
 }

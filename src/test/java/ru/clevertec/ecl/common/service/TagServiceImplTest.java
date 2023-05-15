@@ -12,10 +12,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import ru.clevertec.ecl.common.extension.tag.InvalidParameterResolverTag;
-import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
+import ru.clevertec.ecl.common.mapper.serviceMapper.TagServiceImplTestMapper;
 import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
-import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.repository.tag.TagRepository;
 import ru.clevertec.ecl.service.tag.TagApiService;
@@ -26,7 +25,6 @@ import ru.clevertec.ecl.common.extension.tag.ValidParameterResolverTag;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -52,8 +50,8 @@ public class TagServiceImplTest {
 
         @Test
         void shouldGetTagWhenTagValid(TagDtoRequest tagDto){
-            Tag tag = buildTag(tagDto);
-            TagDtoResponse tagDtoResponse = convertTagToTagDtoResponse(tag);
+            Tag tag = TagServiceImplTestMapper.buildTag(tagDto);
+            TagDtoResponse tagDtoResponse = TagServiceImplTestMapper.convertTagToTagDtoResponse(tag);
             when(tagRepository.findById(RequestId.VALUE_1.getValue())).thenReturn(Optional.of(tag));
             assertEquals(tagDtoResponse, tagApiService.read(RequestId.VALUE_1.getValue()));
             verify(tagRepository, times(1)).findById(RequestId.VALUE_1.getValue());
@@ -61,7 +59,7 @@ public class TagServiceImplTest {
 
         @Test
         void shouldDeleteTagWhenTagIsValid(TagDtoRequest tagDto){
-            Tag tag = buildTag(tagDto);
+            Tag tag = TagServiceImplTestMapper.buildTag(tagDto);
             when(tagRepository.findById(RequestId.VALUE_1.getValue())).thenReturn(Optional.ofNullable(tag));
             assertTrue(tagApiService.delete(RequestId.VALUE_1.getValue()));
             verify(tagRepository,times(1)).deleteById(RequestId.VALUE_1.getValue());
@@ -70,7 +68,7 @@ public class TagServiceImplTest {
 
         @Test
         void shouldUpdateTagWhenTagIsValid(TagDtoRequest tagDto){
-            Tag tag = buildTag(tagDto);
+            Tag tag = TagServiceImplTestMapper.buildTag(tagDto);
             when(tagRepository.findById(RequestId.VALUE_1.getValue())).thenReturn(Optional.ofNullable(tag));
             assertTrue(tagApiService.update(tagDto, RequestId.VALUE_1.getValue()));
             verify(tagRepository, times(1)).save(tag);
@@ -78,7 +76,7 @@ public class TagServiceImplTest {
 
         @Test
         void shouldCreateTagWhenTagIsValid(TagDtoRequest tagDto){
-            Tag tag = buildTagForMethodCreate(tagDto);
+            Tag tag = TagServiceImplTestMapper.buildTagForMethodCreate(tagDto);
             when(tagRepository.save(tag)).thenReturn(tag);
             assertEquals(0, tagApiService.create(tagDto));
             verify(tagRepository, times(1)).save(tag);
@@ -87,50 +85,13 @@ public class TagServiceImplTest {
         @Test
         void shouldReadAllTagWhenTagIsValid(TagDtoRequest tagDto){
             Pageable pageable = PageRequest.of(0, 10, Sort.unsorted());
-            Tag tag = buildTag(tagDto);
+            Tag tag = TagServiceImplTestMapper.buildTag(tagDto);
             List<Tag> resultList = new ArrayList<>();
             resultList.add(tag);
-            List<TagDtoResponse> tagDtoResponseList = getTagDtoResponseList(resultList);
+            List<TagDtoResponse> tagDtoResponseList = TagServiceImplTestMapper.getTagDtoResponseList(resultList);
             when(tagRepository.findAll(pageable)).thenReturn(new PageImpl<>(resultList));
             assertEquals(tagDtoResponseList, tagApiService.readAll(pageable));
             verify(tagRepository, times(1)).findAll(pageable);
-        }
-
-        private Tag buildTag(TagDtoRequest tagDto){
-            return Tag.builder()
-                    .id(RequestId.VALUE_1.getValue())
-                    .name(tagDto.getName())
-                    .build();
-        }
-
-        private Tag buildTagForMethodCreate(TagDtoRequest tagDto){
-            return Tag.builder()
-                    .name(tagDto.getName())
-                    .build();
-        }
-
-        public TagDtoResponse convertTagToTagDtoResponse(Tag tag) {
-            List<GiftCertificatesResponseDto> giftCertificates = new ArrayList<>();
-            for (GiftCertificates giftCertificate : tag.getGiftCertificatesList()) {
-                giftCertificates.add(GiftCertificatesResponseDto.builder()
-                        .id(giftCertificate.getId())
-                        .name(giftCertificate.getName())
-                        .description(giftCertificate.getDescription())
-                        .price(giftCertificate.getPrice())
-                        .duration(giftCertificate.getDuration())
-                        .build());
-            }
-            return TagDtoResponse.builder()
-                    .id(tag.getId())
-                    .name(tag.getName())
-                    .giftCertificates(giftCertificates)
-                    .build();
-        }
-
-        private List<TagDtoResponse> getTagDtoResponseList(List<Tag> tagPage) {
-            return tagPage.stream()
-                    .map(this::convertTagToTagDtoResponse)
-                    .collect(Collectors.toList());
         }
     }
 

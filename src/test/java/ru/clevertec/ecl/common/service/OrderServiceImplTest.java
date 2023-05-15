@@ -7,12 +7,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.clevertec.ecl.common.mapper.serviceMapper.OrderServiceImplTestMapper;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.dto.order.OrderDtoRequest;
 import ru.clevertec.ecl.dto.user.UserDtoRequest;
 import ru.clevertec.ecl.entity.order.Order;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
-import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.entity.user.User;
 import ru.clevertec.ecl.repository.order.OrderRepository;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
@@ -23,8 +23,6 @@ import ru.clevertec.ecl.common.extension.giftCertificates.ValidParameterResolver
 import ru.clevertec.ecl.common.extension.order.ValidParameterResolverOrder;
 import ru.clevertec.ecl.common.extension.user.ValidParameterResolverUser;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -61,8 +59,8 @@ public class OrderServiceImplTest {
         @Test
         public void buyGiftCertificateWhenValidInputShouldReturnTrue
                 (UserDtoRequest userDto, GiftCertificatesDtoRequest giftCertificatesDto) {
-            User user = builderUserDto(userDto);
-            GiftCertificates giftCertificates = buildGiftCertificates(giftCertificatesDto);
+            User user = OrderServiceImplTestMapper.builderUserDto(userDto);
+            GiftCertificates giftCertificates = OrderServiceImplTestMapper.buildGiftCertificates(giftCertificatesDto);
             when(userRepository.findById(RequestId.VALUE_1.getValue())).thenReturn(java.util.Optional.of(user));
             when(giftCertificatesRepository.findById(RequestId.VALUE_1.getValue()))
                     .thenReturn(java.util.Optional.of(giftCertificates));
@@ -74,7 +72,7 @@ public class OrderServiceImplTest {
 
         @Test
         public void getOrdersByUserIdWhenValidInputShouldReturnOrderDtoList(OrderDtoRequest orderDto) {
-            Order order = convertToDto(orderDto);
+            Order order = OrderServiceImplTestMapper.convertToDto(orderDto);
             when(orderRepository.findByUserId(RequestId.VALUE_1.getValue())).thenReturn(Collections.singletonList(order));
             List<OrderDtoRequest> result = orderApiService.getOrdersByUserId(RequestId.VALUE_1.getValue());
             assertEquals(1, result.size());
@@ -93,35 +91,6 @@ public class OrderServiceImplTest {
             assertEquals(testDataOne[0], result.get(0)[0]);
             assertEquals(testDataOne[0], result.get(1)[0]);
         }
-
-        private User builderUserDto(UserDtoRequest userDto) {
-            return User.builder()
-                    .name(userDto.getName())
-                    .email(userDto.getEmail())
-                    .password(userDto.getEmail())
-                    .build();
-        }
-
-        private GiftCertificates buildGiftCertificates(GiftCertificatesDtoRequest giftCertificatesDto) {
-            LocalDateTime now = LocalDateTime.now();
-            String isoDateTime = now.format(DateTimeFormatter.ISO_DATE_TIME);
-            return GiftCertificates.builder()
-                    .name(giftCertificatesDto.getName())
-                    .price(giftCertificatesDto.getPrice())
-                    .description(giftCertificatesDto.getDescription())
-                    .duration(giftCertificatesDto.getDuration())
-                    .tag(new Tag(giftCertificatesDto.getTagDto().getName()))
-                    .create_date(isoDateTime)
-                    .last_update_date(isoDateTime)
-                    .build();
-        }
-
-        private Order convertToDto(OrderDtoRequest order) {
-            return Order.builder()
-                    .id(order.getId())
-                    .purchaseTime(order.getPurchaseTime())
-                    .build();
-        }
     }
 
     @Nested
@@ -139,15 +108,18 @@ public class OrderServiceImplTest {
 
         @Test
         public void buyGiftCertificateTestWhenUserRepositoryFindUserByIdRequestIsInvalid(){
-            when(userRepository.findById(RequestId.VALUE_1.getValue())).thenThrow(IllegalArgumentException.class);
+            when(userRepository.findById(RequestId.VALUE_1.getValue()))
+                    .thenThrow(IllegalArgumentException.class);
             assertThrows(IllegalArgumentException.class,
                     () -> orderApiService.buyGiftCertificate(RequestId.VALUE_1.getValue(), RequestId.VALUE_2.getValue()));
         }
 
         @Test
         public void buyGiftCertificateTestWhenGiftCertificateFindByIdRequestIsInvalid(){
-            when(userRepository.findById(RequestId.VALUE_1.getValue())).thenReturn(Optional.of(new User()));
-            when(giftCertificatesRepository.findById(RequestId.VALUE_2.getValue())).thenThrow(IllegalArgumentException.class);
+            when(userRepository.findById(RequestId.VALUE_1.getValue()))
+                    .thenReturn(Optional.of(new User()));
+            when(giftCertificatesRepository.findById(RequestId.VALUE_2.getValue()))
+                    .thenThrow(IllegalArgumentException.class);
             assertThrows(IllegalArgumentException.class,
                     () -> orderApiService.buyGiftCertificate(RequestId.VALUE_1.getValue(), RequestId.VALUE_2.getValue()));
         }

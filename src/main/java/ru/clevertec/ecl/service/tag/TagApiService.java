@@ -9,7 +9,7 @@ import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.repository.tag.TagRepository;
-import ru.clevertec.ecl.utils.TagsMapper;
+import ru.clevertec.ecl.mapper.TagsMapper;
 
 import java.util.List;
 

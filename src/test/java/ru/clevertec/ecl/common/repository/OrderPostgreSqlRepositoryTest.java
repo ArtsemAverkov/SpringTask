@@ -16,14 +16,11 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
+import ru.clevertec.ecl.common.mapper.repositoryMapper.OrderPostgreSqlRepositoryTestMapper;
 import ru.clevertec.ecl.common.utill.RequestId;
-import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.order.Order;
 import ru.clevertec.ecl.repository.order.OrderRepository;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 
 @DataJpaTest
@@ -41,7 +38,8 @@ public class OrderPostgreSqlRepositoryTest {
     private static final DockerImageName PostgresQL_IMAGE = DockerImageName
             .parse("postgres:14.3");
     @Container
-    private  static PostgreSQLContainer<?> postgresSQLContainer = new PostgreSQLContainer<>(PostgresQL_IMAGE)
+    private  static final PostgreSQLContainer<?> postgresSQLContainer =
+            new PostgreSQLContainer<>(PostgresQL_IMAGE)
             .withDatabaseName("test")
             .withUsername("root")
             .withPassword("root")
@@ -60,7 +58,7 @@ public class OrderPostgreSqlRepositoryTest {
     @DirtiesContext
     void shouldFindByUserOrders(){
         List<Order> byUserId = orderRepository.findByUserId(RequestId.VALUE_1.getValue());
-        List<Order> orders = buildResponse();
+        List<Order> orders = OrderPostgreSqlRepositoryTestMapper.buildResponse();
         testEntityManager.flush();
         testEntityManager.getEntityManager().getTransaction().commit();
         Assertions.assertEquals( orders, byUserId);
@@ -71,36 +69,11 @@ public class OrderPostgreSqlRepositoryTest {
     @Transactional
     @DirtiesContext
     void findMostUsedTagWithHighestOrderCostTest() {
-        List<Object[]> orders = getObjects();
+        List<Object[]> objects = OrderPostgreSqlRepositoryTestMapper.getObjects();
         List<Object[]> mostUsedTagWithHighestOrderCost = orderRepository.findMostUsedTagWithHighestOrderCost();
         testEntityManager.flush();
         testEntityManager.getEntityManager().getTransaction().commit();
-        Assertions.assertArrayEquals(orders.toArray(), mostUsedTagWithHighestOrderCost.toArray());
-    }
-
-
-    private List<Object[]> getObjects() {
-        List<Object[]> orders = new ArrayList<>();
-        orders.add(new Object[]{"Restaurant Voucher",1L});
-        return orders;
-    }
-
-    private List<Order> buildResponse() {
-        List<Order> listOrder = new ArrayList<>();
-        listOrder.add(new Order(
-                1L,
-                20.0,
-                LocalDateTime.parse("2022-05-10T13:00", DateTimeFormatter.ISO_LOCAL_DATE_TIME),
-                new GiftCertificates(
-                        1L,
-                        "Restaurant Voucher",
-                        "Enjoy a meal at a local restaurant",
-                        50.0,
-                        365L,
-                        "2022-05-10 13:00:00",
-                        "2022-05-10 13:00:00"
-                )));
-        return listOrder;
+        Assertions.assertArrayEquals(objects.toArray(), mostUsedTagWithHighestOrderCost.toArray());
     }
 }
 

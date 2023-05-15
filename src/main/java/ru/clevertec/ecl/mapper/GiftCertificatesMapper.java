@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.utils;
+package ru.clevertec.ecl.mapper;
 
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.dto.tag.TagDtoRequest;

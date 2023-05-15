@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
-import ru.clevertec.ecl.utils.GiftCertificatesMapper;
+import ru.clevertec.ecl.mapper.GiftCertificatesMapper;
 
 import java.util.List;
 

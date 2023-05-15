@@ -20,6 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.clevertec.ecl.SpringTaskApplication;
 import ru.clevertec.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
 import ru.clevertec.ecl.common.extension.tag.ValidParameterResolverTag;
+import ru.clevertec.ecl.common.mapper.controllerMapper.GiftCertificatesControllerTestMapper;
 import ru.clevertec.ecl.common.utill.RequestId;
 import ru.clevertec.ecl.controller.giftCertificates.GiftCertificatesController;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
@@ -52,10 +53,11 @@ public class GiftCertificatesControllerTest {
     @Test
     public void testCreate(GiftCertificatesDtoRequest giftCertificatesDto,
                            TagDtoRequest tagDtoRequest) throws Exception {
-        when(giftCertificatesService.create(any(GiftCertificatesDtoRequest.class))).thenReturn(RequestId.VALUE_1.getValue());
+        when(giftCertificatesService.create(any(GiftCertificatesDtoRequest.class)))
+                .thenReturn(RequestId.VALUE_1.getValue());
         mockMvc.perform(MockMvcRequestBuilders.post("/certificates")
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(buildJson(giftCertificatesDto,tagDtoRequest)))
+                        .content(GiftCertificatesControllerTestMapper.buildJson(giftCertificatesDto,tagDtoRequest)))
                 .andExpect(status().isCreated())
                 .andExpect(MockMvcResultMatchers.content().string(RequestId.VALUE_1.getValue().toString()));
         verify(giftCertificatesService).create(any(GiftCertificatesDtoRequest.class));
@@ -67,9 +69,12 @@ public class GiftCertificatesControllerTest {
         when(giftCertificatesService.read(anyLong())).thenReturn(giftCertificatesDto);
         mockMvc.perform(MockMvcRequestBuilders.get("/certificates/{id}", RequestId.VALUE_1.getValue()))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(giftCertificatesDto.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.description").value(giftCertificatesDto.getDescription()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.price").value(giftCertificatesDto.getPrice()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name")
+                        .value(giftCertificatesDto.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description")
+                        .value(giftCertificatesDto.getDescription()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.price")
+                        .value(giftCertificatesDto.getPrice()));
         verify(giftCertificatesService).read(anyLong());
     }
 
@@ -79,7 +84,7 @@ public class GiftCertificatesControllerTest {
         when(giftCertificatesService.update(any(GiftCertificatesDtoRequest.class), anyLong())).thenReturn(true);
         mockMvc.perform(MockMvcRequestBuilders.patch("/certificates/{id}", RequestId.VALUE_1.getValue())
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(buildJson(giftCertificatesDto,tagDtoRequest)))
+                        .content(GiftCertificatesControllerTestMapper.buildJson(giftCertificatesDto,tagDtoRequest)))
                 .andExpect(status().isOk())
                 .andExpect(MockMvcResultMatchers.content().string("true"));
         verify(giftCertificatesService).update(any(GiftCertificatesDtoRequest.class), anyLong());
@@ -98,26 +103,13 @@ public class GiftCertificatesControllerTest {
     @Test
     public void testReadAll(GiftCertificatesDtoRequest giftCertificatesDto,
                             TagDtoRequest tagDtoRequest) throws Exception {
-        String jsonResponse = buildJson(giftCertificatesDto, tagDtoRequest);
+        String buildJson = GiftCertificatesControllerTestMapper.buildJson(giftCertificatesDto, tagDtoRequest);
         List<GiftCertificatesDtoRequest> list = new ArrayList<>();
         list.add(giftCertificatesDto);
         Pageable pageable = PageRequest.of(0, 10, Sort.unsorted());
         when(giftCertificatesService.readAll(pageable)).thenReturn(list);
         mockMvc.perform(MockMvcRequestBuilders.get("/certificates"))
-                .andExpect(MockMvcResultMatchers.content().json("[" + jsonResponse + "]"));
-    }
-
-    private String buildJson(GiftCertificatesDtoRequest giftCertificatesDto,
-                             TagDtoRequest tagDtoRequest){
-        return "{\n" +
-                "  \"name\": \""+giftCertificatesDto.getName()+"\",\n" +
-                "  \"description\": \""+giftCertificatesDto.getDescription()+"\",\n" +
-                "  \"price\": "+giftCertificatesDto.getPrice()+",\n" +
-                "  \"duration\": "+giftCertificatesDto.getDuration()+",\n" +
-                "  \"tagDto\": {\n" +
-                "    \"name\": \""+tagDtoRequest.getName()+"\"\n" +
-                "  }\n" +
-                "}";
+                .andExpect(MockMvcResultMatchers.content().json("[" + buildJson + "]"));
     }
 }
 

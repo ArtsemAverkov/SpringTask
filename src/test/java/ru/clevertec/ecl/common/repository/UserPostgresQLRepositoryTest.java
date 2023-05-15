@@ -34,7 +34,8 @@ public class UserPostgresQLRepositoryTest {
     private static final DockerImageName PostgresQL_IMAGE = DockerImageName
             .parse("postgres:14.3");
     @Container
-    private  static PostgreSQLContainer<?> postgresSQLContainer = new PostgreSQLContainer<>(PostgresQL_IMAGE)
+    private  static final PostgreSQLContainer<?> postgresSQLContainer =
+            new PostgreSQLContainer<>(PostgresQL_IMAGE)
             .withDatabaseName("test")
             .withUsername("root")
             .withPassword("root")

@@ -9,7 +9,7 @@ import ru.clevertec.ecl.entity.user.User;
 import ru.clevertec.ecl.repository.order.OrderRepository;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
 import ru.clevertec.ecl.repository.user.UserRepository;
-import ru.clevertec.ecl.utils.OrdersMapper;
+import ru.clevertec.ecl.mapper.OrdersMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
