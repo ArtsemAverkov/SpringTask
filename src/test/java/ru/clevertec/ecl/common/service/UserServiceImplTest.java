@@ -18,6 +18,7 @@ import ru.clevertec.ecl.common.extension.user.ValidParameterResolverUser;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.times;
@@ -49,6 +50,33 @@ public class UserServiceImplTest {
             when(userRepository.save(builderUserDtoForMethodCreate)).thenReturn(user);
             assertEquals(RequestId.VALUE_1.getValue(), userApiService.create(userDto));
             verify(userRepository, times(1)).save(builderUserDtoForMethodCreate);
+        }
+    }
+
+    @Nested
+    @ExtendWith({MockitoExtension.class, ValidParameterResolverUser.class})
+    public class InvalidData {
+        @InjectMocks
+        private UserApiService userApiService;
+
+        @Mock
+        private UserRepository userRepository;
+
+        @Test
+        void shouldGetUserWhenUserInvalid() {
+            when(userRepository.findById(RequestId.VALUE_1.getValue()))
+                            .thenReturn(Optional.ofNullable(null));
+            assertThrows(IllegalArgumentException.class,
+                    () -> userApiService.read(RequestId.VALUE_1.getValue()));
+
+        }
+
+        @Test
+        void shouldCreateUserWhenUserInvalid(UserDtoRequest userDtoRequest) {
+            when(userRepository.existActiveUserName("name")).thenReturn(1);
+            assertThrows(IllegalArgumentException.class,
+                    () -> userApiService.create(userDtoRequest));
+
         }
     }
 }

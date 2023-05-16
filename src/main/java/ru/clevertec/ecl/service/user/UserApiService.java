@@ -23,7 +23,7 @@ public class UserApiService implements UserService{
      * @throws NoSuchElementException if no User object with the specified ID is found.
      */
 
-    @Cacheable("UsersCache")
+    @Cacheable("myCache")
     @Override
     public User read(Long id) {
         return userRepository.findById(id).orElseThrow(() ->
@@ -36,7 +36,7 @@ public class UserApiService implements UserService{
      * @return the ID of the newly created User object.
      */
 
-    @Cacheable("UsersCache")
+    @Cacheable("myCache")
     @Transactional
     @Override
     public long create(UserDtoRequest userDto) {

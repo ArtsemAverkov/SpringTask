@@ -29,7 +29,7 @@ public class TagApiService implements TagService{
      * @return the ID of the newly created Tag entity.
      */
 
-    @Cacheable("TagCache")
+    @Cacheable("myCache")
     @Override
     public long create(TagDtoRequest tagDto) {
         Tag tag = TagsMapper.buildTag(tagDto);
@@ -43,7 +43,7 @@ public class TagApiService implements TagService{
      * @throws IllegalArgumentException if no Tag entity with the specified ID exists in the data source.
      */
 
-    @Cacheable("TagCache")
+    @Cacheable("myCache")
     @Override
     public TagDtoResponse read(long id) {
         Tag tag = tagRepository.findById(id).orElseThrow(() ->
@@ -58,7 +58,7 @@ public class TagApiService implements TagService{
      * @return true if the update was successful, false otherwise.
      */
 
-    @Cacheable("TagCache")
+    @Cacheable("myCache")
     @Override
     @Transactional
     public boolean update(TagDtoRequest tagDto, Long id) {
@@ -75,7 +75,7 @@ public class TagApiService implements TagService{
      * @return true if the deletion was successful, false otherwise.
      */
 
-    @Cacheable("TagCache")
+    @Cacheable("myCache")
     @Override
     @Transactional
     public boolean delete(Long id) {

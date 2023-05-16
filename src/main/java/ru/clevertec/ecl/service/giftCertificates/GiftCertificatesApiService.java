@@ -29,7 +29,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      * @return the id of the newly created GiftCertificates entity
      */
 
-    @Cacheable("GiftCertificatesCache")
+    @Cacheable("myCache")
     @Override
     public long create(GiftCertificatesDtoRequest giftCertificates) {
         GiftCertificates certificates =
@@ -43,7 +43,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      * @return the GiftCertificates entity with the specified id
      */
 
-    @Cacheable("GiftCertificatesCache")
+    @Cacheable("myCache")
     @Override
     public GiftCertificatesDtoRequest read(long id) {
         GiftCertificates giftCertificates = giftCertificatesRepository.findById(id)
@@ -59,7 +59,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      * @return true if the GiftCertificates entity was updated successfully, false otherwise
      */
 
-    @Cacheable("GiftCertificatesCache")
+    @Cacheable("myCache")
     @Override
     @Transactional
     public boolean update(GiftCertificatesDtoRequest giftCertificates, Long id) {
@@ -76,7 +76,7 @@ public class GiftCertificatesApiService implements GiftCertificatesService{
      * @return true if the GiftCertificates entity was deleted successfully, false otherwise
      */
 
-    @Cacheable("GiftCertificatesCache")
+    @Cacheable("myCache")
     @Override
     @Transactional
     public boolean delete(Long id) {

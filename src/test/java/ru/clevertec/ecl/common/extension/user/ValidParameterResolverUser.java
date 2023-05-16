@@ -18,7 +18,7 @@ public class ValidParameterResolverUser implements ParameterResolver {
                     "password"
             ),
             new UserDtoRequest(
-                    "names",
+                    "name",
                     "email@mail.com",
                     "passwords"
             )

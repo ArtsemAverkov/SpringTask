@@ -109,7 +109,7 @@ public class OrderServiceImplTest {
         @Test
         public void buyGiftCertificateTestWhenUserRepositoryFindUserByIdRequestIsInvalid(){
             when(userRepository.findById(RequestId.VALUE_1.getValue()))
-                    .thenThrow(IllegalArgumentException.class);
+                    .thenReturn(Optional.ofNullable(null));
             assertThrows(IllegalArgumentException.class,
                     () -> orderApiService.buyGiftCertificate(RequestId.VALUE_1.getValue(), RequestId.VALUE_2.getValue()));
         }
@@ -119,7 +119,7 @@ public class OrderServiceImplTest {
             when(userRepository.findById(RequestId.VALUE_1.getValue()))
                     .thenReturn(Optional.of(new User()));
             when(giftCertificatesRepository.findById(RequestId.VALUE_2.getValue()))
-                    .thenThrow(IllegalArgumentException.class);
+                    .thenReturn(Optional.ofNullable(null));
             assertThrows(IllegalArgumentException.class,
                     () -> orderApiService.buyGiftCertificate(RequestId.VALUE_1.getValue(), RequestId.VALUE_2.getValue()));
         }
