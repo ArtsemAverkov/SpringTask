@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.clevertec.ecl.common.service.TagServiceImplTest$InvalidData" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-05-16T17:27:04" hostname="MacBook-Air-Artem.local" time="0.122">
+  <properties/>
+  <testcase name="shouldDeleteTagWhenTagIsInvalid()" classname="ru.clevertec.ecl.common.service.TagServiceImplTest$InvalidData" time="0.107"/>
+  <testcase name="shouldCreateTagWhenTagIsInvalid(TagDtoRequest)" classname="ru.clevertec.ecl.common.service.TagServiceImplTest$InvalidData" time="0.005"/>
+  <testcase name="shouldUpdateTagWhenTasIsInvalid(TagDtoRequest)" classname="ru.clevertec.ecl.common.service.TagServiceImplTest$InvalidData" time="0.003"/>
+  <testcase name="shouldGetTagWhenTagIsInvalid()" classname="ru.clevertec.ecl.common.service.TagServiceImplTest$InvalidData" time="0.003"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

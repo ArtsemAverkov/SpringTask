@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.clevertec.ecl.common.service.TagServiceImplTest$ValidData" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-05-16T17:27:04" hostname="MacBook-Air-Artem.local" time="0.03">
+  <properties/>
+  <testcase name="shouldCreateTagWhenTagIsValid(TagDtoRequest)" classname="ru.clevertec.ecl.common.service.TagServiceImplTest$ValidData" time="0.003"/>
+  <testcase name="shouldUpdateTagWhenTagIsValid(TagDtoRequest)" classname="ru.clevertec.ecl.common.service.TagServiceImplTest$ValidData" time="0.005"/>
+  <testcase name="shouldGetTagWhenTagValid(TagDtoRequest)" classname="ru.clevertec.ecl.common.service.TagServiceImplTest$ValidData" time="0.002"/>
+  <testcase name="shouldReadAllTagWhenTagIsValid(TagDtoRequest)" classname="ru.clevertec.ecl.common.service.TagServiceImplTest$ValidData" time="0.013"/>
+  <testcase name="shouldDeleteTagWhenTagIsValid(TagDtoRequest)" classname="ru.clevertec.ecl.common.service.TagServiceImplTest$ValidData" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

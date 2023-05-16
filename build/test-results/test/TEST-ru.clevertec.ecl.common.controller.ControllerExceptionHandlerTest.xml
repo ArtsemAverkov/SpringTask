@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.clevertec.ecl.common.controller.ControllerExceptionHandlerTest" tests="5" skipped="0" failures="0" errors="0" timestamp="2023-05-16T17:27:02" hostname="MacBook-Air-Artem.local" time="0.141">
+  <properties/>
+  <testcase name="givenNoSuchElementExceptionWhenHandleThenReturnsNoSuchElement()" classname="ru.clevertec.ecl.common.controller.ControllerExceptionHandlerTest" time="0.04"/>
+  <testcase name="givenMissingServletRequestParameterExceptionWhenHandleThenReturnsNoCorrectRequest()" classname="ru.clevertec.ecl.common.controller.ControllerExceptionHandlerTest" time="0.012"/>
+  <testcase name="givenEntityNotFoundExceptionWhenCreateThenReturnsIncorrectRequest()" classname="ru.clevertec.ecl.common.controller.ControllerExceptionHandlerTest" time="0.01"/>
+  <testcase name="givenMethodArgumentNotValidExceptionWhenHandleThenReturnsValidationError()" classname="ru.clevertec.ecl.common.controller.ControllerExceptionHandlerTest" time="0.056"/>
+  <testcase name="givenHttpRequestMethodNotSupportedExceptionWhenHandlingThenReturnsMethodNotAllowed()" classname="ru.clevertec.ecl.common.controller.ControllerExceptionHandlerTest" time="0.015"/>
+  <system-out><![CDATA[
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.0.6)
+
+2023-05-16T20:27:02.550+03:00  INFO 72549 --- [    Test worker] r.c.e.c.c.ControllerExceptionHandlerTest : Starting ControllerExceptionHandlerTest using Java 17.0.2 with PID 72549 (started by artemaverkov in /Users/artemaverkov/Concurrency/Новая папка/SpringTask)
+2023-05-16T20:27:02.551+03:00  INFO 72549 --- [    Test worker] r.c.e.c.c.ControllerExceptionHandlerTest : The following 1 profile is active: "dev"
+2023-05-16T20:27:02.913+03:00  INFO 72549 --- [    Test worker] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2023-05-16T20:27:02.914+03:00  INFO 72549 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2023-05-16T20:27:02.915+03:00  INFO 72549 --- [    Test worker] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2023-05-16T20:27:02.922+03:00  INFO 72549 --- [    Test worker] r.c.e.c.c.ControllerExceptionHandlerTest : Started ControllerExceptionHandlerTest in 0.418 seconds (process running for 61.244)
+2023-05-16T20:27:02.940+03:00  WARN 72549 --- [    Test worker] ocalVariableTableParameterNameDiscoverer : Using deprecated '-debug' fallback for parameter name resolution. Compile the affected code with '-parameters' instead or avoid its introspection: ru.clevertec.ecl.controller.tagController.TagController
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

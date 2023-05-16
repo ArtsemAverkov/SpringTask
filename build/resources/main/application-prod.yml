@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://prod.example.com:5432/artemaverkov
+    username: produser
+    password: prodpass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+    show-sql: false

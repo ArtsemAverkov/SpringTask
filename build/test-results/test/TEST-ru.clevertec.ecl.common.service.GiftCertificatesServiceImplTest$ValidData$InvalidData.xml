@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.clevertec.ecl.common.service.GiftCertificatesServiceImplTest$ValidData$InvalidData" tests="4" skipped="0" failures="0" errors="0" timestamp="2023-05-16T17:27:03" hostname="MacBook-Air-Artem.local" time="0.015">
+  <properties/>
+  <testcase name="shouldUpdateGiftCertificatesWheGiftCertificatesIsInvalid()" classname="ru.clevertec.ecl.common.service.GiftCertificatesServiceImplTest$ValidData$InvalidData" time="0.002"/>
+  <testcase name="shouldDeleteProductWheProductIsInvalid()" classname="ru.clevertec.ecl.common.service.GiftCertificatesServiceImplTest$ValidData$InvalidData" time="0.002"/>
+  <testcase name="shouldCreatePGiftCertificatesWheGiftCertificatesIsInvalid()" classname="ru.clevertec.ecl.common.service.GiftCertificatesServiceImplTest$ValidData$InvalidData" time="0.002"/>
+  <testcase name="shouldGetGiftCertificatesWheGiftCertificatesIsInvalid()" classname="ru.clevertec.ecl.common.service.GiftCertificatesServiceImplTest$ValidData$InvalidData" time="0.005"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

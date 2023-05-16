@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="ru.clevertec.ecl.common.service.UserServiceImplTest$InvalidData" tests="2" skipped="0" failures="0" errors="0" timestamp="2023-05-16T17:27:03" hostname="MacBook-Air-Artem.local" time="0.206">
+  <properties/>
+  <testcase name="shouldGetUserWhenUserInvalid()" classname="ru.clevertec.ecl.common.service.UserServiceImplTest$InvalidData" time="0.202"/>
+  <testcase name="shouldCreateUserWhenUserInvalid(UserDtoRequest)" classname="ru.clevertec.ecl.common.service.UserServiceImplTest$InvalidData" time="0.004"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
