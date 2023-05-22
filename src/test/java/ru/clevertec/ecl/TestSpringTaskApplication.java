@@ -1,4 +1,4 @@
-package ru.clevertek.ecl;
+package ru.clevertec.ecl;
 
 import org.springframework.boot.test.context.SpringBootTest;
 

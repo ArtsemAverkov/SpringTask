@@ -1,4 +1,4 @@
-package ru.clevertek.ecl.common.controller;
+package ru.clevertec.ecl.common.controller;
 
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
@@ -21,9 +21,9 @@ import ru.clevertec.ecl.dto.order.OrderDtoRequest;
 import ru.clevertec.ecl.dto.user.UserDtoRequest;
 import ru.clevertec.ecl.service.order.OrderService;
 import ru.clevertec.ecl.service.user.UserService;
-import ru.clevertek.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
-import ru.clevertek.ecl.common.extension.order.ValidParameterResolverOrder;
-import ru.clevertek.ecl.common.extension.user.ValidParameterResolverUser;
+import ru.clevertec.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
+import ru.clevertec.ecl.common.extension.order.ValidParameterResolverOrder;
+import ru.clevertec.ecl.common.extension.user.ValidParameterResolverUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;

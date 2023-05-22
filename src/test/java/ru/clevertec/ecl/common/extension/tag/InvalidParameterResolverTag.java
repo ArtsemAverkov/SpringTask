@@ -1,4 +1,4 @@
-package ru.clevertek.ecl.common.extension.tag;
+package ru.clevertec.ecl.common.extension.tag;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;

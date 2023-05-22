@@ -1,4 +1,4 @@
-package ru.clevertek.ecl.common.repository;
+package ru.clevertec.ecl.common.repository;
 
 import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Assertions;

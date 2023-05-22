@@ -1,4 +1,4 @@
-package ru.clevertek.ecl.common.service;
+package ru.clevertec.ecl.common.service;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.Test;
@@ -13,8 +13,8 @@ import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
 import ru.clevertec.ecl.service.giftCertificates.GiftCertificatesApiService;
-import ru.clevertek.ecl.common.extension.giftCertificates.InvalidParameterResolverGiftCertificates;
-import ru.clevertek.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
+import ru.clevertec.ecl.common.extension.giftCertificates.InvalidParameterResolverGiftCertificates;
+import ru.clevertec.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

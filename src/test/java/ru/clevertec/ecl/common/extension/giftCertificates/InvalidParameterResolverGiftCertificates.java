@@ -1,4 +1,4 @@
-package ru.clevertek.ecl.common.extension.giftCertificates;
+package ru.clevertec.ecl.common.extension.giftCertificates;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;

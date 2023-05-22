@@ -1,4 +1,4 @@
-package ru.clevertek.ecl.common.controller;
+package ru.clevertec.ecl.common.controller;
 
 
 import org.junit.jupiter.api.Test;
@@ -15,14 +15,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.clevertec.ecl.SpringTaskApplication;
+import ru.clevertec.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
+import ru.clevertec.ecl.common.extension.tag.ValidParameterResolverTag;
 import ru.clevertec.ecl.controller.tagController.TagController;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
 import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.service.tag.TagService;
-import ru.clevertek.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
-import ru.clevertek.ecl.common.extension.tag.ValidParameterResolverTag;
 
 import java.util.Arrays;
 import java.util.List;

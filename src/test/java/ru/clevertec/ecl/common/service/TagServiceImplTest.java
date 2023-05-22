@@ -1,4 +1,4 @@
-package ru.clevertek.ecl.common.service;
+package ru.clevertec.ecl.common.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
@@ -9,6 +9,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Pageable;
+import ru.clevertec.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
+import ru.clevertec.ecl.common.extension.tag.InvalidParameterResolverTag;
+import ru.clevertec.ecl.common.extension.tag.ValidParameterResolverTag;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesResponseDto;
 import ru.clevertec.ecl.dto.tag.TagDtoRequest;
@@ -16,9 +19,6 @@ import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.entity.tag.Tag;
 import ru.clevertec.ecl.repository.tag.TagRepository;
 import ru.clevertec.ecl.service.tag.TagApiService;
-import ru.clevertek.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
-import ru.clevertek.ecl.common.extension.tag.InvalidParameterResolverTag;
-import ru.clevertek.ecl.common.extension.tag.ValidParameterResolverTag;
 
 import java.util.ArrayList;
 import java.util.List;

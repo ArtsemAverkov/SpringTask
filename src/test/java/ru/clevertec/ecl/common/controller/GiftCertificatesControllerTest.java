@@ -1,4 +1,4 @@
-package ru.clevertek.ecl.common.controller;
+package ru.clevertec.ecl.common.controller;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,7 +18,7 @@ import ru.clevertec.ecl.SpringTaskApplication;
 import ru.clevertec.ecl.controller.giftCertificates.GiftCertificatesController;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.service.giftCertificates.GiftCertificatesService;
-import ru.clevertek.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
+import ru.clevertec.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
 
 
 import static org.mockito.ArgumentMatchers.any;

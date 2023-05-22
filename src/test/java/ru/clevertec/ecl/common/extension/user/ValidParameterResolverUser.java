@@ -1,33 +1,35 @@
-package ru.clevertek.ecl.common.extension.tag;
+package ru.clevertec.ecl.common.extension.user;
 
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
-import ru.clevertec.ecl.dto.tag.TagDtoRequest;
+import ru.clevertec.ecl.dto.user.UserDtoRequest;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class ValidParameterResolverTag  implements ParameterResolver {
-    public static List<TagDtoRequest> validListDto = Arrays.asList(
-            new TagDtoRequest(
-                    1L,
-                    "name"
+public class ValidParameterResolverUser implements ParameterResolver {
+    private List<UserDtoRequest> userDtoList = Arrays.asList(
+            new UserDtoRequest(
+                    "name",
+                    "email",
+                    "password"
             ),
-            new TagDtoRequest(
-                    2L,
-                    "names"
+            new UserDtoRequest(
+                    "names",
+                    "emails",
+                    "passwords"
             )
     );
     @Override
     public boolean supportsParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return parameterContext.getParameter().getType()== TagDtoRequest.class;
+        return parameterContext.getParameter().getType()== UserDtoRequest.class;
     }
 
     @Override
     public Object resolveParameter(ParameterContext parameterContext, ExtensionContext extensionContext) throws ParameterResolutionException {
-        return validListDto.get(new Random().nextInt(validListDto.size()));
+        return userDtoList.get(new Random().nextInt(userDtoList.size()));
     }
 }

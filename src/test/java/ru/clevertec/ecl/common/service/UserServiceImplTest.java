@@ -1,4 +1,4 @@
-package ru.clevertek.ecl.common.service;
+package ru.clevertec.ecl.common.service;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Nested;
@@ -8,11 +8,11 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.clevertec.ecl.common.extension.user.ValidParameterResolverUser;
 import ru.clevertec.ecl.dto.user.UserDtoRequest;
 import ru.clevertec.ecl.entity.user.User;
 import ru.clevertec.ecl.repository.user.UserRepository;
 import ru.clevertec.ecl.service.user.UserApiService;
-import ru.clevertek.ecl.common.extension.user.ValidParameterResolverUser;
 
 import java.util.Optional;
 

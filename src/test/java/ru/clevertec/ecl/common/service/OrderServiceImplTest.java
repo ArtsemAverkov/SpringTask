@@ -1,4 +1,4 @@
-package ru.clevertek.ecl.common.service;
+package ru.clevertec.ecl.common.service;
 
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -7,6 +7,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.clevertec.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
+import ru.clevertec.ecl.common.extension.order.ValidParameterResolverOrder;
+import ru.clevertec.ecl.common.extension.user.ValidParameterResolverUser;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.dto.order.OrderDtoRequest;
 import ru.clevertec.ecl.dto.user.UserDtoRequest;
@@ -18,9 +21,6 @@ import ru.clevertec.ecl.repository.order.OrderRepository;
 import ru.clevertec.ecl.repository.giftCertificates.GiftCertificatesRepository;
 import ru.clevertec.ecl.repository.user.UserRepository;
 import ru.clevertec.ecl.service.order.OrderApiService;
-import ru.clevertek.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
-import ru.clevertek.ecl.common.extension.order.ValidParameterResolverOrder;
-import ru.clevertek.ecl.common.extension.user.ValidParameterResolverUser;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

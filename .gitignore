@@ -20,9 +20,6 @@ bin/
 .gradle/
 /build/
 /out/
-*.iml
-*.ipr
-*.iws
 
 # Ignore miscellaneous files
 .DS_Store
