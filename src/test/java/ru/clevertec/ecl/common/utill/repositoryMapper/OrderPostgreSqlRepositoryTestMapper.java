@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.common.mapper.repositoryMapper;
+package ru.clevertec.ecl.common.utill.repositoryMapper;
 
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;
 import ru.clevertec.ecl.entity.order.Order;

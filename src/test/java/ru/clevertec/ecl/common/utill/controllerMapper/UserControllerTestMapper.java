@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.common.mapper.controllerMapper;
+package ru.clevertec.ecl.common.utill.controllerMapper;
 
 import ru.clevertec.ecl.common.utill.RequestId;
 import ru.clevertec.ecl.dto.user.UserDtoRequest;

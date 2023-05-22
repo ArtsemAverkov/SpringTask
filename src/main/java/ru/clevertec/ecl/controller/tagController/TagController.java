@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
+import ru.clevertec.ecl.loger.ExcludeLog;
 import ru.clevertec.ecl.service.tag.TagService;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class TagController {
      * @return the ID of the newly created tag
      */
 
+    @ExcludeLog
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Long create(@RequestBody @Valid TagDtoRequest tagDto){
@@ -51,6 +53,8 @@ public class TagController {
      * @param id the ID of the tag to retrieve
      * @return the TagDtoResponse object representing the tag with the specified ID
      */
+
+
 
     @GetMapping(value= "/{id}")
     @ResponseStatus(HttpStatus.OK)

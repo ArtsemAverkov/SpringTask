@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.clevertec.ecl.SpringTaskApplication;
-import ru.clevertec.ecl.common.mapper.controllerMapper.UserControllerTestMapper;
+import ru.clevertec.ecl.common.utill.controllerMapper.UserControllerTestMapper;
 import ru.clevertec.ecl.controller.user.UserController;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.dto.order.OrderDtoRequest;

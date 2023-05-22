@@ -12,7 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import ru.clevertec.ecl.common.extension.tag.InvalidParameterResolverTag;
-import ru.clevertec.ecl.common.mapper.serviceMapper.TagServiceImplTestMapper;
+import ru.clevertec.ecl.common.utill.serviceMapper.TagServiceImplTestMapper;
 import ru.clevertec.ecl.dto.tag.TagDtoRequest;
 import ru.clevertec.ecl.dto.tag.TagDtoResponse;
 import ru.clevertec.ecl.entity.tag.Tag;

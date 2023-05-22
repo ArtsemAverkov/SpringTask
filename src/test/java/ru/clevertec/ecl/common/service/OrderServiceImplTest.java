@@ -7,7 +7,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.clevertec.ecl.common.mapper.serviceMapper.OrderServiceImplTestMapper;
+import ru.clevertec.ecl.common.utill.serviceMapper.OrderServiceImplTestMapper;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.dto.order.OrderDtoRequest;
 import ru.clevertec.ecl.dto.user.UserDtoRequest;

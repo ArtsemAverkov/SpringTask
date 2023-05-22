@@ -12,3 +12,5 @@ spring:
     show-sql: true
   cache:
     type: myCache
+server:
+  port: 8890

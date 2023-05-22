@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.*;
 import ru.clevertec.ecl.common.extension.giftCertificates.InvalidParameterResolverGiftCertificates;
 import ru.clevertec.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
-import ru.clevertec.ecl.common.mapper.serviceMapper.GiftCertificatesServiceImplTestMapper;
+import ru.clevertec.ecl.common.utill.serviceMapper.GiftCertificatesServiceImplTestMapper;
 import ru.clevertec.ecl.common.utill.RequestId;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.entity.giftCertificates.GiftCertificates;

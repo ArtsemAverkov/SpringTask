@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.clevertec.ecl.SpringTaskApplication;
 import ru.clevertec.ecl.common.extension.giftCertificates.ValidParameterResolverGiftCertificates;
 import ru.clevertec.ecl.common.extension.tag.ValidParameterResolverTag;
-import ru.clevertec.ecl.common.mapper.controllerMapper.GiftCertificatesControllerTestMapper;
+import ru.clevertec.ecl.common.utill.controllerMapper.GiftCertificatesControllerTestMapper;
 import ru.clevertec.ecl.common.utill.RequestId;
 import ru.clevertec.ecl.controller.giftCertificates.GiftCertificatesController;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;

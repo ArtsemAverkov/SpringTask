@@ -1,4 +1,4 @@
-package ru.clevertec.ecl.common.mapper.serviceMapper;
+package ru.clevertec.ecl.common.utill.serviceMapper;
 
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.dto.order.OrderDtoRequest;

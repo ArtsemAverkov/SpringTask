@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.clevertec.ecl.SpringTaskApplication;
 import ru.clevertec.ecl.common.extension.tag.ValidParameterResolverTag;
-import ru.clevertec.ecl.common.mapper.controllerMapper.TagControllerTestMapper;
+import ru.clevertec.ecl.common.utill.controllerMapper.TagControllerTestMapper;
 import ru.clevertec.ecl.controller.tagController.TagController;
 import ru.clevertec.ecl.dto.giftCertificates.GiftCertificatesDtoRequest;
 import ru.clevertec.ecl.dto.tag.TagDtoRequest;
